@@ -1,0 +1,3 @@
+# Project-local Codex defaults for Creature Trail.
+# Keep execution scoped to this repository while using its local actions.
+sandbox_mode = "workspace-write"

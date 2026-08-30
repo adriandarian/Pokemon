@@ -1,0 +1,40 @@
+version = 1
+name = "Creature Trail"
+
+[setup]
+script = ""
+
+[[actions]]
+name = "Run game"
+icon = "run"
+command = "godot --path ."
+
+[[actions]]
+name = "Preview menu"
+icon = "play"
+command = "godot --path . -- --preview-menu"
+
+[[actions]]
+name = "Preview battle"
+icon = "play"
+command = "godot --path . -- --preview-battle"
+
+[[actions]]
+name = "Preview wild area"
+icon = "play"
+command = "godot --path . -- --preview-wild"
+
+[[actions]]
+name = "Test framework"
+icon = "test"
+command = "godot --headless --path . res://tests/framework_smoke_test.tscn"
+
+[[actions]]
+name = "Test gameplay"
+icon = "test"
+command = "godot --headless --path . res://tests/gameplay_smoke_test.tscn"
+
+[[actions]]
+name = "Validate project"
+icon = "check"
+command = "godot --headless --path . --quit-after 3"

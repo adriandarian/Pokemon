@@ -46,9 +46,12 @@ godot --path . -- --preview-wild
 
 ### Quick actions
 
-When opened in a Codex or VS Code workspace, use the task/run buttons to launch
-the game or one of the deterministic previews. The same actions are available
-from `Terminal > Run Task`:
+When opened as a Codex project, select the `Creature Trail` local environment
+from the Environment panel. Its action buttons launch the game, deterministic
+previews, smoke tests, and project validation. The definitions live in
+`.codex/environments/environment.toml`.
+
+The same commands are also available as VS Code tasks from `Terminal > Run Task`:
 
 - `Creature Trail: Run game`
 - `Creature Trail: Preview menu`
