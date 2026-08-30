@@ -1,0 +1,9 @@
+{
+  "godot-bridge": {
+    "command": "node",
+    "args": [".agents/godot-ai-builder/mcp-server/index.js"],
+    "env": {
+      "GODOT_BRIDGE_PORT": "6100"
+    }
+  }
+}
