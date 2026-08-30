@@ -1,0 +1,151 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://features/adventure/hud/adventure_hud.gd" id="1_script"]
+[ext_resource type="Theme" path="res://common/ui/adventure_theme.tres" id="2_theme"]
+
+[node name="AdventureHUD" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme = ExtResource("2_theme")
+script = ExtResource("1_script")
+
+[node name="TopMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_left = 24.0
+offset_top = 22.0
+offset_right = -24.0
+offset_bottom = 150.0
+grow_horizontal = 2
+theme_override_constants/margin_left = 0
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 0
+theme_override_constants/margin_bottom = 0
+
+[node name="TopRow" type="HBoxContainer" parent="TopMargin"]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="LocationCard" type="PanelContainer" parent="TopMargin/TopRow"]
+custom_minimum_size = Vector2(365, 0)
+layout_mode = 2
+
+[node name="LocationVBox" type="VBoxContainer" parent="TopMargin/TopRow/LocationCard"]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Region" type="Label" parent="TopMargin/TopRow/LocationCard/LocationVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.97, 0.75, 0.3, 1)
+theme_override_font_sizes/font_size = 15
+text = "MOSSGLASS FRONTIER"
+
+[node name="Location" type="Label" parent="TopMargin/TopRow/LocationCard/LocationVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.99, 0.97, 0.86, 1)
+theme_override_font_sizes/font_size = 27
+text = "Windfall Village"
+
+[node name="Objective" type="Label" parent="TopMargin/TopRow/LocationCard/LocationVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.72, 0.81, 0.72, 1)
+theme_override_font_sizes/font_size = 15
+text = "Follow the east trail into the wild grass."
+
+[node name="Spacer" type="Control" parent="TopMargin/TopRow"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ControlsCard" type="PanelContainer" parent="TopMargin/TopRow"]
+custom_minimum_size = Vector2(270, 0)
+layout_mode = 2
+
+[node name="ControlsVBox" type="VBoxContainer" parent="TopMargin/TopRow/ControlsCard"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Menu" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.97, 0.75, 0.3, 1)
+text = "TAB   Field Guide"
+
+[node name="Move" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
+layout_mode = 2
+text = "WASD / Arrows   Move"
+
+[node name="Interact" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
+layout_mode = 2
+text = "E   Interact"
+
+[node name="PromptPanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -185.0
+offset_top = -112.0
+offset_right = 185.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PromptLabel" type="Label" parent="PromptPanel"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.9, 0.56, 1)
+theme_override_font_sizes/font_size = 20
+text = "E   Interact"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="DialoguePanel" type="PanelContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 170.0
+offset_top = -210.0
+offset_right = -170.0
+offset_bottom = -38.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DialogueVBox" type="VBoxContainer" parent="DialoguePanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="DialogueTitle" type="Label" parent="DialoguePanel/DialogueVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.74, 0.27, 1)
+theme_override_font_sizes/font_size = 23
+text = "Trail Sign"
+
+[node name="DialogueText" type="Label" parent="DialoguePanel/DialogueVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_colors/font_color = Color(0.95, 0.95, 0.86, 1)
+theme_override_font_sizes/font_size = 19
+text = "Dialogue text."
+autowrap_mode = 2
+
+[node name="Advance" type="Label" parent="DialoguePanel/DialogueVBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.72, 0.65, 1)
+theme_override_font_sizes/font_size = 14
+text = "E / Esc   close"
+horizontal_alignment = 2

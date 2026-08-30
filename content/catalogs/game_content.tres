@@ -1,0 +1,36 @@
+[gd_resource type="Resource" script_class="GameContentCatalog" load_steps=26 format=3]
+
+[ext_resource type="Script" path="res://common/data/game_content_catalog.gd" id="1_script"]
+[ext_resource type="Resource" path="res://content/elements/ember.tres" id="2_ember"]
+[ext_resource type="Resource" path="res://content/elements/tide.tres" id="3_tide"]
+[ext_resource type="Resource" path="res://content/elements/grove.tres" id="4_grove"]
+[ext_resource type="Resource" path="res://content/elements/storm.tres" id="5_storm"]
+[ext_resource type="Resource" path="res://content/moves/kindle_dash.tres" id="6_kindle"]
+[ext_resource type="Resource" path="res://content/moves/tidal_echo.tres" id="7_tidal"]
+[ext_resource type="Resource" path="res://content/moves/root_bind.tres" id="8_root"]
+[ext_resource type="Resource" path="res://content/moves/static_bloom.tres" id="9_static"]
+[ext_resource type="Resource" path="res://content/species/kindlehorn.tres" id="10_kind"]
+[ext_resource type="Resource" path="res://content/species/rillip.tres" id="11_rillip"]
+[ext_resource type="Resource" path="res://content/species/brambit.tres" id="12_brambit"]
+[ext_resource type="Resource" path="res://content/badges/ember_crest.tres" id="13_crest"]
+[ext_resource type="Resource" path="res://content/badges/deep_delver_mark.tres" id="14_delver"]
+[ext_resource type="Resource" path="res://content/locations/windfall_village.tres" id="15_village"]
+[ext_resource type="Resource" path="res://content/locations/mossglass_cave.tres" id="16_cave"]
+[ext_resource type="Resource" path="res://content/locations/sunken_archive.tres" id="17_archive"]
+[ext_resource type="Script" path="res://features/creatures/data/element_definition.gd" id="18_element_script"]
+[ext_resource type="Script" path="res://features/creatures/data/move_definition.gd" id="19_move_script"]
+[ext_resource type="Script" path="res://features/creatures/data/creature_species.gd" id="20_species_script"]
+[ext_resource type="Script" path="res://features/progression/data/badge_definition.gd" id="21_badge_script"]
+[ext_resource type="Script" path="res://features/world/data/location_definition.gd" id="22_location_script"]
+[ext_resource type="Resource" path="res://content/items/trail_prism.tres" id="23_prism"]
+[ext_resource type="Resource" path="res://content/items/moss_tonic.tres" id="24_tonic"]
+[ext_resource type="Script" path="res://features/inventory/data/item_definition.gd" id="25_item_script"]
+
+[resource]
+script = ExtResource("1_script")
+elements = Array[ExtResource("18_element_script")]([ExtResource("2_ember"), ExtResource("3_tide"), ExtResource("4_grove"), ExtResource("5_storm")])
+moves = Array[ExtResource("19_move_script")]([ExtResource("6_kindle"), ExtResource("7_tidal"), ExtResource("8_root"), ExtResource("9_static")])
+species = Array[ExtResource("20_species_script")]([ExtResource("10_kind"), ExtResource("11_rillip"), ExtResource("12_brambit")])
+badges = Array[ExtResource("21_badge_script")]([ExtResource("13_crest"), ExtResource("14_delver")])
+locations = Array[ExtResource("22_location_script")]([ExtResource("15_village"), ExtResource("16_cave"), ExtResource("17_archive")])
+items = Array[ExtResource("25_item_script")]([ExtResource("23_prism"), ExtResource("24_tonic")])

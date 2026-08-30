@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="LocationDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/world/data/location_definition.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"sunken_archive"
+display_name = "Sunken Archive"
+description = "A drowned dungeon whose doors open only for a proven trailkeeper."
+kind = 3
+recommended_level = 14
+required_badge_ids = Array[StringName]([&"ember_crest"])
+

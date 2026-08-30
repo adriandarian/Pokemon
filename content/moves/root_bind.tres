@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MoveDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://features/creatures/data/move_definition.gd" id="1_script"]
+[ext_resource type="Resource" path="res://content/elements/grove.tres" id="2_element"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"root_bind"
+display_name = "Root Bind"
+description = "Living roots slow a target and make escape difficult."
+element = ExtResource("2_element")
+category = 2
+power = 0
+accuracy = 0.9
+max_uses = 15
+

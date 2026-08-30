@@ -1,0 +1,163 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://features/battle/battle_overlay.gd" id="1_script"]
+[ext_resource type="Script" path="res://features/battle/battle_backdrop.gd" id="2_backdrop"]
+[ext_resource type="Script" path="res://features/creatures/presentation/creature_visual.gd" id="3_creature"]
+[ext_resource type="Theme" path="res://common/ui/adventure_theme.tres" id="4_theme"]
+
+[node name="BattleOverlay" type="Control"]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 0
+theme = ExtResource("4_theme")
+script = ExtResource("1_script")
+
+[node name="Backdrop" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_backdrop")
+
+[node name="WildVisual" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_creature")
+visual_scale = 1.42
+facing_left = true
+
+[node name="PlayerVisual" type="Node2D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_creature")
+visual_scale = 1.52
+
+[node name="WildStatus" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.54
+anchor_top = 0.07
+anchor_right = 0.94
+anchor_bottom = 0.27
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="WildStatus"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="WildName" type="Label" parent="WildStatus/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.47, 1)
+theme_override_font_sizes/font_size = 22
+text = "WILD RILLIP   Lv.5"
+
+[node name="WildHP" type="ProgressBar" parent="WildStatus/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+show_percentage = false
+
+[node name="WildHPText" type="Label" parent="WildStatus/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "28 / 28"
+horizontal_alignment = 2
+
+[node name="PlayerStatus" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 0
+anchor_left = 0.06
+anchor_top = 0.38
+anchor_right = 0.4
+anchor_bottom = 0.57
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="PlayerStatus"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="PlayerName" type="Label" parent="PlayerStatus/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.86, 0.47, 1)
+theme_override_font_sizes/font_size = 22
+text = "KINDLEHORN   Lv.7"
+
+[node name="PlayerHP" type="ProgressBar" parent="PlayerStatus/VBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+show_percentage = false
+
+[node name="PlayerHPText" type="Label" parent="PlayerStatus/VBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 14
+text = "24 / 24"
+horizontal_alignment = 2
+
+[node name="ActionMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 42.0
+offset_top = -165.0
+offset_right = -42.0
+offset_bottom = -28.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="ActionPanel" type="PanelContainer" parent="ActionMargin"]
+layout_mode = 2
+
+[node name="ActionRow" type="HBoxContainer" parent="ActionMargin/ActionPanel"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="BattleLog" type="Label" parent="ActionMargin/ActionPanel/ActionRow"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(420, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.97, 0.96, 0.85, 1)
+theme_override_font_sizes/font_size = 20
+text = "A wild creature appears!"
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="Buttons" type="GridContainer" parent="ActionMargin/ActionPanel/ActionRow"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+columns = 2
+theme_override_constants/h_separation = 10
+theme_override_constants/v_separation = 10
+
+[node name="FightButton" type="Button" parent="ActionMargin/ActionPanel/ActionRow/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 54)
+layout_mode = 2
+text = "FIGHT"
+
+[node name="CaptureButton" type="Button" parent="ActionMargin/ActionPanel/ActionRow/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 54)
+layout_mode = 2
+text = "THROW PRISM  ×6"
+
+[node name="RunButton" type="Button" parent="ActionMargin/ActionPanel/ActionRow/Buttons"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 54)
+layout_mode = 2
+text = "RUN"

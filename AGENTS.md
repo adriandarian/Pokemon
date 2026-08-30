@@ -19,3 +19,14 @@ Godot project (`project.godot`).
 
 These are project-local junctions, so updating either vendored repository keeps
 the discovered skills current.
+
+## Project Framework
+
+Before building a feature, read `docs/architecture.md` and
+`docs/agent-workflow.md`. Keep one authoritative owner for mutable state, treat
+`content/*.tres` as read-only definitions during play, and add features under a
+co-located `features/<feature_name>/` boundary with an isolated validation path.
+
+Preserve the locked faux-2.5D exploration, flat 2D battle, visible-wild-creature,
+and original-content direction in the architecture guide. Remaining open design
+choices belong to the game designer and require an explicit feature design task.

@@ -1,0 +1,212 @@
+[gd_scene load_steps=4 format=3]
+
+[ext_resource type="Script" path="res://features/bootstrap/bootstrap_controller.gd" id="1_controller"]
+[ext_resource type="Script" path="res://features/bootstrap/bootstrap_view.gd" id="2_view"]
+[ext_resource type="Theme" path="res://features/bootstrap/foundation_theme.tres" id="3_theme"]
+
+[node name="Bootstrap" type="Node"]
+script = ExtResource("1_controller")
+
+[node name="BootstrapView" type="Control" parent="."]
+unique_name_in_owner = true
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("3_theme")
+script = ExtResource("2_view")
+
+[node name="Background" type="ColorRect" parent="BootstrapView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.035, 0.047, 0.043, 1)
+
+[node name="TrailBand" type="ColorRect" parent="BootstrapView"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 9.0
+grow_horizontal = 2
+mouse_filter = 2
+color = Color(0.31, 0.792, 0.482, 1)
+
+[node name="ScrollContainer" type="ScrollContainer" parent="BootstrapView"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+horizontal_scroll_mode = 0
+
+[node name="PageMargins" type="MarginContainer" parent="BootstrapView/ScrollContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 56
+theme_override_constants/margin_top = 46
+theme_override_constants/margin_right = 56
+theme_override_constants/margin_bottom = 40
+
+[node name="Page" type="VBoxContainer" parent="BootstrapView/ScrollContainer/PageMargins"]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Kicker" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.506, 0.871, 0.624, 1)
+theme_override_font_sizes/font_size = 14
+text = "CREATURE RPG FOUNDATION  /  GODOT 4.5"
+
+[node name="Title" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_colors/font_color = Color(0.957, 0.984, 0.965, 1)
+theme_override_font_sizes/font_size = 42
+text = "The trail starts here."
+
+[node name="Subtitle" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_colors/font_color = Color(0.65, 0.714, 0.674, 1)
+theme_override_font_sizes/font_size = 18
+text = "A data-driven base for collecting creatures, training teams, earning badges, and exploring caves and dungeons."
+autowrap_mode = 2
+
+[node name="HeaderGap" type="Control" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+custom_minimum_size = Vector2(0, 8)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Separator" type="HSeparator" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+layout_mode = 2
+
+[node name="Cards" type="HFlowContainer" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 22
+theme_override_constants/v_separation = 22
+
+[node name="CatalogCard" type="PanelContainer" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="CatalogContent" type="VBoxContainer" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/CatalogCard"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="CatalogKicker" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/CatalogCard/CatalogContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.506, 0.871, 0.624, 1)
+theme_override_font_sizes/font_size = 13
+text = "AUTHORED CONTENT"
+
+[node name="CatalogTitle" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/CatalogCard/CatalogContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.957, 0.984, 0.965, 1)
+theme_override_font_sizes/font_size = 26
+text = "Content registry"
+
+[node name="CatalogSummary" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/CatalogCard/CatalogContent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Loading catalog…"
+
+[node name="CatalogNote" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/CatalogCard/CatalogContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54, 0.612, 0.568, 1)
+theme_override_font_sizes/font_size = 14
+text = "Add .tres definitions; gameplay code stays unchanged."
+autowrap_mode = 2
+
+[node name="ProfileCard" type="PanelContainer" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(500, 250)
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="ProfileContent" type="VBoxContainer" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/ProfileCard"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="ProfileKicker" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/ProfileCard/ProfileContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.961, 0.714, 0.286, 1)
+theme_override_font_sizes/font_size = 13
+text = "RUNTIME STATE"
+
+[node name="ProfileTitle" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/ProfileCard/ProfileContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.957, 0.984, 0.965, 1)
+theme_override_font_sizes/font_size = 26
+text = "Current expedition"
+
+[node name="ProfileSummary" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/ProfileCard/ProfileContent"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_vertical = 3
+text = "Loading profile…"
+
+[node name="ProfileNote" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page/Cards/ProfileCard/ProfileContent"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.54, 0.612, 0.568, 1)
+theme_override_font_sizes/font_size = 14
+text = "Session state is separate from read-only species data."
+autowrap_mode = 2
+
+[node name="ActionGap" type="Control" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+custom_minimum_size = Vector2(0, 4)
+layout_mode = 2
+mouse_filter = 2
+
+[node name="Actions" type="HFlowContainer" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/h_separation = 12
+theme_override_constants/v_separation = 12
+
+[node name="CreatureButton" type="Button" parent="BootstrapView/ScrollContainer/PageMargins/Page/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(230, 48)
+layout_mode = 2
+focus_mode = 2
+text = "Collect sample creature"
+
+[node name="BadgeButton" type="Button" parent="BootstrapView/ScrollContainer/PageMargins/Page/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(190, 48)
+layout_mode = 2
+focus_mode = 2
+text = "Earn first badge"
+
+[node name="ResetButton" type="Button" parent="BootstrapView/ScrollContainer/PageMargins/Page/Actions"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(160, 48)
+layout_mode = 2
+focus_mode = 2
+text = "Reset session"
+
+[node name="StatusLabel" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.557, 0.902, 0.663, 1)
+text = "Starting services…"
+autowrap_mode = 2
+
+[node name="Footer" type="Label" parent="BootstrapView/ScrollContainer/PageMargins/Page"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.408, 0.467, 0.431, 1)
+theme_override_font_sizes/font_size = 13
+text = "No combat rules, camera perspective, or final art direction are locked in yet. Build each feature behind a documented contract."
+autowrap_mode = 2

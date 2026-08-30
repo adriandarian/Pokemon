@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BadgeDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://features/progression/data/badge_definition.gd" id="1_script"]
+[ext_resource type="Resource" path="res://content/elements/ember.tres" id="2_element"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"ember_crest"
+display_name = "Ember Crest"
+description = "Proof that a trailkeeper can remain steady under pressure."
+element = ExtResource("2_element")
+obedience_level = 20
+

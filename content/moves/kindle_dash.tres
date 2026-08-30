@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MoveDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://features/creatures/data/move_definition.gd" id="1_script"]
+[ext_resource type="Resource" path="res://content/elements/ember.tres" id="2_element"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"kindle_dash"
+display_name = "Kindle Dash"
+description = "A quick shoulder charge wrapped in a ribbon of sparks."
+element = ExtResource("2_element")
+category = 0
+power = 35
+accuracy = 0.95
+max_uses = 20
+

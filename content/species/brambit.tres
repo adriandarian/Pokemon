@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="CreatureSpecies" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://features/creatures/data/creature_species.gd" id="1_script"]
+[ext_resource type="Script" path="res://features/creatures/data/creature_stats.gd" id="2_stats_script"]
+[ext_resource type="Resource" path="res://content/elements/grove.tres" id="3_element"]
+[ext_resource type="Resource" path="res://content/moves/root_bind.tres" id="4_move"]
+[ext_resource type="Script" path="res://features/creatures/data/element_definition.gd" id="5_element_script"]
+[ext_resource type="Script" path="res://features/creatures/data/move_definition.gd" id="6_move_script"]
+
+[sub_resource type="Resource" id="Stats"]
+script = ExtResource("2_stats_script")
+max_hp = 32
+attack = 11
+defense = 15
+focus = 9
+resistance = 14
+speed = 7
+
+[resource]
+script = ExtResource("1_script")
+id = &"brambit"
+display_name = "Brambit"
+lore = "A patient burrower that grows a fresh crown of leaves after every hard-won journey."
+elements = Array[ExtResource("5_element_script")]([ExtResource("3_element")])
+base_stats = SubResource("Stats")
+learnset = Array[ExtResource("6_move_script")]([ExtResource("4_move")])

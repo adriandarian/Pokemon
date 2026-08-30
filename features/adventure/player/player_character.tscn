@@ -1,0 +1,36 @@
+[gd_scene load_steps=5 format=3]
+
+[ext_resource type="Script" path="res://features/adventure/player/player_character.gd" id="1_player"]
+[ext_resource type="Script" path="res://features/adventure/player/player_visual.gd" id="2_visual"]
+
+[sub_resource type="CapsuleShape2D" id="PlayerShape"]
+radius = 16.0
+height = 34.0
+
+[sub_resource type="RectangleShape2D" id="InteractionShape"]
+size = Vector2(95, 78)
+
+[node name="Player" type="CharacterBody2D"]
+unique_name_in_owner = true
+collision_layer = 1
+collision_mask = 2
+script = ExtResource("1_player")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0)
+shape = SubResource("PlayerShape")
+
+[node name="PlayerVisual" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, -12)
+script = ExtResource("2_visual")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, -260)
+position_smoothing_enabled = true
+position_smoothing_speed = 7.0
+limit_left = 0
+limit_top = 0
+limit_right = 2200
+limit_bottom = 1300
+limit_smoothed = true

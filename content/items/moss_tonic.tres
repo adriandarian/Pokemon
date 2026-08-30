@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="ItemDefinition" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://features/inventory/data/item_definition.gd" id="1_script"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"moss_tonic"
+display_name = "Moss Tonic"
+description = "A cool herbal tonic. Restores a companion after a hard trail."
+kind = 1
+max_stack = 20
+accent_color = Color(0.404, 0.784, 0.427, 1)

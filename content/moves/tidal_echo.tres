@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="MoveDefinition" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://features/creatures/data/move_definition.gd" id="1_script"]
+[ext_resource type="Resource" path="res://content/elements/tide.tres" id="2_element"]
+
+[resource]
+script = ExtResource("1_script")
+id = &"tidal_echo"
+display_name = "Tidal Echo"
+description = "A resonant wave that gathers strength as it crosses the field."
+element = ExtResource("2_element")
+category = 1
+power = 32
+accuracy = 1.0
+max_uses = 25
+
