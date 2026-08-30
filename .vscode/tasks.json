@@ -1,0 +1,62 @@
+{
+  "version": "2.0.0",
+  "options": {
+    "cwd": "${workspaceFolder}"
+  },
+  "tasks": [
+    {
+      "label": "Creature Trail: Run game",
+      "type": "process",
+      "command": "godot",
+      "args": ["--path", "${workspaceFolder}"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Creature Trail: Preview menu",
+      "type": "process",
+      "command": "godot",
+      "args": ["--path", "${workspaceFolder}", "--", "--preview-menu"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Creature Trail: Preview battle",
+      "type": "process",
+      "command": "godot",
+      "args": ["--path", "${workspaceFolder}", "--", "--preview-battle"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Creature Trail: Preview wild area",
+      "type": "process",
+      "command": "godot",
+      "args": ["--path", "${workspaceFolder}", "--", "--preview-wild"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Creature Trail: Smoke test framework",
+      "type": "process",
+      "command": "godot",
+      "args": ["--headless", "--path", "${workspaceFolder}", "res://tests/framework_smoke_test.tscn"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Creature Trail: Smoke test gameplay",
+      "type": "process",
+      "command": "godot",
+      "args": ["--headless", "--path", "${workspaceFolder}", "res://tests/gameplay_smoke_test.tscn"],
+      "problemMatcher": []
+    },
+    {
+      "label": "Creature Trail: Validate project",
+      "type": "process",
+      "command": "godot",
+      "args": ["--headless", "--path", "${workspaceFolder}", "--quit-after", "3"],
+      "dependsOn": [
+        "Creature Trail: Smoke test framework",
+        "Creature Trail: Smoke test gameplay"
+      ],
+      "dependsOrder": "sequence",
+      "problemMatcher": []
+    }
+  ]
+}

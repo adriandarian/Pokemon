@@ -44,6 +44,24 @@ godot --path . -- --preview-battle
 godot --path . -- --preview-wild
 ```
 
+### Quick actions
+
+When opened in a Codex or VS Code workspace, use the task/run buttons to launch
+the game or one of the deterministic previews. The same actions are available
+from `Terminal > Run Task`:
+
+- `Creature Trail: Run game`
+- `Creature Trail: Preview menu`
+- `Creature Trail: Preview battle`
+- `Creature Trail: Preview wild area`
+- `Creature Trail: Smoke test framework`
+- `Creature Trail: Smoke test gameplay`
+- `Creature Trail: Validate project`
+
+The Godot editor must be open with the `AI Game Builder` plugin enabled for the
+Codex editor bridge. It listens on `127.0.0.1:6100` and is configured in
+`.mcp.json`.
+
 ## Repository map
 
 ```text
