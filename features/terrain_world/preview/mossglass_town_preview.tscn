@@ -1,0 +1,51 @@
+[gd_scene load_steps=9 format=3]
+
+[ext_resource type="Script" path="res://features/terrain_world/preview/mossglass_town_preview.gd" id="1_preview"]
+[ext_resource type="PackedScene" path="res://features/terrain_world/mossglass_town_world.tscn" id="2_terrain"]
+[ext_resource type="Script" path="res://features/settlement/runtime/settlement_runtime.gd" id="3_settlement"]
+[ext_resource type="Script" path="res://features/terrain_world/runtime/terrain_scatter_runtime.gd" id="4_scatter"]
+[ext_resource type="PackedScene" path="res://features/adventure/player/player_character.tscn" id="5_player"]
+[ext_resource type="Script" path="res://features/voxel_art/voxel_preview_capture.gd" id="6_capture"]
+[ext_resource type="Script" path="res://features/world_animation/ambient_wind.gd" id="7_wind"]
+[ext_resource type="Script" path="res://features/world_animation/wind_motes.gd" id="8_motes"]
+
+[node name="MossglassTownPreview" type="Node"]
+script = ExtResource("1_preview")
+
+[node name="VoxelPreviewCapture" type="Node" parent="."]
+script = ExtResource("6_capture")
+
+[node name="AmbientWind" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("7_wind")
+
+[node name="SettlementRuntime" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("3_settlement")
+
+[node name="TerrainScatterRuntime" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_scatter")
+
+[node name="World" type="Node2D" parent="."]
+
+[node name="TerrainWorld" parent="World" instance=ExtResource("2_terrain")]
+unique_name_in_owner = true
+
+[node name="WindMotes" type="Node2D" parent="World"]
+script = ExtResource("8_motes")
+
+[node name="Actors" type="Node2D" parent="."]
+y_sort_enabled = true
+
+[node name="Props" type="Node2D" parent="Actors"]
+unique_name_in_owner = true
+y_sort_enabled = true
+
+[node name="Player" parent="Actors" instance=ExtResource("5_player")]
+
+[node name="OverviewCamera" type="Camera2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(3000, 1500)
+zoom = Vector2(0.24, 0.24)
+position_smoothing_enabled = false

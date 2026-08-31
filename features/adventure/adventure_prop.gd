@@ -19,6 +19,14 @@ enum Kind {
 	NPC,
 	ROCK,
 	LANTERN,
+	COTTAGE,
+	MARKET_STALL,
+	CIVIC_HALL,
+	HOMESTEAD_COMPOUND,
+	WHEAT_FIELD,
+	MEADOW_SHRUB,
+	RIVER_CROSSING,
+	RIVER_STAIR,
 }
 
 @export var kind: Kind = Kind.TREE
@@ -40,7 +48,11 @@ func configure(prop_kind: Kind, title: String = "", text: String = "") -> void:
 func _ready() -> void:
 	collision_layer = 2
 	collision_mask = 0
-	material = VoxelAssets.create_chroma_material()
+	material = (
+		VoxelAssets.create_strict_chroma_material()
+		if kind in [Kind.RIVER_CROSSING, Kind.RIVER_STAIR]
+		else VoxelAssets.create_chroma_material()
+	)
 	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
 	if kind == Kind.HOUSE:
 		_add_lodge_contact_shadow()
@@ -89,6 +101,8 @@ func get_prompt() -> String:
 
 
 func _add_collision() -> void:
+	if kind in [Kind.RIVER_CROSSING, Kind.RIVER_STAIR]:
+		return
 	var collision := CollisionShape2D.new()
 	var shape: Shape2D
 	match kind:
@@ -97,6 +111,36 @@ func _add_collision() -> void:
 			rectangle.size = Scale.HOUSE_FOOTPRINT
 			shape = rectangle
 			collision.position = Scale.HOUSE_COLLISION_OFFSET
+		Kind.COTTAGE:
+			var rectangle := RectangleShape2D.new()
+			rectangle.size = Scale.COTTAGE_FOOTPRINT
+			shape = rectangle
+			collision.position = Scale.COTTAGE_COLLISION_OFFSET
+		Kind.MARKET_STALL:
+			var rectangle := RectangleShape2D.new()
+			rectangle.size = Scale.MARKET_FOOTPRINT
+			shape = rectangle
+			collision.position = Scale.MARKET_COLLISION_OFFSET
+		Kind.CIVIC_HALL:
+			var rectangle := RectangleShape2D.new()
+			rectangle.size = Scale.CIVIC_HALL_FOOTPRINT
+			shape = rectangle
+			collision.position = Scale.CIVIC_HALL_COLLISION_OFFSET
+		Kind.HOMESTEAD_COMPOUND:
+			var rectangle := RectangleShape2D.new()
+			rectangle.size = Scale.HOMESTEAD_FOOTPRINT
+			shape = rectangle
+			collision.position = Scale.HOMESTEAD_COLLISION_OFFSET
+		Kind.WHEAT_FIELD:
+			var rectangle := RectangleShape2D.new()
+			rectangle.size = Scale.WHEAT_FOOTPRINT
+			shape = rectangle
+			collision.position = Scale.WHEAT_COLLISION_OFFSET
+		Kind.MEADOW_SHRUB:
+			var circle := CircleShape2D.new()
+			circle.radius = Scale.SHRUB_COLLISION_RADIUS
+			shape = circle
+			collision.position = Vector2(0.0, -4.0)
 		Kind.TREE:
 			var circle := CircleShape2D.new()
 			circle.radius = Scale.TREE_COLLISION_RADIUS
@@ -131,7 +175,7 @@ func _draw() -> void:
 	var texture: Texture2D = VoxelAssets.get_prop_texture(kind)
 	var display_size: Vector2 = _get_display_size()
 	var source_rect: Rect2 = VoxelAssets.get_prop_source_rect(texture, kind)
-	var bottom_offset: float = 7.0 if kind == Kind.HOUSE else 1.0
+	var bottom_offset: float = 7.0 if kind in [Kind.HOUSE, Kind.COTTAGE, Kind.MARKET_STALL, Kind.CIVIC_HALL, Kind.HOMESTEAD_COMPOUND, Kind.WHEAT_FIELD] else 1.0
 	var destination_rect: Rect2 = VoxelAssets.fit_bottom_centered(source_rect, display_size, bottom_offset)
 	destination_rect.position.y -= _ground_elevation_pixels
 	draw_texture_rect_region(texture, destination_rect, source_rect)
@@ -141,6 +185,22 @@ func _get_display_size() -> Vector2:
 	match kind:
 		Kind.HOUSE:
 			return Scale.HOUSE_DISPLAY_BOX
+		Kind.COTTAGE:
+			return Scale.COTTAGE_DISPLAY_BOX
+		Kind.MARKET_STALL:
+			return Scale.MARKET_DISPLAY_BOX
+		Kind.CIVIC_HALL:
+			return Scale.CIVIC_HALL_DISPLAY_BOX
+		Kind.HOMESTEAD_COMPOUND:
+			return Scale.HOMESTEAD_DISPLAY_BOX
+		Kind.WHEAT_FIELD:
+			return Scale.WHEAT_DISPLAY_BOX
+		Kind.MEADOW_SHRUB:
+			return Scale.SHRUB_DISPLAY_BOX
+		Kind.RIVER_CROSSING:
+			return Scale.RIVER_CROSSING_DISPLAY_BOX
+		Kind.RIVER_STAIR:
+			return Scale.RIVER_STAIR_DISPLAY_BOX
 		Kind.SIGN:
 			return Scale.SIGN_DISPLAY_BOX
 		Kind.NPC:
@@ -154,7 +214,7 @@ func _get_display_size() -> Vector2:
 
 
 func _draw_contact_shadow() -> void:
-	if kind == Kind.HOUSE:
+	if kind in [Kind.HOUSE, Kind.RIVER_CROSSING, Kind.RIVER_STAIR]:
 		return
 	var contact_radii: Vector2
 	var strength: float = 1.0
@@ -172,6 +232,24 @@ func _draw_contact_shadow() -> void:
 		Kind.LANTERN:
 			contact_radii = Vector2(22.0, 4.5)
 			strength = 0.95
+		Kind.COTTAGE:
+			contact_radii = Vector2(145.0, 14.0)
+			strength = 1.15
+		Kind.MARKET_STALL:
+			contact_radii = Vector2(132.0, 12.0)
+			strength = 1.08
+		Kind.CIVIC_HALL:
+			contact_radii = Vector2(274.0, 19.0)
+			strength = 1.18
+		Kind.HOMESTEAD_COMPOUND:
+			contact_radii = Vector2(380.0, 23.0)
+			strength = 1.18
+		Kind.WHEAT_FIELD:
+			contact_radii = Vector2(390.0, 15.0)
+			strength = 0.84
+		Kind.MEADOW_SHRUB:
+			contact_radii = Vector2(55.0, 6.0)
+			strength = 0.82
 		_:
 			contact_radii = Vector2(17.0, 4.5)
 	GroundShadow.draw(

@@ -9,6 +9,7 @@ static var WILD_POLYGON := PackedVector2Array([
 ])
 
 var _wind_source: AmbientWind
+var _terrain_query: TerrainQuery
 
 
 func _ready() -> void:
@@ -19,6 +20,11 @@ func _ready() -> void:
 
 func set_wind_source(source: AmbientWind) -> void:
 	_wind_source = source
+	queue_redraw()
+
+
+func set_terrain_query(query: TerrainQuery) -> void:
+	_terrain_query = query
 	queue_redraw()
 
 
@@ -37,29 +43,37 @@ func _draw() -> void:
 			var jitter_x: float = float((row * 31 + column * 17) % 29) - 14.0
 			var jitter_y: float = float((row * 13 + column * 23) % 21) - 10.0
 			var base := Vector2(1270.0 + float(column) * 59.0 + jitter_x, 300.0 + float(row) * 72.0 + jitter_y)
-			if Geometry2D.is_point_in_polygon(base, WILD_POLYGON):
+			if Geometry2D.is_point_in_polygon(base, WILD_POLYGON) and _can_draw_grass(base):
 				_draw_grass_cluster(base, 0.82 + float((row + column) % 3) * 0.11)
 
 	for index: int in range(18):
 		var base := Vector2(430.0 + float((index * 113) % 1480), 320.0 + float((index * 191) % 820))
-		if not Geometry2D.is_point_in_polygon(base, WILD_POLYGON):
+		if not Geometry2D.is_point_in_polygon(base, WILD_POLYGON) and _can_draw_grass(base):
 			_draw_grass_cluster(base, 0.58)
 
 
+func _can_draw_grass(base: Vector2) -> bool:
+	if _terrain_query == null:
+		return true
+	var sample: TerrainSample = _terrain_query.sample_at(base)
+	return sample.valid and sample.surface == TerrainChunkData.Surface.GRASS
+
+
 func _draw_grass_cluster(base: Vector2, scale_factor: float) -> void:
+	var projected_base: Vector2 = _terrain_query.to_view(base) if _terrain_query != null else base
 	var stem_height: float = 26.0 * scale_factor
 	var wind: Vector2 = _wind_source.sample(base) if _wind_source != null else Vector2.ZERO
 	var bend := Vector2(wind.x * (9.0 + scale_factor * 4.0), wind.y * 3.0)
-	var dark_tip := base + Vector2(-5.0, -stem_height - 5.0) + bend
-	var light_tip := base + Vector2(7.0, -stem_height * 0.88) + bend * 1.15
+	var dark_tip := projected_base + Vector2(-5.0, -stem_height - 5.0) + bend
+	var light_tip := projected_base + Vector2(7.0, -stem_height * 0.88) + bend * 1.15
 
 	draw_colored_polygon(PackedVector2Array([
-		base + Vector2(-8.0, 0.0), base + Vector2(-5.0, -stem_height * 0.48) + bend * 0.32,
-		dark_tip, base + Vector2(0.0, 0.0),
+		projected_base + Vector2(-8.0, 0.0), projected_base + Vector2(-5.0, -stem_height * 0.48) + bend * 0.32,
+		dark_tip, projected_base + Vector2(0.0, 0.0),
 	]), Color("2f6b3d"))
 	draw_colored_polygon(PackedVector2Array([
-		base + Vector2(1.0, 0.0), base + Vector2(5.0, -stem_height * 0.45) + bend * 0.38,
-		light_tip, base + Vector2(11.0, 0.0),
+		projected_base + Vector2(1.0, 0.0), projected_base + Vector2(5.0, -stem_height * 0.45) + bend * 0.38,
+		light_tip, projected_base + Vector2(11.0, 0.0),
 	]), Color("76a554"))
 	_draw_voxel_top(dark_tip + Vector2(2.0, 0.0), Vector2(7.0, 4.0), Color("94ba64"), Color("4d8348"))
 

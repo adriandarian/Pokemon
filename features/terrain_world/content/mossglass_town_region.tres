@@ -1,0 +1,198 @@
+[gd_resource type="Resource" script_class="TerrainRegionDefinition" load_steps=27 format=3]
+
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_region_definition.gd" id="1_region"]
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_biome_definition.gd" id="2_biome"]
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_stamp_definition.gd" id="3_stamp"]
+
+[sub_resource type="Resource" id="BiomeWetland"]
+script = ExtResource("2_biome")
+biome_id = &"river_wetland"
+display_name = "River Wetland"
+top_color = Color(0.28, 0.45, 0.30, 1)
+path_color = Color(0.66, 0.59, 0.36, 1)
+cliff_color = Color(0.22, 0.32, 0.27, 1)
+detail_color = Color(0.42, 0.64, 0.41, 1)
+
+[sub_resource type="Resource" id="BiomeMeadow"]
+script = ExtResource("2_biome")
+biome_id = &"windfall_meadow"
+display_name = "Town Meadow"
+top_color = Color(0.42, 0.58, 0.31, 1)
+path_color = Color(0.79, 0.68, 0.40, 1)
+cliff_color = Color(0.33, 0.38, 0.28, 1)
+detail_color = Color(0.64, 0.74, 0.40, 1)
+
+[sub_resource type="Resource" id="BiomeWild"]
+script = ExtResource("2_biome")
+biome_id = &"mossglass_wild"
+display_name = "Mossglass Wild"
+top_color = Color(0.22, 0.39, 0.23, 1)
+path_color = Color(0.67, 0.57, 0.33, 1)
+cliff_color = Color(0.18, 0.29, 0.22, 1)
+detail_color = Color(0.34, 0.55, 0.30, 1)
+
+[sub_resource type="Resource" id="BiomeHighland"]
+script = ExtResource("2_biome")
+biome_id = &"mossglass_highland"
+display_name = "Civic Highland"
+top_color = Color(0.34, 0.48, 0.27, 1)
+path_color = Color(0.73, 0.62, 0.37, 1)
+cliff_color = Color(0.29, 0.32, 0.24, 1)
+detail_color = Color(0.53, 0.66, 0.35, 1)
+
+[sub_resource type="Resource" id="StampRiver"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_river"
+kind = 3
+bounds = Rect2i(0, 0, 7, 96)
+
+[sub_resource type="Resource" id="StampWestLowland"]
+script = ExtResource("3_stamp")
+stamp_id = &"west_lowland"
+bounds = Rect2i(7, 0, 35, 96)
+target_elevation = 0.0
+
+[sub_resource type="Resource" id="StampTownTerrace"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_middle_terrace"
+bounds = Rect2i(42, 6, 54, 84)
+target_elevation = 1.0
+
+[sub_resource type="Resource" id="StampCivicHighland"]
+script = ExtResource("3_stamp")
+stamp_id = &"civic_highland"
+bounds = Rect2i(52, 10, 32, 24)
+target_elevation = 2.0
+
+[sub_resource type="Resource" id="StampEastWild"]
+script = ExtResource("3_stamp")
+stamp_id = &"east_wild_shelf"
+bounds = Rect2i(100, 0, 28, 96)
+target_elevation = 2.0
+
+[sub_resource type="Resource" id="StampWetBiome"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_wetland_biome"
+kind = 1
+bounds = Rect2i(7, 0, 17, 96)
+biome_index = 0
+
+[sub_resource type="Resource" id="StampMeadowBiome"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_meadow_biome"
+kind = 1
+bounds = Rect2i(20, 0, 80, 96)
+biome_index = 1
+
+[sub_resource type="Resource" id="StampWildBiome"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_wild_biome"
+kind = 1
+bounds = Rect2i(96, 0, 32, 96)
+biome_index = 2
+
+[sub_resource type="Resource" id="StampCivicBiome"]
+script = ExtResource("3_stamp")
+stamp_id = &"civic_highland_biome"
+kind = 1
+bounds = Rect2i(52, 10, 32, 24)
+biome_index = 3
+
+[sub_resource type="Resource" id="StampMarketParcel"]
+script = ExtResource("3_stamp")
+stamp_id = &"market_square"
+kind = 4
+bounds = Rect2i(46, 49, 12, 16)
+target_elevation = 1.0
+biome_index = 1
+
+[sub_resource type="Resource" id="StampCivicParcel"]
+script = ExtResource("3_stamp")
+stamp_id = &"civic_square"
+kind = 4
+bounds = Rect2i(52, 10, 32, 20)
+target_elevation = 2.0
+biome_index = 3
+
+[sub_resource type="Resource" id="StampSouthParcel"]
+script = ExtResource("3_stamp")
+stamp_id = &"south_service_square"
+kind = 4
+bounds = Rect2i(50, 72, 18, 12)
+target_elevation = 1.0
+biome_index = 1
+
+[sub_resource type="Resource" id="StampMainRoad"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_main_road"
+kind = 2
+bounds = Rect2i(7, 54, 119, 5)
+path_points = Array[Vector2]([Vector2(6.5, 56.5), Vector2(26, 56.2), Vector2(48, 56.8), Vector2(72, 56.2), Vector2(98, 56.7), Vector2(125.5, 55.8)])
+
+[sub_resource type="Resource" id="StampCrossRoad"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_cross_road"
+kind = 2
+bounds = Rect2i(58, 31, 6, 59)
+path_points = Array[Vector2]([Vector2(60.8, 31), Vector2(60.2, 47), Vector2(61, 64), Vector2(60.5, 89.5)])
+
+[sub_resource type="Resource" id="StampCivicRoad"]
+script = ExtResource("3_stamp")
+stamp_id = &"civic_approach"
+kind = 2
+bounds = Rect2i(57, 16, 8, 25)
+path_points = Array[Vector2]([Vector2(61, 16), Vector2(60.5, 24), Vector2(60.7, 39.5)])
+
+[sub_resource type="Resource" id="StampWestRamp"]
+script = ExtResource("3_stamp")
+stamp_id = &"west_town_ramp"
+kind = 6
+bounds = Rect2i(35, 54, 9, 5)
+start_elevation = 0.0
+end_elevation = 1.0
+axis = 0
+biome_index = 1
+
+[sub_resource type="Resource" id="StampEastRamp"]
+script = ExtResource("3_stamp")
+stamp_id = &"east_wild_ramp"
+kind = 6
+bounds = Rect2i(93, 54, 11, 5)
+start_elevation = 1.0
+end_elevation = 2.0
+axis = 0
+biome_index = 2
+
+[sub_resource type="Resource" id="StampCivicStair"]
+script = ExtResource("3_stamp")
+stamp_id = &"civic_stair"
+kind = 5
+bounds = Rect2i(57, 29, 8, 12)
+start_elevation = 2.0
+end_elevation = 1.0
+axis = 1
+biome_index = 3
+
+[sub_resource type="Resource" id="StampBridge"]
+script = ExtResource("3_stamp")
+stamp_id = &"town_river_bridge"
+kind = 7
+bounds = Rect2i(0, 54, 12, 5)
+target_elevation = 0.0
+
+[resource]
+script = ExtResource("1_region")
+region_id = &"mossglass_town"
+compiler_version = 1
+seed = 29182026
+chunk_count = Vector2i(4, 3)
+chunk_size_cells = Vector2i(32, 32)
+cell_size = 48.0
+elevation_step_pixels = 48.0
+elevation_frequency = 0.025
+moisture_frequency = 0.039
+raised_ground_threshold = 0.54
+biomes = Array[ExtResource("2_biome")]([SubResource("BiomeWetland"), SubResource("BiomeMeadow"), SubResource("BiomeWild"), SubResource("BiomeHighland")])
+stamps = Array[ExtResource("3_stamp")]([SubResource("StampRiver"), SubResource("StampWestLowland"), SubResource("StampTownTerrace"), SubResource("StampCivicHighland"), SubResource("StampEastWild"), SubResource("StampWetBiome"), SubResource("StampMeadowBiome"), SubResource("StampWildBiome"), SubResource("StampCivicBiome"), SubResource("StampMarketParcel"), SubResource("StampCivicParcel"), SubResource("StampSouthParcel"), SubResource("StampMainRoad"), SubResource("StampCrossRoad"), SubResource("StampCivicRoad"), SubResource("StampWestRamp"), SubResource("StampEastRamp"), SubResource("StampCivicStair"), SubResource("StampBridge")])
+required_route_points = Array[Vector2i]([Vector2i(3, 56), Vector2i(20, 56), Vector2i(39, 56), Vector2i(50, 56), Vector2i(60, 84), Vector2i(60, 20), Vector2i(80, 56), Vector2i(98, 56), Vector2i(115, 56)])
+

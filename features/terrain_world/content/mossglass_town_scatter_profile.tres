@@ -1,0 +1,46 @@
+[gd_resource type="Resource" script_class="TerrainScatterProfile" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_scatter_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_scatter_definition.gd" id="2_definition"]
+
+[sub_resource type="Resource" id="WetlandTrees"]
+script = ExtResource("2_definition")
+scatter_id = &"town_wetland_tree"
+visual_id = &"tree"
+allowed_biome_ids = Array[StringName]([&"river_wetland"])
+attempts_per_chunk = 34
+max_instances_per_chunk = 5
+min_spacing_cells = 6.5
+surface_clearance_cells = 2
+chunk_margin_cells = 1.5
+seed_offset = 421
+
+[sub_resource type="Resource" id="WildTrees"]
+script = ExtResource("2_definition")
+scatter_id = &"town_wild_tree"
+visual_id = &"tree"
+allowed_biome_ids = Array[StringName]([&"mossglass_wild", &"mossglass_highland"])
+attempts_per_chunk = 48
+max_instances_per_chunk = 7
+min_spacing_cells = 6.5
+surface_clearance_cells = 2
+chunk_margin_cells = 1.5
+seed_offset = 509
+
+[sub_resource type="Resource" id="BoundaryRocks"]
+script = ExtResource("2_definition")
+scatter_id = &"town_boundary_rock"
+visual_id = &"rock"
+allowed_biome_ids = Array[StringName]([&"river_wetland", &"mossglass_wild", &"mossglass_highland"])
+attempts_per_chunk = 28
+max_instances_per_chunk = 4
+min_spacing_cells = 4.0
+surface_clearance_cells = 1
+chunk_margin_cells = 1.0
+seed_offset = 613
+
+[resource]
+script = ExtResource("1_profile")
+profile_id = &"mossglass_town_scatter"
+definitions = Array[ExtResource("2_definition")]([SubResource("WetlandTrees"), SubResource("WildTrees"), SubResource("BoundaryRocks")])
+exclusion_rects = Array[Rect2]([Rect2(576, 384, 4128, 3840)])

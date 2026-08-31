@@ -1,0 +1,38 @@
+[gd_resource type="Resource" script_class="SettlementDefinition" load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://features/settlement/data/settlement_definition.gd" id="1_settlement"]
+[ext_resource type="Script" path="res://features/settlement/data/settlement_prop_definition.gd" id="2_prop"]
+
+[sub_resource type="Resource" id="PropHomestead"]
+script = ExtResource("2_prop")
+prop_id = &"starting_homestead"
+kind = 9
+world_position = Vector2(1550, 1450)
+interaction_title = "Trailkeeper Homestead"
+interaction_text = "A small beginning: one warm cottage, a tended garden, and a trail leading toward a much larger world."
+
+[sub_resource type="Resource" id="PropWheat"]
+script = ExtResource("2_prop")
+prop_id = &"highland_wheat_field"
+kind = 10
+world_position = Vector2(2260, 820)
+
+[sub_resource type="Resource" id="PropRiverCrossing"]
+script = ExtResource("2_prop")
+prop_id = &"willowrun_crossing"
+kind = 12
+world_position = Vector2(1848, 2496)
+
+[sub_resource type="Resource" id="PropRiverStair"]
+script = ExtResource("2_prop")
+prop_id = &"willowrun_stair"
+kind = 13
+world_position = Vector2(1800, 1780)
+
+[resource]
+script = ExtResource("1_settlement")
+settlement_id = &"starting_homestead"
+display_name = "Trailkeeper Homestead"
+tier = 0
+world_bounds = Rect2(240, 0, 2592, 2000)
+props = Array[ExtResource("2_prop")]([SubResource("PropHomestead"), SubResource("PropWheat"), SubResource("PropRiverCrossing"), SubResource("PropRiverStair")])

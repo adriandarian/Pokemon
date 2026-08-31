@@ -41,9 +41,9 @@ func _ready() -> void:
 	var grass: WindGrass = adventure.get_node_or_null("WorldCanvas/WindGrass") as WindGrass
 	var motes: WindMotes = adventure.get_node_or_null("WorldCanvas/WindMotes") as WindMotes
 	_expect(wind != null, "The adventure has one authoritative ambient wind owner.")
-	_expect(shoreline != null, "The animated shoreline layer is present.")
-	_expect(grass != null, "The wind-driven grass layer is present.")
-	_expect(motes != null, "The wind-mote layer is present.")
+	_expect(shoreline == null, "The old shoreline layer is disconnected from the homestead baseline.")
+	_expect(grass == null, "The old grass overlay is disconnected from the homestead baseline.")
+	_expect(motes == null, "The old wind-mote overlay is disconnected from the homestead baseline.")
 
 	var player: PlayerCharacter = adventure.get_node("Actors/Player") as PlayerCharacter
 	var player_sprite: AnimatedSprite2D = player.visual.get_node("AnimatedSprite2D") as AnimatedSprite2D
@@ -59,26 +59,27 @@ func _ready() -> void:
 	player.visual.set_motion(Vector2.DOWN, 0.0, false)
 	_expect(player.visual.get_current_animation_name() == &"front_idle", "Stopping returns the explorer to its expression idle clip.")
 
-	var npc: AdventureNpc
-	var lantern_flame_count: int = 0
 	var props: Node = adventure.get_node("Actors/Props")
-	for child: Node in props.get_children():
-		if child is AdventureNpc:
-			npc = child as AdventureNpc
-		elif child is AdventureProp and (child as AdventureProp).kind == AdventureProp.Kind.LANTERN:
-			var flame := child.get_node_or_null("LanternFlame") as LanternFlame
-			if flame != null:
-				lantern_flame_count += 1
-				_expect(
-					flame.position.is_equal_approx(AdventureScale.LANTERN_FLAME_POSITION),
-					"A lantern flame scales with the hanging fixture instead of detaching."
-				)
-				_expect(
-					flame.scale.is_equal_approx(AdventureScale.LANTERN_FLAME_SCALE),
-					"Lantern flame volume follows the authoritative prop scale."
-				)
-	_expect(npc != null, "Ranger Sela is a dedicated moving NPC actor.")
-	_expect(lantern_flame_count == 2, "Both authored lanterns own a wind-driven flame visual.")
+	var npc := AdventureNpc.new()
+	npc.configure("Animation Ranger", "Focused animation fixture")
+	props.add_child(npc)
+	npc.set_wind_source(wind)
+	var lantern := AdventureProp.new()
+	lantern.configure(AdventureProp.Kind.LANTERN)
+	props.add_child(lantern)
+	lantern.set_wind_source(wind)
+	var flame := lantern.get_node_or_null("LanternFlame") as LanternFlame
+	_expect(flame != null, "A focused lantern fixture owns its wind-driven flame visual.")
+	if flame != null:
+		_expect(
+			flame.position.is_equal_approx(AdventureScale.LANTERN_FLAME_POSITION),
+			"A lantern flame scales with the hanging fixture instead of detaching."
+		)
+		_expect(
+			flame.scale.is_equal_approx(AdventureScale.LANTERN_FLAME_SCALE),
+			"Lantern flame volume follows the authoritative prop scale."
+		)
+	_expect(npc != null, "The reusable moving-NPC animation fixture can be instantiated independently.")
 	if npc != null:
 		var npc_sprite: AnimatedSprite2D = npc.get_visual().get_node("AnimatedSprite2D") as AnimatedSprite2D
 		npc.get_visual().set_motion(Vector2.RIGHT, 40.0, false)

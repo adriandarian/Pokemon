@@ -15,14 +15,15 @@ var facing: Vector2 = Vector2.DOWN
 var running: bool = false
 var visual: PlayerVisual
 var _missing_visual_reported: bool = false
+var _ground_elevation_pixels: float = 0.0
 
 
 func _ready() -> void:
 	_resolve_visual()
 	var camera := get_node_or_null("Camera2D") as Camera2D
 	if camera != null:
-		camera.position = Scale.EXPLORATION_CAMERA_OFFSET
 		camera.zoom = Scale.EXPLORATION_CAMERA_ZOOM
+		_sync_camera_projection(camera)
 
 
 func _physics_process(delta: float) -> void:
@@ -58,6 +59,36 @@ func set_movement_enabled(enabled: bool) -> void:
 
 func get_visual() -> PlayerVisual:
 	return _resolve_visual()
+
+
+func set_ground_elevation_pixels(value: float) -> void:
+	if is_equal_approx(_ground_elevation_pixels, value):
+		return
+	_ground_elevation_pixels = value
+	var current_visual: PlayerVisual = _resolve_visual()
+	if current_visual != null:
+		current_visual.set_ground_elevation_pixels(value)
+	var camera := get_node_or_null("Camera2D") as Camera2D
+	if camera != null:
+		_sync_camera_projection(camera)
+
+
+func get_ground_elevation_pixels() -> float:
+	return _ground_elevation_pixels
+
+
+func set_world_bounds(bounds: Rect2) -> void:
+	var camera := get_node_or_null("Camera2D") as Camera2D
+	if camera == null:
+		return
+	camera.limit_left = floori(bounds.position.x)
+	camera.limit_top = floori(bounds.position.y)
+	camera.limit_right = ceili(bounds.end.x)
+	camera.limit_bottom = ceili(bounds.end.y)
+
+
+func _sync_camera_projection(camera: Camera2D) -> void:
+	camera.position = Scale.EXPLORATION_CAMERA_OFFSET + Vector2.UP * _ground_elevation_pixels
 
 
 func _resolve_visual() -> PlayerVisual:

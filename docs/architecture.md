@@ -2,12 +2,18 @@
 
 ## Product direction
 
-Creature Trail uses a 2D Godot project with two complementary presentations:
+Creature Trail uses two complementary presentations with different simulation
+dimensions:
 
-- Exploration is faux 2.5D: 2D sprites and shapes, oblique scenery, Y-based depth sorting, and a camera-followed character.
+- Exploration is true 3D simulation presented as faux 2.5D: `CharacterBody3D`,
+  3D terrain and prop collision, elevation, ramps/stairs, bridges, and an
+  orthographic camera. Sprite-based characters may use `AnimatedSprite3D`, but
+  their movement and world contacts remain 3D.
 - Encounters deliberately flatten into a composed 2D battle stage.
 
-That direction is locked. New features should strengthen the transition between those modes rather than replacing the project with a 3D controller or an unrelated menu prototype.
+That direction is locked. New exploration features must preserve the illustrated
+camera language without returning to flat 2D collision or a perspective/FPS
+controller. Battles remain deliberately flat and graphic.
 
 ## System layers
 
@@ -35,12 +41,11 @@ SceneTree
 ├── GameSession
 ├── SettingsService
 └── Adventure
-    ├── WorldCanvas                 painted oblique environment
-    ├── WorldBounds / River / Fence collision
-    ├── Actors (Y-sorted)
-    │   ├── Player                  movement, facing, camera, interaction intent
-    │   ├── Props                   people, signs, lodge, trees, rocks, lanterns
-    │   └── WildCreatures           visible roaming encounter actors
+    ├── World (Node3D)              terrain, elevation, water, route geometry
+    ├── Player (CharacterBody3D)    movement, facing, 3D collision, interaction
+    ├── CameraRig                   orthographic faux-2D framing
+    ├── Props (StaticBody3D)        buildings, trees, rocks, fences, landmarks
+    ├── WildCreatures               future visible 3D encounter actors
     └── Interface (CanvasLayer)
         ├── AdventureHUD
         ├── GameMenu                Bag, Profile, Creature Dex, Settings
@@ -103,7 +108,8 @@ A feature is ready to integrate when it:
 Locked:
 
 - Godot 4.5 and typed GDScript.
-- 2D project with faux-2.5D exploration and flat 2D battle presentation.
+- 3D-physics faux-2.5D exploration with an orthographic camera and flat 2D
+  battle presentation.
 - Camera-followed character movement with explicit interactions.
 - Wild creatures visible in the world before battle.
 - Turn-based one-versus-one encounter slice with weakening and consumable capture tools.

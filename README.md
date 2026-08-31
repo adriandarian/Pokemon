@@ -19,7 +19,8 @@ godot --path .
 The current slice includes:
 
 - A camera-followed player with acceleration, collision, facing, and authored interactions.
-- A faux-2.5D voxel overworld with depth sorting, continuous generated grass, an oblique trail, grounded village props, an animated river, and a wild preserve.
+- A compiled faux-2.5D terrain system with a live four-chunk village, a twelve-chunk town-scale reference district, deterministic biome scatter, walkable elevation, cliffs, stairs, ramps, grounded buildings, an animated river, and a wild preserve.
+- Chunk-owned settlement content at village and town density, plus a threaded city-district composition that keeps only one town-sized district group resident.
 - Three original creature species and four original elements/moves.
 - Visible roaming wild creatures; encounters happen by approaching and interacting, not by an invisible random roll.
 - A turn-based 2D battle presentation with health, elemental damage, retaliation, capture probability, victory, defeat, and escape.
@@ -34,8 +35,13 @@ No Pokémon names, creatures, art, audio, maps, or proprietary data are included
 ```powershell
 godot --headless --path . res://tests/framework_smoke_test.tscn
 godot --headless --path . res://tests/gameplay_smoke_test.tscn
+godot --headless --path . res://tests/terrain_world_smoke_test.tscn
+godot --headless --path . res://tests/town_streaming_smoke_test.tscn
+godot --headless --path . res://tests/city_district_streaming_smoke_test.tscn
 godot --headless --path . res://tests/world_animation_smoke_test.tscn
 godot --headless --path . res://tests/location_banner_smoke_test.tscn
+godot --headless --path . res://features/terrain_world/tools/compile_starter_region.tscn
+godot --headless --path . res://features/terrain_world/tools/compile_region.tscn -- --terrain-region=res://features/terrain_world/content/mossglass_town_region.tres --terrain-output=res://features/terrain_world/generated/town --terrain-prefix=mossglass_town
 godot --headless --path . --quit-after 3
 ```
 
@@ -47,6 +53,9 @@ godot --path . -- --preview-profile
 godot --path . -- --preview-dex
 godot --path . -- --preview-battle
 godot --path . -- --preview-wild
+godot --path . -- --preview-terrain
+godot --path . -- --preview-south
+godot --path . res://features/terrain_world/preview/mossglass_town_preview.tscn
 godot --path . -- --preview-animation=walk
 godot --path . -- --preview-animation=run
 godot --path . -- --capture-delay-frames=90 --capture-preview=res://preview.png
@@ -85,6 +94,8 @@ features/menu/               Bag, Profile, Creature Dex, and Settings UI
 features/creatures/          Species, runtime creature state, original visuals
 features/inventory/          Item definitions
 features/progression/        Badges and player profile data
+features/settlement/         Village/town layouts and streamed city district groups
+features/terrain_world/      Authored stamps, compiler, chunks, queries, scatter, previews
 features/world/              Location definitions
 features/world_animation/    Shared human clips, wind, shoreline, grass, and flame motion
 tests/                       Headless framework and gameplay validation

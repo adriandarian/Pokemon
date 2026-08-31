@@ -25,7 +25,9 @@ Constraints:
 - Treat content/*.tres as read-only definitions during play.
 - Keep UI presentation separate from state mutation.
 - Prefer local signals; add EventHub signals only for cross-feature lifecycle events.
-- Preserve the locked faux-2.5D exploration, flat 2D battle, visible-wild-creature, and original-content direction in `docs/architecture.md`.
+- Preserve the locked 3D-physics faux-2.5D exploration, orthographic camera,
+  flat 2D battle, visible-wild-creature, and original-content direction in
+  `docs/architecture.md`.
 - Do not choose one of the remaining open game-wide design decisions without a dedicated design task.
 - Use original names and assets; do not import proprietary Pokémon content.
 

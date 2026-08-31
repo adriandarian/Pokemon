@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="PackedScene" path="res://features/terrain_world/terrain_world.tscn" id="1_terrain"]
+
+[node name="TerrainWorldPreview" type="Node2D"]
+
+[node name="TerrainWorld" parent="." instance=ExtResource("1_terrain")]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(1130, 760)
+zoom = Vector2(0.68, 0.68)
+

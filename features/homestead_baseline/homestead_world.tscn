@@ -1,0 +1,14 @@
+[gd_scene load_steps=7 format=3]
+
+[ext_resource type="Script" path="res://features/terrain_world/runtime/terrain_world.gd" id="1_world"]
+[ext_resource type="Resource" path="res://features/homestead_baseline/content/homestead_starter_region.tres" id="2_region"]
+[ext_resource type="Resource" path="res://features/homestead_baseline/generated/homestead_0_0.tres" id="3_chunk_0"]
+[ext_resource type="Resource" path="res://features/homestead_baseline/generated/homestead_1_0.tres" id="4_chunk_1"]
+[ext_resource type="Resource" path="res://features/homestead_baseline/generated/homestead_0_1.tres" id="5_chunk_2"]
+[ext_resource type="Resource" path="res://features/homestead_baseline/generated/homestead_1_1.tres" id="6_chunk_3"]
+
+[node name="TerrainWorld" type="Node2D"]
+unique_name_in_owner = true
+script = ExtResource("1_world")
+region = ExtResource("2_region")
+compiled_chunks = Array[TerrainChunkData]([ExtResource("3_chunk_0"), ExtResource("4_chunk_1"), ExtResource("5_chunk_2"), ExtResource("6_chunk_3")])

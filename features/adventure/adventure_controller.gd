@@ -1,11 +1,10 @@
 class_name AdventureController
 extends Node
 
-const RANGER_LODGE_YARD_POSITION := Vector2(930.0, 625.0)
-const EAST_TRAIL_SIGN_POSITION := Vector2(1080.0, 590.0)
-const PRESERVE_SIGN_POSITION := Vector2(1320.0, 590.0)
-const PRESERVE_GATE_NORTH_LANTERN_POSITION := Vector2(1450.0, 495.0)
-const PRESERVE_GATE_SOUTH_LANTERN_POSITION := Vector2(1590.0, 900.0)
+const HOMESTEAD_SETTLEMENT: SettlementDefinition = preload(
+	"res://features/homestead_baseline/content/homestead_settlement.tres"
+)
+const PLAYER_START_POSITION := Vector2(1320.0, 1580.0)
 
 @onready var player: PlayerCharacter = %Player
 @onready var props: Node2D = %Props
@@ -14,9 +13,8 @@ const PRESERVE_GATE_SOUTH_LANTERN_POSITION := Vector2(1590.0, 900.0)
 @onready var game_menu: GameMenu = %GameMenu
 @onready var battle_overlay: BattleOverlay = %BattleOverlay
 @onready var ambient_wind: AmbientWind = %AmbientWind
-@onready var shoreline_waves: ShorelineWaves = %ShorelineWaves
-@onready var wind_grass: WindGrass = %WindGrass
-@onready var wind_motes: WindMotes = %WindMotes
+@onready var terrain_world: TerrainWorld = %TerrainWorld
+@onready var settlement_runtime: SettlementRuntime = %SettlementRuntime
 
 var _nearby_target: Node2D
 var _active_wild_creature: WildCreatureActor
@@ -27,9 +25,12 @@ var _current_area: StringName
 
 func _ready() -> void:
 	GameSession.ensure_starter()
-	shoreline_waves.set_wind_source(ambient_wind)
-	wind_grass.set_wind_source(ambient_wind)
-	wind_motes.set_wind_source(ambient_wind)
+	player.set_world_bounds(terrain_world.get_world_bounds())
+	terrain_world.enable_streaming(player, 1)
+	terrain_world.attach_follower(player, true)
+	settlement_runtime.prop_activated.connect(_on_settlement_prop_activated)
+	settlement_runtime.prop_deactivated.connect(_on_settlement_prop_deactivated)
+	settlement_runtime.configure(HOMESTEAD_SETTLEMENT, terrain_world, props, ambient_wind)
 	var player_visual: PlayerVisual = player.get_visual()
 	if player_visual != null:
 		player_visual.set_wind_source(ambient_wind)
@@ -106,7 +107,7 @@ func _on_battle_finished(outcome: int) -> void:
 			_wild_targets.erase(_active_wild_creature)
 			_active_wild_creature.queue_free()
 	elif outcome == BattleOverlay.Result.PLAYER_DEFEATED:
-		player.global_position = Vector2(650.0, 860.0)
+		player.global_position = PLAYER_START_POSITION
 	_active_wild_creature = null
 	player.set_movement_enabled(true)
 
@@ -137,50 +138,56 @@ func _find_interaction_target(origin: Vector2, facing: Vector2) -> Node2D:
 
 
 func _update_area_hud() -> void:
-	var next_area: StringName = &"mossglass_wilds" if player.global_position.x >= 1220.0 else &"windfall_village"
+	var next_area: StringName
+	if player.global_position.y >= 2050.0:
+		next_area = &"river_crossing"
+	elif player.global_position.x >= 1800.0 and player.global_position.y <= 1000.0:
+		next_area = &"wheat_terrace"
+	else:
+		next_area = &"starting_homestead"
 	if next_area == _current_area:
 		return
 	_current_area = next_area
-	if _current_area == &"mossglass_wilds":
-		hud.set_location("Mossglass Frontier", "Mossglass Wilds", "Approach a roaming creature and press E to battle.")
+	if _current_area == &"river_crossing":
+		hud.set_location("Mossglass Frontier", "Willowrun Crossing", "Cross the timber bridge to continue south.")
+	elif _current_area == &"wheat_terrace":
+		hud.set_location("Mossglass Frontier", "Highfield Terrace", "Ripe wheat overlooks the starting homestead.")
 	else:
-		hud.set_location("Mossglass Frontier", "Windfall Village", "Follow the east trail into the wild grass.")
+		hud.set_location("Mossglass Frontier", "Trailkeeper Homestead", "Follow the path from your cottage toward the river.")
 
 
 func _spawn_authored_world() -> void:
-	_spawn_prop(AdventureProp.Kind.HOUSE, Vector2(610.0, 620.0), "Trailkeeper Lodge", "Your lodge is warm, but the open trail is calling. The Field Guide in your bag tracks creatures, supplies, and badges.")
-	# Ranger Sela patrols the lodge yard, where a trailkeeper has a reason to be.
-	_spawn_npc(RANGER_LODGE_YARD_POSITION, "Ranger Sela", "Wild creatures are visible in the preserve now. Approach calmly, press E, weaken one in battle, then cast a Trail Prism.")
-	# Wayfinding stays on the north verge, while paired lanterns frame the actual
-	# preserve threshold from opposite sides of the road.
-	_spawn_prop(AdventureProp.Kind.SIGN, EAST_TRAIL_SIGN_POSITION, "East Trail", "Mossglass Wilds  →\nVisible creatures roam the long grass. Trail Prisms work best after a creature is weakened.")
-	_spawn_prop(AdventureProp.Kind.SIGN, PRESERVE_SIGN_POSITION, "Preserve Boundary", "WILD AREA\nStay alert. A creature's element changes which moves hit hardest.")
-	_spawn_prop(AdventureProp.Kind.LANTERN, PRESERVE_GATE_NORTH_LANTERN_POSITION)
-	_spawn_prop(AdventureProp.Kind.LANTERN, PRESERVE_GATE_SOUTH_LANTERN_POSITION)
-
-	# Backdrop grove frames the lodge without occupying its yard or the route.
+	# The authored grove frames the reference composition while preserving the
+	# northern trail, cottage yard, stair approach, bridge, and southern exit.
 	var tree_positions: Array[Vector2] = [
-		Vector2(365.0, 315.0), Vector2(470.0, 235.0), Vector2(560.0, 330.0),
-		Vector2(840.0, 255.0), Vector2(1015.0, 335.0), Vector2(380.0, 720.0),
-		# South grove keeps the pier approach legible and gives the fence a context.
-		Vector2(735.0, 1110.0), Vector2(1040.0, 1080.0),
-		# Preserve perimeter vegetation contains the encounter space.
-		Vector2(1570.0, 285.0), Vector2(2015.0, 345.0), Vector2(2070.0, 635.0),
-		Vector2(2005.0, 935.0), Vector2(1710.0, 1040.0),
+		Vector2(210.0, 260.0), Vector2(560.0, 240.0), Vector2(1030.0, 210.0),
+		Vector2(1450.0, 260.0), Vector2(2840.0, 250.0), Vector2(2600.0, 520.0),
+		Vector2(360.0, 780.0), Vector2(780.0, 1010.0), Vector2(2750.0, 1120.0),
+		Vector2(300.0, 1620.0), Vector2(650.0, 1830.0), Vector2(2540.0, 1760.0),
+		Vector2(180.0, 2640.0), Vector2(620.0, 2860.0), Vector2(2600.0, 2700.0),
+		Vector2(2910.0, 2970.0), Vector2(1180.0, 2860.0),
 	]
 	for tree_position: Vector2 in tree_positions:
 		_spawn_prop(AdventureProp.Kind.TREE, tree_position)
 
 	var rock_positions: Array[Vector2] = [
-		Vector2(390.0, 865.0), Vector2(1010.0, 1130.0),
-		Vector2(1510.0, 940.0), Vector2(1840.0, 320.0), Vector2(1910.0, 850.0),
+		Vector2(780.0, 420.0), Vector2(1040.0, 1150.0), Vector2(2500.0, 1300.0),
+		Vector2(360.0, 2300.0), Vector2(2520.0, 2460.0), Vector2(1500.0, 2820.0),
 	]
 	for rock_position: Vector2 in rock_positions:
 		_spawn_prop(AdventureProp.Kind.ROCK, rock_position)
 
-	_spawn_wild_creature(&"rillip", 5, Vector2(1490.0, 610.0), 38.0)
-	_spawn_wild_creature(&"brambit", 6, Vector2(1740.0, 760.0), 46.0)
-	_spawn_wild_creature(&"rillip", 8, Vector2(1850.0, 465.0), 34.0)
+	var shrub_positions: Array[Vector2] = [
+		Vector2(320.0, 420.0), Vector2(920.0, 330.0), Vector2(1320.0, 500.0),
+		Vector2(2680.0, 780.0), Vector2(520.0, 1160.0), Vector2(930.0, 1420.0),
+		Vector2(2260.0, 1380.0), Vector2(2740.0, 1520.0), Vector2(460.0, 1900.0),
+		Vector2(870.0, 1880.0), Vector2(2380.0, 1880.0), Vector2(2820.0, 1980.0),
+		Vector2(290.0, 2580.0), Vector2(850.0, 2520.0), Vector2(1280.0, 2700.0),
+		Vector2(1760.0, 2860.0), Vector2(2360.0, 2660.0), Vector2(2760.0, 2860.0),
+	]
+	for shrub_position: Vector2 in shrub_positions:
+		_spawn_prop(AdventureProp.Kind.MEADOW_SHRUB, shrub_position)
+
 
 
 func _spawn_prop(kind: AdventureProp.Kind, world_position: Vector2, title: String = "", text: String = "") -> AdventureProp:
@@ -189,9 +196,22 @@ func _spawn_prop(kind: AdventureProp.Kind, world_position: Vector2, title: Strin
 	prop.position = world_position
 	props.add_child(prop)
 	prop.set_wind_source(ambient_wind)
+	terrain_world.attach_follower(prop, false)
 	if not text.is_empty():
 		_interaction_targets.append(prop)
 	return prop
+
+
+func _on_settlement_prop_activated(prop: AdventureProp) -> void:
+	if not prop.interaction_text.is_empty() and not _interaction_targets.has(prop):
+		_interaction_targets.append(prop)
+
+
+func _on_settlement_prop_deactivated(prop: AdventureProp) -> void:
+	_interaction_targets.erase(prop)
+	if _nearby_target == prop:
+		_nearby_target = null
+		hud.set_context_prompt("")
 
 
 func _spawn_npc(world_position: Vector2, title: String, text: String) -> AdventureNpc:
@@ -200,6 +220,7 @@ func _spawn_npc(world_position: Vector2, title: String, text: String) -> Adventu
 	npc.position = world_position
 	props.add_child(npc)
 	npc.set_wind_source(ambient_wind)
+	terrain_world.attach_follower(npc, true)
 	_interaction_targets.append(npc)
 	return npc
 
@@ -211,6 +232,7 @@ func _spawn_wild_creature(species_id: StringName, level: int, world_position: Ve
 	actor.roam_radius = roam_radius
 	actor.position = world_position
 	wild_creatures.add_child(actor)
+	terrain_world.attach_follower(actor, true)
 	_wild_targets.append(actor)
 	return actor
 
@@ -241,3 +263,20 @@ func _apply_developer_preview() -> void:
 		player.global_position = Vector2(430.0, 340.0)
 	elif arguments.has("--preview-wild"):
 		player.global_position = Vector2(1400.0, 690.0)
+	elif arguments.has("--preview-terrain"):
+		player.global_position = PLAYER_START_POSITION
+		player.reset_physics_interpolation()
+	elif arguments.has("--preview-south"):
+		player.global_position = Vector2(1980.0, 2780.0)
+		player.reset_physics_interpolation()
+	elif arguments.has("--preview-homestead-overview"):
+		player.global_position = Vector2(1536.0, 1590.0)
+		player.set_movement_enabled(false)
+		player.reset_physics_interpolation()
+		var camera := player.get_node_or_null("Camera2D") as Camera2D
+		if camera != null:
+			camera.zoom = Vector2(0.65, 0.65)
+			camera.position = Vector2(0.0, -40.0)
+		var interface_layer := get_node_or_null("Interface") as CanvasLayer
+		if interface_layer != null:
+			interface_layer.visible = false

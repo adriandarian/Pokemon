@@ -1,0 +1,23 @@
+[gd_scene load_steps=15 format=3]
+
+[ext_resource type="Script" path="res://features/terrain_world/runtime/terrain_world.gd" id="1_world"]
+[ext_resource type="Resource" path="res://features/terrain_world/content/mossglass_town_region.tres" id="2_region"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_0_0.tres" id="3_00"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_1_0.tres" id="4_10"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_2_0.tres" id="5_20"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_3_0.tres" id="6_30"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_0_1.tres" id="7_01"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_1_1.tres" id="8_11"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_2_1.tres" id="9_21"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_3_1.tres" id="10_31"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_0_2.tres" id="11_02"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_1_2.tres" id="12_12"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_2_2.tres" id="13_22"]
+[ext_resource type="Resource" path="res://features/terrain_world/generated/town/mossglass_town_3_2.tres" id="14_32"]
+
+[node name="MossglassTownTerrain" type="Node2D"]
+script = ExtResource("1_world")
+region = ExtResource("2_region")
+compiled_chunks = Array[TerrainChunkData]([ExtResource("3_00"), ExtResource("4_10"), ExtResource("5_20"), ExtResource("6_30"), ExtResource("7_01"), ExtResource("8_11"), ExtResource("9_21"), ExtResource("10_31"), ExtResource("11_02"), ExtResource("12_12"), ExtResource("13_22"), ExtResource("14_32")])
+materialize_all_on_ready = false
+

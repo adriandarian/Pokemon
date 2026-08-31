@@ -2,7 +2,7 @@ class_name AdventureWorldCanvas
 extends Node2D
 
 const GRASS_TEXTURE: Texture2D = preload("res://assets/voxel/terrain_grass_top_v3.png")
-const WORLD_RECT := Rect2(0.0, 0.0, 2200.0, 1300.0)
+const WORLD_RECT := Rect2(0.0, 0.0, 3072.0, 3072.0)
 const PIER_LANDING_CENTER := Vector2(379.0, 1043.0)
 static var WILD_POLYGON := PackedVector2Array([
 	Vector2(1230.0, 246.0), Vector2(1435.0, 220.0), Vector2(1775.0, 234.0),

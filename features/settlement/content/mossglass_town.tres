@@ -1,0 +1,316 @@
+[gd_resource type="Resource" script_class="SettlementDefinition" load_steps=41 format=3]
+
+[ext_resource type="Script" path="res://features/settlement/data/settlement_definition.gd" id="1_settlement"]
+[ext_resource type="Script" path="res://features/settlement/data/settlement_prop_definition.gd" id="2_prop"]
+
+[sub_resource type="Resource" id="CivicHall"]
+script = ExtResource("2_prop")
+prop_id = &"mossglass_civic_hall"
+kind = 8
+world_position = Vector2(2928, 768)
+interaction_title = "Mossglass Civic Hall"
+interaction_text = "The clock tower looks across every terrace, from the river ward to the eastern wild shelf."
+
+[sub_resource type="Resource" id="CottageReedwatch"]
+script = ExtResource("2_prop")
+prop_id = &"reedwatch_cottage"
+kind = 6
+world_position = Vector2(768, 864)
+interaction_title = "Reedwatch Cottage"
+interaction_text = "Bundles of river reed dry under the broad eaves."
+
+[sub_resource type="Resource" id="CottageRiverbend"]
+script = ExtResource("2_prop")
+prop_id = &"riverbend_cottage"
+kind = 6
+world_position = Vector2(1296, 816)
+interaction_title = "Riverbend Cottage"
+interaction_text = "A lowland home with polished green-glass shutters."
+
+[sub_resource type="Resource" id="CottageRainbarrel"]
+script = ExtResource("2_prop")
+prop_id = &"rainbarrel_cottage"
+kind = 6
+world_position = Vector2(1728, 960)
+interaction_title = "Rainbarrel Cottage"
+interaction_text = "Copper gutters feed a row of moss-covered rain barrels."
+
+[sub_resource type="Resource" id="CottageWillowlane"]
+script = ExtResource("2_prop")
+prop_id = &"willowlane_cottage"
+kind = 6
+world_position = Vector2(720, 1584)
+interaction_title = "Willowlane Cottage"
+interaction_text = "A little house tucked beside the willow lane."
+
+[sub_resource type="Resource" id="CottageFerryfield"]
+script = ExtResource("2_prop")
+prop_id = &"ferryfield_cottage"
+kind = 6
+world_position = Vector2(1248, 1536)
+interaction_title = "Ferryfield Cottage"
+interaction_text = "Old ferry ropes have been woven into the porch rail."
+
+[sub_resource type="Resource" id="CottageOldmoss"]
+script = ExtResource("2_prop")
+prop_id = &"oldmoss_cottage"
+kind = 6
+world_position = Vector2(1728, 1680)
+interaction_title = "Oldmoss Cottage"
+interaction_text = "The roof garden is said to be older than the town road."
+
+[sub_resource type="Resource" id="CottageLowbank"]
+script = ExtResource("2_prop")
+prop_id = &"lowbank_cottage"
+kind = 6
+world_position = Vector2(720, 2112)
+interaction_title = "Lowbank Cottage"
+interaction_text = "River stones line the doorstep in careful spirals."
+
+[sub_resource type="Resource" id="CottageBridgeward"]
+script = ExtResource("2_prop")
+prop_id = &"bridgeward_cottage"
+kind = 6
+world_position = Vector2(1296, 2112)
+interaction_title = "Bridgeward Cottage"
+interaction_text = "A brass lantern marks the safe road toward the bridge."
+
+[sub_resource type="Resource" id="CottageWestgate"]
+script = ExtResource("2_prop")
+prop_id = &"westgate_cottage"
+kind = 6
+world_position = Vector2(1728, 2160)
+interaction_title = "Westgate Cottage"
+interaction_text = "Travel packs hang ready beside the western door."
+
+[sub_resource type="Resource" id="CottageFernquay"]
+script = ExtResource("2_prop")
+prop_id = &"fernquay_cottage"
+kind = 6
+world_position = Vector2(816, 3360)
+interaction_title = "Fernquay Cottage"
+interaction_text = "The quay keeper grows luminous ferns in shallow clay bowls."
+
+[sub_resource type="Resource" id="CottageCattail"]
+script = ExtResource("2_prop")
+prop_id = &"cattail_cottage"
+kind = 6
+world_position = Vector2(1344, 3360)
+interaction_title = "Cattail Cottage"
+interaction_text = "Cattail weave mats cover the shaded front step."
+
+[sub_resource type="Resource" id="CottageWillowrest"]
+script = ExtResource("2_prop")
+prop_id = &"willowrest_cottage"
+kind = 6
+world_position = Vector2(1776, 3408)
+interaction_title = "Willowrest Cottage"
+interaction_text = "A quiet porch faces the southern trail."
+
+[sub_resource type="Resource" id="CottageMarshlight"]
+script = ExtResource("2_prop")
+prop_id = &"marshlight_cottage"
+kind = 6
+world_position = Vector2(864, 4032)
+interaction_title = "Marshlight Cottage"
+interaction_text = "Glass lanterns glow here whenever fog rolls off the water."
+
+[sub_resource type="Resource" id="CottageSouthbank"]
+script = ExtResource("2_prop")
+prop_id = &"southbank_cottage"
+kind = 6
+world_position = Vector2(1392, 4032)
+interaction_title = "Southbank Cottage"
+interaction_text = "A family of trail menders lives behind the teal door."
+
+[sub_resource type="Resource" id="CottageMossgate"]
+script = ExtResource("2_prop")
+prop_id = &"mossgate_cottage"
+kind = 6
+world_position = Vector2(1824, 4080)
+interaction_title = "Mossgate Cottage"
+interaction_text = "The last lowland home before the southern terrace."
+
+[sub_resource type="Resource" id="CottageTerraceNorth"]
+script = ExtResource("2_prop")
+prop_id = &"terrace_north_cottage"
+kind = 6
+world_position = Vector2(2160, 576)
+interaction_title = "Terrace North Cottage"
+interaction_text = "Its high windows catch the first light over Mossglass."
+
+[sub_resource type="Resource" id="CottageClockhillEast"]
+script = ExtResource("2_prop")
+prop_id = &"clockhill_east_cottage"
+kind = 6
+world_position = Vector2(3696, 720)
+interaction_title = "Clockhill East Cottage"
+interaction_text = "The civic bell sounds especially clear from this garden."
+
+[sub_resource type="Resource" id="CottageHighgarden"]
+script = ExtResource("2_prop")
+prop_id = &"highgarden_cottage"
+kind = 6
+world_position = Vector2(3744, 1296)
+interaction_title = "Highgarden Cottage"
+interaction_text = "Terraced herb beds step down beside the house."
+
+[sub_resource type="Resource" id="CottageAmberlane"]
+script = ExtResource("2_prop")
+prop_id = &"amberlane_cottage"
+kind = 6
+world_position = Vector2(2160, 1392)
+interaction_title = "Amberlane Cottage"
+interaction_text = "Amber tiles mark a lane toward the civic stair."
+
+[sub_resource type="Resource" id="CottageKilnrow"]
+script = ExtResource("2_prop")
+prop_id = &"kilnrow_cottage"
+kind = 6
+world_position = Vector2(2304, 2016)
+interaction_title = "Kilnrow Cottage"
+interaction_text = "Warm ceramic roof charms were fired in the nearby kiln."
+
+[sub_resource type="Resource" id="CottageSunward"]
+script = ExtResource("2_prop")
+prop_id = &"sunward_cottage"
+kind = 6
+world_position = Vector2(3600, 1968)
+interaction_title = "Sunward Cottage"
+interaction_text = "A bright porch looks east across the upper shelf."
+
+[sub_resource type="Resource" id="CottageGlassmaker"]
+script = ExtResource("2_prop")
+prop_id = &"glassmaker_cottage"
+kind = 6
+world_position = Vector2(4176, 2016)
+interaction_title = "Glassmaker Cottage"
+interaction_text = "Colored panes scatter green and gold light over the path."
+
+[sub_resource type="Resource" id="CottageSouthOrchard"]
+script = ExtResource("2_prop")
+prop_id = &"south_orchard_cottage"
+kind = 6
+world_position = Vector2(2160, 3312)
+interaction_title = "South Orchard Cottage"
+interaction_text = "Small fruit trees form a windbreak around the terrace."
+
+[sub_resource type="Resource" id="CottageLanternrow"]
+script = ExtResource("2_prop")
+prop_id = &"lanternrow_cottage"
+kind = 6
+world_position = Vector2(3456, 3312)
+interaction_title = "Lanternrow Cottage"
+interaction_text = "Keepers leave a porch light for late market travelers."
+
+[sub_resource type="Resource" id="CottageFarrier"]
+script = ExtResource("2_prop")
+prop_id = &"farrier_cottage"
+kind = 6
+world_position = Vector2(4224, 3312)
+interaction_title = "Farrier Cottage"
+interaction_text = "The yard holds racks of repaired buckles and trail bells."
+
+[sub_resource type="Resource" id="CottageLowerCross"]
+script = ExtResource("2_prop")
+prop_id = &"lower_cross_cottage"
+kind = 6
+world_position = Vector2(2208, 3936)
+interaction_title = "Lower Cross Cottage"
+interaction_text = "A broad stoop faces the southern crossroad."
+
+[sub_resource type="Resource" id="CottageCooper"]
+script = ExtResource("2_prop")
+prop_id = &"cooper_cottage"
+kind = 6
+world_position = Vector2(3456, 3936)
+interaction_title = "Cooper Cottage"
+interaction_text = "New barrels wait beneath a canvas awning."
+
+[sub_resource type="Resource" id="CottageEastgarden"]
+script = ExtResource("2_prop")
+prop_id = &"eastgarden_cottage"
+kind = 6
+world_position = Vector2(4224, 3936)
+interaction_title = "Eastgarden Cottage"
+interaction_text = "Wild-shelf flowers spill over the low stone wall."
+
+[sub_resource type="Resource" id="CottageBellkeeper"]
+script = ExtResource("2_prop")
+prop_id = &"bellkeeper_cottage"
+kind = 6
+world_position = Vector2(3936, 1440)
+interaction_title = "Bellkeeper Cottage"
+interaction_text = "The town bellkeeper keeps immaculate time and an untidy garden."
+
+[sub_resource type="Resource" id="CottageMeadowstep"]
+script = ExtResource("2_prop")
+prop_id = &"meadowstep_cottage"
+kind = 6
+world_position = Vector2(4416, 960)
+interaction_title = "Meadowstep Cottage"
+interaction_text = "A narrow path climbs from here toward the eastern meadow."
+
+[sub_resource type="Resource" id="TownInn"]
+script = ExtResource("2_prop")
+prop_id = &"mossglass_town_inn"
+kind = 1
+world_position = Vector2(4368, 1680)
+interaction_title = "The Mossglass Inn"
+interaction_text = "Travelers trade stories beside the tiled hearth before taking the eastern trail."
+
+[sub_resource type="Resource" id="MarketNorthwest"]
+script = ExtResource("2_prop")
+prop_id = &"market_northwest"
+kind = 7
+world_position = Vector2(2304, 2448)
+interaction_title = "River Goods Stall"
+interaction_text = "Polished stones, reed baskets, and waterproof trail wraps are neatly displayed."
+
+[sub_resource type="Resource" id="MarketNortheast"]
+script = ExtResource("2_prop")
+prop_id = &"market_northeast"
+kind = 7
+world_position = Vector2(3504, 2448)
+interaction_title = "Highland Produce Stall"
+interaction_text = "Bright roots and terrace herbs arrive before sunrise."
+
+[sub_resource type="Resource" id="MarketFarEast"]
+script = ExtResource("2_prop")
+prop_id = &"market_far_east"
+kind = 7
+world_position = Vector2(4128, 2448)
+interaction_title = "Trail Supply Stall"
+interaction_text = "Ropes, field notebooks, and spare lantern oil fill every shelf."
+
+[sub_resource type="Resource" id="MarketSouthwest"]
+script = ExtResource("2_prop")
+prop_id = &"market_southwest"
+kind = 7
+world_position = Vector2(2304, 3120)
+interaction_title = "Charmstone Stall"
+interaction_text = "Tiny mineral charms turn slowly in the breeze."
+
+[sub_resource type="Resource" id="MarketSoutheast"]
+script = ExtResource("2_prop")
+prop_id = &"market_southeast"
+kind = 7
+world_position = Vector2(3504, 3120)
+interaction_title = "Baker's Stall"
+interaction_text = "Warm seed cakes are wrapped for long journeys."
+
+[sub_resource type="Resource" id="MarketFarSouth"]
+script = ExtResource("2_prop")
+prop_id = &"market_far_south"
+kind = 7
+world_position = Vector2(4128, 3120)
+interaction_title = "Creature Care Stall"
+interaction_text = "Soft brushes, tonics, and trail-safe treats sit beneath the coral canopy."
+
+[resource]
+script = ExtResource("1_settlement")
+settlement_id = &"mossglass_town"
+display_name = "Mossglass Town"
+tier = 2
+world_bounds = Rect2(576, 384, 4128, 3840)
+props = Array[ExtResource("2_prop")]([SubResource("CivicHall"), SubResource("CottageReedwatch"), SubResource("CottageRiverbend"), SubResource("CottageRainbarrel"), SubResource("CottageWillowlane"), SubResource("CottageFerryfield"), SubResource("CottageOldmoss"), SubResource("CottageLowbank"), SubResource("CottageBridgeward"), SubResource("CottageWestgate"), SubResource("CottageFernquay"), SubResource("CottageCattail"), SubResource("CottageWillowrest"), SubResource("CottageMarshlight"), SubResource("CottageSouthbank"), SubResource("CottageMossgate"), SubResource("CottageTerraceNorth"), SubResource("CottageClockhillEast"), SubResource("CottageHighgarden"), SubResource("CottageAmberlane"), SubResource("CottageKilnrow"), SubResource("CottageSunward"), SubResource("CottageGlassmaker"), SubResource("CottageSouthOrchard"), SubResource("CottageLanternrow"), SubResource("CottageFarrier"), SubResource("CottageLowerCross"), SubResource("CottageCooper"), SubResource("CottageEastgarden"), SubResource("CottageBellkeeper"), SubResource("CottageMeadowstep"), SubResource("TownInn"), SubResource("MarketNorthwest"), SubResource("MarketNortheast"), SubResource("MarketFarEast"), SubResource("MarketSouthwest"), SubResource("MarketSoutheast"), SubResource("MarketFarSouth")])

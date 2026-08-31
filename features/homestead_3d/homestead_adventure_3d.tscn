@@ -1,0 +1,91 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://features/homestead_3d/homestead_adventure_3d.gd" id="1_controller"]
+[ext_resource type="PackedScene" path="res://features/homestead_3d/homestead_world_3d.tscn" id="2_world"]
+[ext_resource type="PackedScene" path="res://features/homestead_3d/homestead_player_3d.tscn" id="3_player"]
+[ext_resource type="Script" path="res://features/homestead_3d/faux_2d_camera_rig.gd" id="4_camera"]
+[ext_resource type="PackedScene" path="res://features/adventure/hud/adventure_hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" path="res://features/menu/game_menu.tscn" id="6_menu"]
+[ext_resource type="PackedScene" path="res://features/battle/battle_overlay.tscn" id="7_battle"]
+[ext_resource type="Script" path="res://features/homestead_3d/homestead_preview_capture_3d.gd" id="8_capture"]
+[ext_resource type="Script" path="res://features/mouse_navigation/mouse_navigation_controller.gd" id="9_mouse_navigation"]
+
+[sub_resource type="NavigationMesh" id="NavigationMesh_homestead"]
+agent_height = 1.75
+agent_max_climb = 0.25
+agent_max_slope = 50.0
+agent_radius = 0.5
+geometry_collision_mask = 2
+geometry_parsed_geometry_type = 1
+geometry_source_geometry_mode = 1
+geometry_source_group_name = &"navigation_mesh_source_group"
+region_min_size = 1.0
+
+[sub_resource type="Environment" id="Environment_homestead"]
+background_mode = 1
+background_color = Color(0.43, 0.51, 0.24, 1)
+ambient_light_source = 3
+ambient_light_color = Color(0.58, 0.64, 0.46, 1)
+ambient_light_energy = 0.66
+reflected_light_source = 2
+tonemap_mode = 2
+adjustment_enabled = true
+adjustment_brightness = 0.9
+adjustment_contrast = 0.9
+adjustment_saturation = 0.82
+
+[sub_resource type="StandardMaterial3D" id="SunDiscMaterial"]
+shading_mode = 0
+albedo_color = Color(1, 0.85, 0.5, 1)
+
+[node name="HomesteadAdventure3D" type="Node3D"]
+script = ExtResource("1_controller")
+
+[node name="PreviewCapture" type="Node" parent="."]
+script = ExtResource("8_capture")
+
+[node name="World" parent="." instance=ExtResource("2_world")]
+unique_name_in_owner = true
+
+[node name="NavigationRegion3D" type="NavigationRegion3D" parent="."]
+unique_name_in_owner = true
+navigation_mesh = SubResource("NavigationMesh_homestead")
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+unique_name_in_owner = true
+
+[node name="CameraRig" type="Node3D" parent="."]
+unique_name_in_owner = true
+script = ExtResource("4_camera")
+
+[node name="Camera3D" type="Camera3D" parent="CameraRig"]
+projection = 1
+size = 24.0
+near = 0.1
+far = 150.0
+
+[node name="MouseNavigation" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("9_mouse_navigation")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+rotation = Vector3(-0.959931, -0.436332, 0)
+light_color = Color(1, 0.94, 0.82, 1)
+light_energy = 0.76
+shadow_enabled = true
+directional_shadow_max_distance = 70.0
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_homestead")
+
+[node name="Interface" type="CanvasLayer" parent="."]
+layer = 10
+
+[node name="AdventureHUD" parent="Interface" instance=ExtResource("5_hud")]
+unique_name_in_owner = true
+
+[node name="GameMenu" parent="Interface" instance=ExtResource("6_menu")]
+unique_name_in_owner = true
+
+[node name="BattleOverlay" parent="Interface" instance=ExtResource("7_battle")]
+unique_name_in_owner = true

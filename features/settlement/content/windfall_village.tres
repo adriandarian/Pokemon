@@ -1,0 +1,53 @@
+[gd_resource type="Resource" script_class="SettlementDefinition" load_steps=8 format=3]
+
+[ext_resource type="Script" path="res://features/settlement/data/settlement_definition.gd" id="1_settlement"]
+[ext_resource type="Script" path="res://features/settlement/data/settlement_prop_definition.gd" id="2_prop"]
+
+[sub_resource type="Resource" id="PropLodge"]
+script = ExtResource("2_prop")
+prop_id = &"trailkeeper_lodge"
+kind = 1
+world_position = Vector2(610, 620)
+interaction_title = "Trailkeeper Lodge"
+interaction_text = "Your lodge is warm, but the open trail is calling. The Field Guide in your bag tracks creatures, supplies, and badges."
+
+[sub_resource type="Resource" id="PropNorthwindCottage"]
+script = ExtResource("2_prop")
+prop_id = &"northwind_cottage"
+kind = 6
+world_position = Vector2(1110, 370)
+interaction_title = "Northwind Cottage"
+interaction_text = "A tidy cottage for trailkeepers who work the high meadow plots."
+
+[sub_resource type="Resource" id="PropFernbankCottage"]
+script = ExtResource("2_prop")
+prop_id = &"fernbank_cottage"
+kind = 6
+world_position = Vector2(1130, 980)
+interaction_title = "Fernbank Cottage"
+interaction_text = "Bundles of drying moss and river herbs hang beneath the eaves."
+
+[sub_resource type="Resource" id="PropBridgewatchCottage"]
+script = ExtResource("2_prop")
+prop_id = &"bridgewatch_cottage"
+kind = 6
+world_position = Vector2(450, 990)
+interaction_title = "Bridgewatch Cottage"
+interaction_text = "The oldest cottage in Windfall keeps a lantern lit for travelers crossing the river."
+
+[sub_resource type="Resource" id="PropMarket"]
+script = ExtResource("2_prop")
+prop_id = &"windfall_market"
+kind = 7
+world_position = Vector2(1050, 675)
+interaction_title = "Windfall Market"
+interaction_text = "Local keepers trade tonics, trail food, and hand-cut charm stones here."
+
+[resource]
+script = ExtResource("1_settlement")
+settlement_id = &"windfall_village"
+display_name = "Windfall Village"
+tier = 1
+world_bounds = Rect2(336, 192, 1056, 1056)
+props = Array[ExtResource("2_prop")]([SubResource("PropLodge"), SubResource("PropNorthwindCottage"), SubResource("PropFernbankCottage"), SubResource("PropBridgewatchCottage"), SubResource("PropMarket")])
+

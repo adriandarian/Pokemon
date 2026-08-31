@@ -1,0 +1,47 @@
+[gd_resource type="Resource" script_class="TerrainScatterProfile" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_scatter_profile.gd" id="1_profile"]
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_scatter_definition.gd" id="2_definition"]
+
+[sub_resource type="Resource" id="MeadowTrees"]
+script = ExtResource("2_definition")
+scatter_id = &"meadow_tree"
+visual_id = &"tree"
+allowed_biome_ids = Array[StringName]([&"windfall_meadow", &"river_wetland"])
+attempts_per_chunk = 28
+max_instances_per_chunk = 4
+min_spacing_cells = 7.0
+surface_clearance_cells = 2
+chunk_margin_cells = 2.0
+seed_offset = 101
+
+[sub_resource type="Resource" id="WildTrees"]
+script = ExtResource("2_definition")
+scatter_id = &"wild_tree"
+visual_id = &"tree"
+allowed_biome_ids = Array[StringName]([&"mossglass_wild", &"mossglass_highland"])
+attempts_per_chunk = 36
+max_instances_per_chunk = 6
+min_spacing_cells = 7.5
+surface_clearance_cells = 2
+chunk_margin_cells = 2.0
+seed_offset = 211
+
+[sub_resource type="Resource" id="BiomeRocks"]
+script = ExtResource("2_definition")
+scatter_id = &"biome_rock"
+visual_id = &"rock"
+allowed_biome_ids = Array[StringName]([&"river_wetland", &"windfall_meadow", &"mossglass_wild", &"mossglass_highland"])
+attempts_per_chunk = 24
+max_instances_per_chunk = 4
+min_spacing_cells = 4.0
+surface_clearance_cells = 1
+chunk_margin_cells = 1.5
+seed_offset = 307
+
+[resource]
+script = ExtResource("1_profile")
+profile_id = &"windfall_biome_scatter"
+definitions = Array[ExtResource("2_definition")]([SubResource("MeadowTrees"), SubResource("WildTrees"), SubResource("BiomeRocks")])
+exclusion_rects = Array[Rect2]([Rect2(0, 0, 3072, 1536)])
+

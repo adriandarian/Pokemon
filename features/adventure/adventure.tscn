@@ -1,36 +1,14 @@
-[gd_scene load_steps=20 format=3]
+[gd_scene load_steps=10 format=3]
 
 [ext_resource type="Script" path="res://features/adventure/adventure_controller.gd" id="1_controller"]
-[ext_resource type="Script" path="res://features/adventure/world_canvas.gd" id="2_world"]
 [ext_resource type="PackedScene" path="res://features/adventure/player/player_character.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://features/adventure/hud/adventure_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" path="res://features/menu/game_menu.tscn" id="5_menu"]
 [ext_resource type="PackedScene" path="res://features/battle/battle_overlay.tscn" id="6_battle"]
 [ext_resource type="Script" path="res://features/voxel_art/voxel_preview_capture.gd" id="7_capture"]
-[ext_resource type="Script" path="res://features/voxel_art/voxel_water_surface.gd" id="8_water"]
-[ext_resource type="Script" path="res://features/voxel_art/river_overlay.gd" id="9_river_overlay"]
 [ext_resource type="Script" path="res://features/world_animation/ambient_wind.gd" id="10_wind"]
-[ext_resource type="Script" path="res://features/world_animation/shoreline_waves.gd" id="11_shoreline"]
-[ext_resource type="Script" path="res://features/world_animation/wind_grass.gd" id="12_grass"]
-[ext_resource type="Script" path="res://features/world_animation/wind_motes.gd" id="13_motes"]
-[sub_resource type="RectangleShape2D" id="TopBoundary"]
-size = Vector2(2200, 40)
-
-[sub_resource type="RectangleShape2D" id="SideBoundary"]
-size = Vector2(40, 1300)
-
-[sub_resource type="RectangleShape2D" id="BottomBoundary"]
-size = Vector2(2200, 40)
-
-[sub_resource type="RectangleShape2D" id="RiverBoundary"]
-size = Vector2(275, 710)
-
-[sub_resource type="RectangleShape2D" id="RiverUpperBoundary"]
-size = Vector2(275, 1080)
-
-[sub_resource type="RectangleShape2D" id="FenceBoundary"]
-size = Vector2(1720, 28)
-
+[ext_resource type="PackedScene" path="res://features/homestead_baseline/homestead_world.tscn" id="14_terrain"]
+[ext_resource type="Script" path="res://features/settlement/runtime/settlement_runtime.gd" id="15_settlement"]
 [node name="Adventure" type="Node"]
 script = ExtResource("1_controller")
 
@@ -41,84 +19,13 @@ script = ExtResource("7_capture")
 unique_name_in_owner = true
 script = ExtResource("10_wind")
 
+[node name="SettlementRuntime" type="Node" parent="."]
+unique_name_in_owner = true
+script = ExtResource("15_settlement")
+
 [node name="WorldCanvas" type="Node2D" parent="."]
-script = ExtResource("2_world")
 
-[node name="WaterSurface" type="Polygon2D" parent="WorldCanvas"]
-script = ExtResource("8_water")
-
-[node name="ShorelineWaves" type="Node2D" parent="WorldCanvas"]
-unique_name_in_owner = true
-script = ExtResource("11_shoreline")
-
-[node name="RiverOverlay" type="Node2D" parent="WorldCanvas"]
-script = ExtResource("9_river_overlay")
-
-[node name="WindGrass" type="Node2D" parent="WorldCanvas"]
-unique_name_in_owner = true
-script = ExtResource("12_grass")
-
-[node name="WindMotes" type="Node2D" parent="WorldCanvas"]
-unique_name_in_owner = true
-script = ExtResource("13_motes")
-
-[node name="WorldCollision" type="Node2D" parent="."]
-
-[node name="Top" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(1100, -20)
-collision_layer = 2
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="WorldCollision/Top"]
-shape = SubResource("TopBoundary")
-
-[node name="Bottom" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(1100, 1320)
-collision_layer = 2
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="WorldCollision/Bottom"]
-shape = SubResource("BottomBoundary")
-
-[node name="Left" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(-20, 650)
-collision_layer = 2
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="WorldCollision/Left"]
-shape = SubResource("SideBoundary")
-
-[node name="Right" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(2220, 650)
-collision_layer = 2
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="WorldCollision/Right"]
-shape = SubResource("SideBoundary")
-
-[node name="RiverUpper" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(135, 390)
-collision_layer = 2
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="WorldCollision/RiverUpper"]
-shape = SubResource("RiverUpperBoundary")
-
-[node name="RiverLower" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(135, 1240)
-collision_layer = 2
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="WorldCollision/RiverLower"]
-shape = SubResource("RiverBoundary")
-
-[node name="Fence" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(1320, 1220)
-collision_layer = 2
-collision_mask = 0
-
-[node name="Shape" type="CollisionShape2D" parent="WorldCollision/Fence"]
-shape = SubResource("FenceBoundary")
+[node name="TerrainWorld" parent="WorldCanvas" instance=ExtResource("14_terrain")]
 
 [node name="Actors" type="Node2D" parent="."]
 y_sort_enabled = true
@@ -132,7 +39,7 @@ unique_name_in_owner = true
 y_sort_enabled = true
 
 [node name="Player" parent="Actors" instance=ExtResource("3_player")]
-position = Vector2(650, 875)
+position = Vector2(1320, 1580)
 
 [node name="Interface" type="CanvasLayer" parent="."]
 layer = 10

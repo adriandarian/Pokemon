@@ -1,0 +1,171 @@
+[gd_resource type="Resource" script_class="TerrainRegionDefinition" load_steps=24 format=3]
+
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_region_definition.gd" id="1_region"]
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_biome_definition.gd" id="2_biome"]
+[ext_resource type="Script" path="res://features/terrain_world/data/terrain_stamp_definition.gd" id="3_stamp"]
+
+[sub_resource type="Resource" id="BiomeMeadow"]
+script = ExtResource("2_biome")
+biome_id = &"homestead_meadow"
+display_name = "Homestead Meadow"
+top_color = Color(0.375, 0.506, 0.184, 1)
+path_color = Color(0.745, 0.635, 0.384, 1)
+cliff_color = Color(0.239, 0.275, 0.137, 1)
+detail_color = Color(0.533, 0.627, 0.243, 1)
+
+[sub_resource type="Resource" id="BiomeWetland"]
+script = ExtResource("2_biome")
+biome_id = &"homestead_river"
+display_name = "Homestead River"
+top_color = Color(0.278, 0.424, 0.188, 1)
+path_color = Color(0.714, 0.596, 0.349, 1)
+cliff_color = Color(0.176, 0.247, 0.141, 1)
+detail_color = Color(0.435, 0.561, 0.216, 1)
+
+[sub_resource type="Resource" id="BiomeHighland"]
+script = ExtResource("2_biome")
+biome_id = &"homestead_highland"
+display_name = "Wheat Terrace"
+top_color = Color(0.412, 0.522, 0.176, 1)
+path_color = Color(0.769, 0.651, 0.392, 1)
+cliff_color = Color(0.243, 0.267, 0.129, 1)
+detail_color = Color(0.557, 0.616, 0.235, 1)
+
+[sub_resource type="Resource" id="StampMeadowBiome"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_meadow_biome"
+kind = 1
+bounds = Rect2i(0, 0, 64, 64)
+biome_index = 0
+
+[sub_resource type="Resource" id="StampNorthTerrace"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_north_terrace"
+bounds = Rect2i(0, 0, 64, 36)
+target_elevation = 1.0
+
+[sub_resource type="Resource" id="StampHighTerrace"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_wheat_terrace"
+bounds = Rect2i(35, 4, 29, 15)
+target_elevation = 2.0
+
+[sub_resource type="Resource" id="StampHighlandBiome"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_highland_biome"
+kind = 1
+bounds = Rect2i(35, 4, 29, 15)
+biome_index = 2
+
+[sub_resource type="Resource" id="StampRiver"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_river"
+kind = 3
+bounds = Rect2i(0, 43, 64, 9)
+
+[sub_resource type="Resource" id="StampRiverBiome"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_river_biome"
+kind = 1
+bounds = Rect2i(0, 41, 64, 13)
+biome_index = 1
+
+[sub_resource type="Resource" id="StampNorthTrailA"]
+script = ExtResource("3_stamp")
+stamp_id = &"north_trail_a"
+kind = 2
+bounds = Rect2i(5, 0, 6, 9)
+path_points = Array[Vector2]([Vector2(8, 0), Vector2(7, 4), Vector2(9, 8)])
+
+[sub_resource type="Resource" id="StampNorthTrailB"]
+script = ExtResource("3_stamp")
+stamp_id = &"north_trail_b"
+kind = 2
+bounds = Rect2i(8, 8, 7, 9)
+path_points = Array[Vector2]([Vector2(9, 8), Vector2(12, 12), Vector2(13, 16)])
+
+[sub_resource type="Resource" id="StampNorthTrailC"]
+script = ExtResource("3_stamp")
+stamp_id = &"north_trail_c"
+kind = 2
+bounds = Rect2i(12, 16, 8, 10)
+path_points = Array[Vector2]([Vector2(13, 16), Vector2(15, 21), Vector2(19, 25)])
+
+[sub_resource type="Resource" id="StampYardTrail"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_yard_trail"
+kind = 2
+bounds = Rect2i(18, 22, 15, 7)
+path_points = Array[Vector2]([Vector2(19, 25), Vector2(24, 26), Vector2(31, 27)])
+
+[sub_resource type="Resource" id="StampStairApproach"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_stair_approach"
+kind = 2
+bounds = Rect2i(29, 26, 10, 9)
+path_points = Array[Vector2]([Vector2(31, 27), Vector2(34, 31), Vector2(37, 34)])
+
+[sub_resource type="Resource" id="StampRiverStair"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_river_stair"
+kind = 5
+bounds = Rect2i(36, 34, 3, 4)
+start_elevation = 1.0
+end_elevation = 0.0
+axis = 1
+biome_index = 0
+
+[sub_resource type="Resource" id="StampLowRiverApproach"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_low_river_approach"
+kind = 2
+bounds = Rect2i(35, 37, 8, 7)
+path_points = Array[Vector2]([Vector2(37, 37), Vector2(38, 40), Vector2(39, 43)])
+
+[sub_resource type="Resource" id="StampFieldStair"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_field_stair"
+kind = 5
+bounds = Rect2i(57, 15, 3, 6)
+start_elevation = 2.0
+end_elevation = 1.0
+axis = 1
+biome_index = 2
+
+[sub_resource type="Resource" id="StampBridge"]
+script = ExtResource("3_stamp")
+stamp_id = &"homestead_timber_bridge"
+kind = 7
+bounds = Rect2i(35, 43, 7, 9)
+target_elevation = 0.0
+
+[sub_resource type="Resource" id="StampSouthTrailA"]
+script = ExtResource("3_stamp")
+stamp_id = &"south_trail_a"
+kind = 2
+bounds = Rect2i(36, 51, 14, 10)
+path_points = Array[Vector2]([Vector2(39, 52), Vector2(43, 56), Vector2(49, 60)])
+
+[sub_resource type="Resource" id="StampSouthTrailB"]
+script = ExtResource("3_stamp")
+stamp_id = &"south_trail_b"
+kind = 2
+bounds = Rect2i(48, 58, 16, 6)
+path_points = Array[Vector2]([Vector2(49, 60), Vector2(56, 61), Vector2(64, 63)])
+
+[resource]
+script = ExtResource("1_region")
+region_id = &"homestead_baseline"
+compiler_version = 1
+seed = 3182026
+chunk_count = Vector2i(2, 2)
+chunk_size_cells = Vector2i(32, 32)
+cell_size = 48.0
+elevation_step_pixels = 80.0
+hide_stair_geometry_under_authored_art = true
+elevation_frequency = 0.02
+moisture_frequency = 0.035
+raised_ground_threshold = 1.0
+biomes = Array[ExtResource("2_biome")]([SubResource("BiomeMeadow"), SubResource("BiomeWetland"), SubResource("BiomeHighland")])
+stamps = Array[ExtResource("3_stamp")]([SubResource("StampMeadowBiome"), SubResource("StampNorthTerrace"), SubResource("StampHighTerrace"), SubResource("StampHighlandBiome"), SubResource("StampRiver"), SubResource("StampRiverBiome"), SubResource("StampNorthTrailA"), SubResource("StampNorthTrailB"), SubResource("StampNorthTrailC"), SubResource("StampYardTrail"), SubResource("StampStairApproach"), SubResource("StampRiverStair"), SubResource("StampLowRiverApproach"), SubResource("StampFieldStair"), SubResource("StampBridge"), SubResource("StampSouthTrailA"), SubResource("StampSouthTrailB")])
+required_route_points = Array[Vector2i]([Vector2i(8, 2), Vector2i(19, 25), Vector2i(30, 28), Vector2i(37, 35), Vector2i(39, 41), Vector2i(39, 47), Vector2i(43, 56), Vector2i(58, 62), Vector2i(58, 10)])
