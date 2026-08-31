@@ -1,6 +1,12 @@
 class_name AdventureController
 extends Node
 
+const RANGER_LODGE_YARD_POSITION := Vector2(842.0, 585.0)
+const EAST_TRAIL_SIGN_POSITION := Vector2(1040.0, 582.0)
+const PRESERVE_SIGN_POSITION := Vector2(1248.0, 585.0)
+const PRESERVE_GATE_NORTH_LANTERN_POSITION := Vector2(1400.0, 515.0)
+const PRESERVE_GATE_SOUTH_LANTERN_POSITION := Vector2(1425.0, 820.0)
+
 @onready var player: PlayerCharacter = %Player
 @onready var props: Node2D = %Props
 @onready var wild_creatures: Node2D = %WildCreatures
@@ -143,24 +149,31 @@ func _update_area_hud() -> void:
 
 func _spawn_authored_world() -> void:
 	_spawn_prop(AdventureProp.Kind.HOUSE, Vector2(610.0, 620.0), "Trailkeeper Lodge", "Your lodge is warm, but the open trail is calling. The Field Guide in your bag tracks creatures, supplies, and badges.")
-	_spawn_npc(Vector2(875.0, 675.0), "Ranger Sela", "Wild creatures are visible in the preserve now. Approach calmly, press E, weaken one in battle, then cast a Trail Prism.")
-	_spawn_prop(AdventureProp.Kind.SIGN, Vector2(1055.0, 750.0), "East Trail", "Mossglass Wilds  →\nVisible creatures roam the long grass. Trail Prisms work best after a creature is weakened.")
-	_spawn_prop(AdventureProp.Kind.SIGN, Vector2(1268.0, 670.0), "Preserve Boundary", "WILD AREA\nStay alert. A creature's element changes which moves hit hardest.")
-	_spawn_prop(AdventureProp.Kind.LANTERN, Vector2(950.0, 820.0))
-	_spawn_prop(AdventureProp.Kind.LANTERN, Vector2(1180.0, 785.0))
+	# Ranger Sela patrols the lodge yard, where a trailkeeper has a reason to be.
+	_spawn_npc(RANGER_LODGE_YARD_POSITION, "Ranger Sela", "Wild creatures are visible in the preserve now. Approach calmly, press E, weaken one in battle, then cast a Trail Prism.")
+	# Wayfinding stays on the north verge, while paired lanterns frame the actual
+	# preserve threshold from opposite sides of the road.
+	_spawn_prop(AdventureProp.Kind.SIGN, EAST_TRAIL_SIGN_POSITION, "East Trail", "Mossglass Wilds  →\nVisible creatures roam the long grass. Trail Prisms work best after a creature is weakened.")
+	_spawn_prop(AdventureProp.Kind.SIGN, PRESERVE_SIGN_POSITION, "Preserve Boundary", "WILD AREA\nStay alert. A creature's element changes which moves hit hardest.")
+	_spawn_prop(AdventureProp.Kind.LANTERN, PRESERVE_GATE_NORTH_LANTERN_POSITION)
+	_spawn_prop(AdventureProp.Kind.LANTERN, PRESERVE_GATE_SOUTH_LANTERN_POSITION)
 
+	# Backdrop grove frames the lodge without occupying its yard or the route.
 	var tree_positions: Array[Vector2] = [
-		Vector2(390.0, 390.0), Vector2(515.0, 320.0), Vector2(805.0, 350.0),
-		Vector2(995.0, 365.0), Vector2(1140.0, 430.0), Vector2(1110.0, 1030.0),
-		Vector2(790.0, 1095.0), Vector2(470.0, 1210.0), Vector2(2040.0, 350.0),
-		Vector2(2070.0, 610.0), Vector2(2015.0, 920.0),
+		Vector2(390.0, 350.0), Vector2(520.0, 285.0), Vector2(760.0, 305.0),
+		Vector2(980.0, 345.0), Vector2(380.0, 720.0),
+		# South grove keeps the pier approach legible and gives the fence a context.
+		Vector2(735.0, 1110.0), Vector2(1040.0, 1080.0),
+		# Preserve perimeter vegetation contains the encounter space.
+		Vector2(1570.0, 285.0), Vector2(2015.0, 345.0), Vector2(2070.0, 635.0),
+		Vector2(2005.0, 935.0), Vector2(1710.0, 1040.0),
 	]
 	for tree_position: Vector2 in tree_positions:
 		_spawn_prop(AdventureProp.Kind.TREE, tree_position)
 
 	var rock_positions: Array[Vector2] = [
-		Vector2(1350.0, 300.0), Vector2(1830.0, 325.0), Vector2(1910.0, 825.0),
-		Vector2(1430.0, 910.0), Vector2(1020.0, 1110.0),
+		Vector2(390.0, 865.0), Vector2(1010.0, 1130.0),
+		Vector2(1510.0, 940.0), Vector2(1840.0, 320.0), Vector2(1910.0, 850.0),
 	]
 	for rock_position: Vector2 in rock_positions:
 		_spawn_prop(AdventureProp.Kind.ROCK, rock_position)
@@ -222,5 +235,9 @@ func _apply_developer_preview() -> void:
 	elif arguments.has("--preview-battle"):
 		player.set_movement_enabled(false)
 		battle_overlay.start_battle(&"rillip", 5)
+	elif arguments.has("--preview-pier"):
+		player.global_position = Vector2(480.0, 1030.0)
+	elif arguments.has("--preview-river-north"):
+		player.global_position = Vector2(430.0, 340.0)
 	elif arguments.has("--preview-wild"):
 		player.global_position = Vector2(1400.0, 690.0)

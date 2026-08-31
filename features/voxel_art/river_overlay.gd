@@ -1,11 +1,14 @@
 class_name RiverOverlay
 extends Node2D
 
+const PIER_LANDING_CENTER := Vector2(379.0, 1043.0)
+
 static var BANK_POINTS := PackedVector2Array([
-	Vector2(278.0, 404.0), Vector2(292.0, 492.0), Vector2(276.0, 585.0),
+	Vector2(286.0, -160.0), Vector2(282.0, 32.0), Vector2(296.0, 144.0),
+	Vector2(276.0, 280.0), Vector2(278.0, 404.0), Vector2(292.0, 492.0), Vector2(276.0, 585.0),
 	Vector2(298.0, 682.0), Vector2(282.0, 780.0), Vector2(304.0, 878.0),
 	Vector2(286.0, 974.0), Vector2(306.0, 1072.0), Vector2(288.0, 1170.0),
-	Vector2(300.0, 1300.0),
+	Vector2(300.0, 1460.0),
 ])
 
 

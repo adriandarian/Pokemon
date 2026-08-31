@@ -13,7 +13,6 @@
 [ext_resource type="Script" path="res://features/world_animation/shoreline_waves.gd" id="11_shoreline"]
 [ext_resource type="Script" path="res://features/world_animation/wind_grass.gd" id="12_grass"]
 [ext_resource type="Script" path="res://features/world_animation/wind_motes.gd" id="13_motes"]
-
 [sub_resource type="RectangleShape2D" id="TopBoundary"]
 size = Vector2(2200, 40)
 
@@ -27,7 +26,7 @@ size = Vector2(2200, 40)
 size = Vector2(275, 710)
 
 [sub_resource type="RectangleShape2D" id="RiverUpperBoundary"]
-size = Vector2(275, 525)
+size = Vector2(275, 1080)
 
 [sub_resource type="RectangleShape2D" id="FenceBoundary"]
 size = Vector2(1720, 28)
@@ -98,7 +97,7 @@ collision_mask = 0
 shape = SubResource("SideBoundary")
 
 [node name="RiverUpper" type="StaticBody2D" parent="WorldCollision"]
-position = Vector2(135, 682)
+position = Vector2(135, 390)
 collision_layer = 2
 collision_mask = 0
 

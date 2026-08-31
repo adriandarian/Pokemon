@@ -8,17 +8,19 @@ extends Node2D
 var _home: Vector2
 var _time: float = 0.0
 var _phase: float = 0.0
+var _ground_elevation_pixels: float = 0.0
+var _visual: CreatureVisual
 
 
 func _ready() -> void:
 	_home = position
 	_phase = randf_range(0.0, TAU)
 	add_to_group(&"wild_creature")
-	var visual := CreatureVisual.new()
-	visual.species_id = species_id
-	visual.visual_scale = 0.72
-	visual.position = Vector2.ZERO
-	add_child(visual)
+	_visual = CreatureVisual.new()
+	_visual.species_id = species_id
+	_visual.visual_scale = 0.72
+	_visual.position = Vector2.ZERO
+	add_child(_visual)
 	queue_redraw()
 
 
@@ -35,8 +37,21 @@ func get_prompt() -> String:
 	return "Challenge %s" % (species.display_name if species != null else "wild creature")
 
 
+func set_ground_elevation_pixels(value: float) -> void:
+	if is_equal_approx(_ground_elevation_pixels, value):
+		return
+	_ground_elevation_pixels = value
+	if _visual != null:
+		_visual.set_ground_elevation_pixels(value)
+	queue_redraw()
+
+
+func get_ground_elevation_pixels() -> float:
+	return _ground_elevation_pixels
+
+
 func _draw() -> void:
-	var center := Vector2(0.0, -101.0)
+	var center := Vector2(0.0, -101.0 - _ground_elevation_pixels)
 	draw_colored_polygon(PackedVector2Array([
 		center + Vector2(0.0, -17.0), center + Vector2(14.0, 0.0),
 		center + Vector2(0.0, 17.0), center + Vector2(-14.0, 0.0),

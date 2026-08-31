@@ -11,6 +11,7 @@ const DISPLAY_SIZE := Vector2(138.0, 138.0)
 
 var active: bool = true
 var _time: float = 0.0
+var _ground_elevation_pixels: float = 0.0
 
 
 func _ready() -> void:
@@ -23,6 +24,17 @@ func _ready() -> void:
 func set_species(value: StringName) -> void:
 	species_id = value
 	queue_redraw()
+
+
+func set_ground_elevation_pixels(value: float) -> void:
+	if is_equal_approx(_ground_elevation_pixels, value):
+		return
+	_ground_elevation_pixels = value
+	queue_redraw()
+
+
+func get_ground_elevation_pixels() -> float:
+	return _ground_elevation_pixels
 
 
 func _process(delta: float) -> void:
@@ -43,9 +55,13 @@ func _draw() -> void:
 	GroundShadow.draw(
 		self,
 		Vector2(25.0, 5.5) * visual_scale,
-		Vector2(0.0, -1.0) * visual_scale
+		Vector2(0.0, -visual_scale - _ground_elevation_pixels)
 	)
-	draw_set_transform(Vector2(0.0, bob), 0.0, Vector2(flip_x, visual_scale))
+	draw_set_transform(
+		Vector2(0.0, bob - _ground_elevation_pixels),
+		0.0,
+		Vector2(flip_x, visual_scale)
+	)
 	var texture: Texture2D = VoxelAssets.get_species_texture(species_id)
 	var source_rect: Rect2 = VoxelAssets.get_species_source_rect(texture, species_id)
 	var destination_rect: Rect2 = VoxelAssets.fit_bottom_centered(source_rect, DISPLAY_SIZE, 1.0)

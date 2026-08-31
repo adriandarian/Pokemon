@@ -5,10 +5,13 @@ const WATER_TEXTURE: Texture2D = preload("res://assets/voxel/terrain_water.png")
 const WATER_SHADER: Shader = preload("res://features/voxel_art/voxel_water.gdshader")
 
 static var RIVER_POLYGON := PackedVector2Array([
-	Vector2(0.0, 404.0), Vector2(278.0, 404.0), Vector2(292.0, 492.0),
+	# Both caps live beyond the camera limits, so traversal can never reveal a
+	# rectangular edge where the river texture begins or ends.
+	Vector2(0.0, -160.0), Vector2(286.0, -160.0), Vector2(282.0, 32.0),
+	Vector2(296.0, 144.0), Vector2(276.0, 280.0), Vector2(278.0, 404.0), Vector2(292.0, 492.0),
 	Vector2(276.0, 585.0), Vector2(298.0, 682.0), Vector2(282.0, 780.0),
 	Vector2(304.0, 878.0), Vector2(286.0, 974.0), Vector2(306.0, 1072.0),
-	Vector2(288.0, 1170.0), Vector2(300.0, 1300.0), Vector2(0.0, 1300.0),
+	Vector2(288.0, 1170.0), Vector2(300.0, 1460.0), Vector2(0.0, 1460.0),
 ])
 
 

@@ -3,6 +3,7 @@ extends Node2D
 
 const GRASS_TEXTURE: Texture2D = preload("res://assets/voxel/terrain_grass.png")
 const WORLD_RECT := Rect2(0.0, 0.0, 2200.0, 1300.0)
+const PIER_LANDING_CENTER := Vector2(379.0, 1043.0)
 static var WILD_POLYGON := PackedVector2Array([
 	Vector2(1230.0, 246.0), Vector2(1435.0, 220.0), Vector2(1775.0, 234.0),
 	Vector2(2010.0, 290.0), Vector2(2044.0, 510.0), Vector2(2020.0, 785.0),
@@ -79,6 +80,7 @@ func _draw_wild_preserve() -> void:
 	draw_polyline(closed_outline, Color("305f3d"), 26.0, true)
 	draw_polyline(closed_outline, Color(0.56, 0.73, 0.39, 0.54), 7.0, true)
 
+
 func _draw_trail() -> void:
 	var path: PackedVector2Array = _build_trail_curve()
 	draw_polyline(path, Color("8e714b"), 172.0, true)
@@ -92,8 +94,10 @@ func _draw_trail() -> void:
 
 
 func _build_trail_curve() -> PackedVector2Array:
+	# The first anchor is the landward center of the pier, so the route reads as
+	# one continuous journey from the waterfront into the preserve.
 	var anchors: Array[Vector2] = [
-		Vector2(334.0, 1178.0), Vector2(548.0, 1020.0), Vector2(682.0, 786.0),
+		PIER_LANDING_CENTER, Vector2(540.0, 1014.0), Vector2(682.0, 786.0),
 		Vector2(964.0, 698.0), Vector2(1235.0, 721.0), Vector2(1548.0, 574.0),
 		Vector2(1825.0, 502.0), Vector2(2160.0, 470.0),
 	]
@@ -105,6 +109,10 @@ func _build_trail_curve() -> PackedVector2Array:
 		var tangent: Vector2 = (following - previous) * 0.19
 		curve.add_point(anchors[index], -tangent, tangent)
 	return curve.get_baked_points()
+
+
+static func get_trail_start() -> Vector2:
+	return PIER_LANDING_CENTER
 
 
 func _offset_points(points: PackedVector2Array, offset: Vector2) -> PackedVector2Array:
@@ -122,6 +130,7 @@ func _draw_world_details() -> void:
 		var flower_color := Color("f1d46b") if index % 3 != 0 else Color("ef8176")
 		_draw_voxel_top(point, Vector2(5.0, 3.0), flower_color, Color("47784a"))
 		draw_rect(Rect2(point + Vector2(-2.0, 3.0), Vector2(4.0, 9.0)), Color("3b7044"))
+
 
 func _draw_fence() -> void:
 	var rail_start := Vector2(430.0, 1208.0)

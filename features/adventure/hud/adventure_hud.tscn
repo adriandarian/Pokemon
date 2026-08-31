@@ -65,31 +65,6 @@ text = "Follow the east trail into the wild grass."
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="ControlsCard" type="PanelContainer" parent="TopMargin/TopRow"]
-custom_minimum_size = Vector2(270, 0)
-layout_mode = 2
-
-[node name="ControlsVBox" type="VBoxContainer" parent="TopMargin/TopRow/ControlsCard"]
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="Menu" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.97, 0.75, 0.3, 1)
-text = "TAB   Field Guide"
-
-[node name="Move" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
-layout_mode = 2
-text = "WASD / Arrows   Move"
-
-[node name="Run" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
-layout_mode = 2
-text = "SHIFT   Run"
-
-[node name="Interact" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
-layout_mode = 2
-text = "E   Interact"
-
 [node name="PromptPanel" type="PanelContainer" parent="."]
 unique_name_in_owner = true
 layout_mode = 1

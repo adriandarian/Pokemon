@@ -13,6 +13,15 @@ func _ready() -> void:
 	_expect(GameSession.profile.discovered_species_ids.has(&"kindlehorn"), "The starter is recorded in the Creature Dex.")
 
 	_expect(ContentRegistry.get_item(&"trail_prism") != null, "The capture tool is authored content.")
+	_expect(
+		AdventureWorldCanvas.get_trail_start().distance_to(RiverOverlay.PIER_LANDING_CENTER) < 0.1,
+		"The village trail connects directly to the landward center of the pier."
+	)
+	_expect(
+		VoxelWaterSurface.RIVER_POLYGON[0].y < 0.0
+		and VoxelWaterSurface.RIVER_POLYGON[VoxelWaterSurface.RIVER_POLYGON.size() - 1].y > 1300.0,
+		"The river extends beyond both vertical camera limits without a visible cap."
+	)
 	_expect(GameSession.get_item_count(&"trail_prism") == 6, "A new trailkeeper receives six capture tools.")
 	_expect(GameSession.consume_item(&"trail_prism"), "A capture tool can be consumed through the session API.")
 	_expect(GameSession.get_item_count(&"trail_prism") == 5, "Consuming an item updates the owned count.")

@@ -84,8 +84,8 @@ continuous animation.
   separate source assets.
 - Repeated `play()` calls: visuals switch clips only when the requested clip
   changes, so frame timing is not reset every physics frame.
-- NPC obstruction: Ranger Sela patrols only a short authored route on the open
-  trail and returns to idle when a target is reached.
+- NPC obstruction: Ranger Sela patrols a compact authored loop in the lodge yard,
+  away from the painted walkway, and returns to idle when a target is reached.
 - Desynchronized effects: all wind consumers sample one `AmbientWind` owner.
 - Excess redraw cost: grass and wind motes are isolated from the static world
   canvas; only the animated overlay nodes redraw each frame.

@@ -20,6 +20,7 @@ enum Kind {
 
 var _lantern_flame: LanternFlame
 var _wind_source: AmbientWind
+var _ground_elevation_pixels: float = 0.0
 
 
 func configure(prop_kind: Kind, title: String = "", text: String = "") -> void:
@@ -50,6 +51,17 @@ func set_wind_source(source: AmbientWind) -> void:
 	_wind_source = source
 	if _lantern_flame != null:
 		_lantern_flame.set_wind_source(source)
+
+
+func set_ground_elevation_pixels(value: float) -> void:
+	if is_equal_approx(_ground_elevation_pixels, value):
+		return
+	_ground_elevation_pixels = value
+	queue_redraw()
+
+
+func get_ground_elevation_pixels() -> float:
+	return _ground_elevation_pixels
 
 
 func get_interaction() -> Dictionary:
@@ -98,6 +110,7 @@ func _draw() -> void:
 	var display_size: Vector2 = _get_display_size()
 	var source_rect: Rect2 = VoxelAssets.get_prop_source_rect(texture, kind)
 	var destination_rect: Rect2 = VoxelAssets.fit_bottom_centered(source_rect, display_size, 1.0)
+	destination_rect.position.y -= _ground_elevation_pixels
 	draw_texture_rect_region(texture, destination_rect, source_rect)
 
 
@@ -139,4 +152,9 @@ func _draw_contact_shadow() -> void:
 			strength = 0.95
 		_:
 			contact_radii = Vector2(17.0, 4.5)
-	GroundShadow.draw(self, contact_radii, Vector2(0.0, -1.0), strength)
+	GroundShadow.draw(
+		self,
+		contact_radii,
+		Vector2(0.0, -1.0 - _ground_elevation_pixels),
+		strength
+	)

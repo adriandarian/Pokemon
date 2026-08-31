@@ -21,6 +21,7 @@ var _current_animation: StringName
 var _wind_source: AmbientWind
 var _sprite: AnimatedSprite2D
 var _sprite_scale: float = 1.0
+var _ground_elevation_pixels: float = 0.0
 
 
 func _ready() -> void:
@@ -39,6 +40,17 @@ func _ready() -> void:
 
 func set_wind_source(source: AmbientWind) -> void:
 	_wind_source = source
+
+
+func set_ground_elevation_pixels(value: float) -> void:
+	if is_equal_approx(_ground_elevation_pixels, value):
+		return
+	_ground_elevation_pixels = value
+	queue_redraw()
+
+
+func get_ground_elevation_pixels() -> float:
+	return _ground_elevation_pixels
 
 
 func set_motion(direction: Vector2, speed: float, running: bool) -> void:
@@ -96,7 +108,10 @@ func _process(delta: float) -> void:
 			Locomotion.RUN:
 				bob = sin(_phase) * 1.4
 				lean = sin(_phase) * 0.014 + movement_direction.x * 0.012
-	_sprite.position = BASE_SPRITE_POSITION + Vector2(0.0, bob + crop_center_offset)
+	_sprite.position = BASE_SPRITE_POSITION + Vector2(
+		0.0,
+		bob + crop_center_offset - _ground_elevation_pixels
+	)
 	_sprite.rotation = lean
 	queue_redraw()
 
@@ -105,7 +120,12 @@ func _draw() -> void:
 	var pulse: float = 1.0
 	if not SettingsService.reduced_motion and _locomotion != Locomotion.IDLE:
 		pulse += sin(_phase * 2.0) * (0.035 if _locomotion == Locomotion.WALK else 0.06)
-	GroundShadow.draw(self, Vector2(21.0, 4.5) * pulse, Vector2(0.0, -1.0), 1.08)
+	GroundShadow.draw(
+		self,
+		Vector2(21.0, 4.5) * pulse,
+		Vector2(0.0, -1.0 - _ground_elevation_pixels),
+		1.08
+	)
 
 
 func _play_requested_animation() -> void:

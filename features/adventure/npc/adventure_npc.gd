@@ -13,8 +13,9 @@ var interaction_text: String = ""
 var _home_position: Vector2
 var _patrol_offsets: Array[Vector2] = [
 	Vector2.ZERO,
-	Vector2(116.0, -22.0),
-	Vector2(42.0, 38.0),
+	Vector2(78.0, -16.0),
+	Vector2(38.0, -58.0),
+	Vector2(-22.0, -30.0),
 ]
 var _target_index: int = 1
 var _completed_segments: int = 0
@@ -42,6 +43,11 @@ func _ready() -> void:
 func set_wind_source(source: AmbientWind) -> void:
 	if _visual != null:
 		_visual.set_wind_source(source)
+
+
+func set_ground_elevation_pixels(value: float) -> void:
+	if _visual != null:
+		_visual.set_ground_elevation_pixels(value)
 
 
 func get_interaction() -> Dictionary:
