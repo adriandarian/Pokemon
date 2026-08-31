@@ -21,10 +21,10 @@ intentionally flat 2D composition.
   charcoal. Content accents retain their existing element colors.
 - Edges: crisp and hard, without ink outlines, antialiased pixel-art fuzz, or
   photorealistic materials.
-- Terrain: generated grass is a single continuous material beneath broad,
-  antialiased land contours. Trails and preserve boundaries are authored curves
-  rather than a visible square grid, with small cubic facets restoring the voxel
-  language at their edges.
+- Terrain: generated grass is a single continuous material built from large,
+  interlocking voxel plates beneath broad land contours. It uses nearest-neighbor
+  sampling so those modeled block edges survive at gameplay scale. Trails and
+  preserve boundaries remain authored curves rather than a tile grid.
 - Water: generated river voxels are mapped onto an irregular authored shoreline.
   A shared `canvas_item` shader scrolls two quantized flow samples and a shimmer
   band through time; reduced-motion mode freezes the shader at a stable frame.
@@ -98,14 +98,16 @@ destructively rewriting the generated subject pixels.
   dimensions and hidden chroma padding never change collision or grounding.
 - Chroma fringe: the shared shader uses a narrow smooth distance threshold around
   the sampled magenta key color; subject palettes deliberately exclude magenta.
-- Import quality and memory: textures use lossless import, no mipmaps, a 512 px
-  import-size cap, and linear filtering for clean high-resolution downscaling.
+- Import quality and memory: textures use lossless import and no mipmaps. Large
+  terrain materials use a 1024 px import cap with nearest-neighbor sampling;
+  character and prop sources retain linear filtering for clean downscaling.
 - Broken grounding: every world sprite is bottom-centered on its existing node
-  origin, with shared contact occlusion drawn at that origin and the visible art
-  overlapping it by one pixel. Collision positions do not move, while the
-  subject cannot float above or visually detach from its footprint. The chroma
-  shader reconstructs edge color before alpha blending to prevent a magenta seam
-  from separating the subject from its shadow.
+  origin, with shared contact occlusion drawn at that origin. Human animation
+  frames include transparent boot padding, so their presentation roots apply an
+  explicit foot-contact correction while leaving collision positions unchanged.
+  The lodge uses a wider footprint-matched contact shadow beneath its integrated
+  stone base. The chroma shader reconstructs edge color before alpha blending to
+  prevent a magenta seam from separating any subject from its footprint.
 - Water animation drift: shader motion uses `TIME` only for presentation and
   exposes `motion_amount`; `SettingsService.reduced_motion` sets it to zero.
 - Narrow UI overflow: generated icons have fixed compact minimum sizes and text

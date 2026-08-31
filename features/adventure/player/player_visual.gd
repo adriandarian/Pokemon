@@ -4,6 +4,7 @@ extends Node2D
 const GroundShadow = preload("res://features/voxel_art/grounding_shadow.gd")
 const HumanAtlas = preload("res://features/world_animation/human_animation_atlas.gd")
 const VoxelAssets = preload("res://features/voxel_art/voxel_asset_library.gd")
+const Scale = preload("res://features/adventure/adventure_scale.gd")
 
 enum Locomotion {
 	IDLE,
@@ -11,8 +12,12 @@ enum Locomotion {
 	RUN,
 }
 
-const DISPLAY_SIZE := Vector2(116.0, 142.0)
-const BASE_SPRITE_POSITION := Vector2(0.0, -DISPLAY_SIZE.y * 0.5 + 1.0)
+const DISPLAY_SIZE := Scale.PLAYER_DISPLAY_BOX
+const FOOT_CONTACT_OFFSET: float = 10.0
+const BASE_SPRITE_POSITION := Vector2(
+	0.0,
+	-DISPLAY_SIZE.y * 0.5 + 1.0 + FOOT_CONTACT_OFFSET
+)
 
 var movement_direction: Vector2 = Vector2.DOWN
 var _locomotion: Locomotion = Locomotion.IDLE

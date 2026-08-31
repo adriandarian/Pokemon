@@ -66,8 +66,17 @@ func _ready() -> void:
 		if child is AdventureNpc:
 			npc = child as AdventureNpc
 		elif child is AdventureProp and (child as AdventureProp).kind == AdventureProp.Kind.LANTERN:
-			if child.get_node_or_null("LanternFlame") is LanternFlame:
+			var flame := child.get_node_or_null("LanternFlame") as LanternFlame
+			if flame != null:
 				lantern_flame_count += 1
+				_expect(
+					flame.position.is_equal_approx(AdventureScale.LANTERN_FLAME_POSITION),
+					"A lantern flame scales with the hanging fixture instead of detaching."
+				)
+				_expect(
+					flame.scale.is_equal_approx(AdventureScale.LANTERN_FLAME_SCALE),
+					"Lantern flame volume follows the authoritative prop scale."
+				)
 	_expect(npc != null, "Ranger Sela is a dedicated moving NPC actor.")
 	_expect(lantern_flame_count == 2, "Both authored lanterns own a wind-driven flame visual.")
 	if npc != null:

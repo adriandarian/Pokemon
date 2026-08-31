@@ -35,6 +35,7 @@ No Pokémon names, creatures, art, audio, maps, or proprietary data are included
 godot --headless --path . res://tests/framework_smoke_test.tscn
 godot --headless --path . res://tests/gameplay_smoke_test.tscn
 godot --headless --path . res://tests/world_animation_smoke_test.tscn
+godot --headless --path . res://tests/location_banner_smoke_test.tscn
 godot --headless --path . --quit-after 3
 ```
 

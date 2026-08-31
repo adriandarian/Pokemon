@@ -1,7 +1,7 @@
 class_name AdventureWorldCanvas
 extends Node2D
 
-const GRASS_TEXTURE: Texture2D = preload("res://assets/voxel/terrain_grass.png")
+const GRASS_TEXTURE: Texture2D = preload("res://assets/voxel/terrain_grass_top_v3.png")
 const WORLD_RECT := Rect2(0.0, 0.0, 2200.0, 1300.0)
 const PIER_LANDING_CENTER := Vector2(379.0, 1043.0)
 static var WILD_POLYGON := PackedVector2Array([
@@ -13,13 +13,15 @@ static var WILD_POLYGON := PackedVector2Array([
 
 
 func _ready() -> void:
-	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	# Keep the authored block faces intact instead of smoothing them into a
+	# painterly ground wash at gameplay scale.
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	queue_redraw()
 
 
 func _draw() -> void:
 	_draw_continuous_ground()
-	_draw_northern_ridge()
 	_draw_land_contours()
 	_draw_wild_preserve()
 	_draw_trail()
@@ -28,33 +30,17 @@ func _draw() -> void:
 
 
 func _draw_continuous_ground() -> void:
-	draw_rect(WORLD_RECT, Color("668e5d"))
-	draw_texture_rect(GRASS_TEXTURE, WORLD_RECT, false, Color(0.68, 0.76, 0.61, 0.82))
-	draw_rect(WORLD_RECT, Color(0.16, 0.28, 0.19, 0.13))
-
-
-func _draw_northern_ridge() -> void:
-	var ridge_face := PackedVector2Array([
-		Vector2(0.0, 64.0), Vector2(142.0, 44.0), Vector2(286.0, 70.0),
-		Vector2(448.0, 30.0), Vector2(630.0, 58.0), Vector2(820.0, 24.0),
-		Vector2(1020.0, 54.0), Vector2(1220.0, 28.0), Vector2(1430.0, 62.0),
-		Vector2(1660.0, 32.0), Vector2(1885.0, 56.0), Vector2(2200.0, 18.0),
-		Vector2(2200.0, 220.0), Vector2(0.0, 220.0),
-	])
-	draw_colored_polygon(ridge_face, Color(0.16, 0.31, 0.23, 0.82))
-	draw_polyline(PackedVector2Array([
-		Vector2(0.0, 202.0), Vector2(325.0, 194.0), Vector2(670.0, 210.0),
-		Vector2(1035.0, 188.0), Vector2(1410.0, 205.0), Vector2(1760.0, 191.0),
-		Vector2(2200.0, 204.0),
-	]), Color("779d65"), 28.0, true)
-	draw_polyline(PackedVector2Array([
-		Vector2(0.0, 215.0), Vector2(325.0, 207.0), Vector2(670.0, 223.0),
-		Vector2(1035.0, 201.0), Vector2(1410.0, 218.0), Vector2(1760.0, 204.0),
-		Vector2(2200.0, 217.0),
-	]), Color("294e42"), 12.0, true)
-	for index: int in range(17):
-		var center := Vector2(52.0 + float(index) * 136.0, 188.0 + float(index % 3) * 7.0)
-		_draw_voxel_top(center, Vector2(44.0, 16.0), Color("86aa6b"), Color("426c50"))
+	draw_rect(WORLD_RECT, Color("5d854f"))
+	var material_scale := Vector2(0.62, 0.62)
+	draw_set_transform(Vector2.ZERO, 0.0, material_scale)
+	draw_texture_rect(
+		GRASS_TEXTURE,
+		Rect2(WORLD_RECT.position / material_scale, WORLD_RECT.size / material_scale),
+		true,
+		Color(0.72, 0.82, 0.61, 0.94)
+	)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
+	draw_rect(WORLD_RECT, Color(0.12, 0.24, 0.15, 0.09))
 
 
 func _draw_land_contours() -> void:

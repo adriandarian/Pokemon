@@ -14,6 +14,22 @@ func _ready() -> void:
 
 	_expect(ContentRegistry.get_item(&"trail_prism") != null, "The capture tool is authored content.")
 	_expect(
+		AdventureScale.HOUSE_HEIGHT_IN_HUMANS >= 3.5,
+		"The lodge reads as architecture at more than three and a half human heights."
+	)
+	_expect(
+		AdventureScale.SIGN_HEIGHT_IN_HUMANS < 0.8,
+		"Wayfinding signs remain shorter than a person."
+	)
+	_expect(
+		AdventureScale.LANTERN_HEIGHT_IN_HUMANS >= 1.7,
+		"Hanging lanterns clear a person's head."
+	)
+	_expect(
+		AdventureScale.EXPLORATION_CAMERA_ZOOM.x < 0.9,
+		"Exploration is deliberately zoomed out for the corrected landmark scale."
+	)
+	_expect(
 		AdventureWorldCanvas.get_trail_start().distance_to(RiverOverlay.PIER_LANDING_CENTER) < 0.1,
 		"The village trail connects directly to the landward center of the pier."
 	)
@@ -45,6 +61,11 @@ func _ready() -> void:
 	var battle_overlay: BattleOverlay = adventure.get_node_or_null("Interface/BattleOverlay") as BattleOverlay
 	_expect(player != null, "The adventure boots with a controllable CharacterBody2D player.")
 	if player != null:
+		var camera := player.get_node_or_null("Camera2D") as Camera2D
+		_expect(
+			camera != null and camera.zoom.is_equal_approx(AdventureScale.EXPLORATION_CAMERA_ZOOM),
+			"The live exploration camera consumes the authoritative scale contract."
+		)
 		var initial_visual: PlayerVisual = player.get_visual()
 		_expect(initial_visual != null, "The player resolves its required visual child.")
 		player.visual = null
@@ -55,6 +76,28 @@ func _ready() -> void:
 			"The player physics loop recovers its visual reference after an editor hot reload."
 		)
 	_expect(adventure.get_node("Actors/WildCreatures").get_child_count() == 3, "The authored wild preserve contains visible encounter creatures.")
+	var lodge: AdventureProp
+	for prop_node: Node in adventure.get_node("Actors/Props").get_children():
+		if prop_node is AdventureProp and (prop_node as AdventureProp).kind == AdventureProp.Kind.HOUSE:
+			lodge = prop_node as AdventureProp
+			break
+	_expect(lodge != null, "The authored village contains the Trailkeeper Lodge.")
+	if lodge != null:
+		var lodge_collision: CollisionShape2D
+		for lodge_child: Node in lodge.get_children():
+			if lodge_child is CollisionShape2D:
+				lodge_collision = lodge_child as CollisionShape2D
+				break
+		var lodge_shape := lodge_collision.shape as RectangleShape2D if lodge_collision != null else null
+		_expect(
+			lodge_shape != null and lodge_shape.size.is_equal_approx(AdventureScale.HOUSE_FOOTPRINT),
+			"The lodge collision footprint grows with its architectural presentation."
+		)
+		var lodge_shadow := lodge.get_node_or_null("LodgeContactShadow") as Sprite2D
+		_expect(
+			lodge_shadow != null and lodge_shadow.texture != null,
+			"The lodge keeps its dedicated footprint-matched contact shadow."
+		)
 	_expect(game_menu != null, "The Field Guide is present in the playable scene.")
 	_expect(battle_overlay != null, "The 2D battle presentation is present in the playable scene.")
 

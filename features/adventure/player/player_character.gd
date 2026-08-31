@@ -1,6 +1,8 @@
 class_name PlayerCharacter
 extends CharacterBody2D
 
+const Scale = preload("res://features/adventure/adventure_scale.gd")
+
 signal interact_requested(origin: Vector2, facing: Vector2)
 
 @export var move_speed: float = 165.0
@@ -17,6 +19,10 @@ var _missing_visual_reported: bool = false
 
 func _ready() -> void:
 	_resolve_visual()
+	var camera := get_node_or_null("Camera2D") as Camera2D
+	if camera != null:
+		camera.position = Scale.EXPLORATION_CAMERA_OFFSET
+		camera.zoom = Scale.EXPLORATION_CAMERA_ZOOM
 
 
 func _physics_process(delta: float) -> void:

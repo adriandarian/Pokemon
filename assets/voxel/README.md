@@ -35,6 +35,7 @@ Avoid: Pokemon designs; Minecraft branding or recognizable block textures; photo
 | `brambit.png` | Original shy grove creature named Brambit: compact warm-brown voxel body, lighter tan face and belly, tiny charcoal eyes and nose, three asymmetrical leafy voxel shoots forming a green crown, short stump-like legs; earthy and curious, no resemblance to an existing franchise creature. |
 | `tree.png` | Mossglass frontier tree: thick warm-brown block trunk with subtle bark color steps, broad asymmetrical canopy built from clustered moss, sage, and fern-green cubes; sturdy authored-world prop with a clean bottom-center trunk contact point. |
 | `lodge.png` | Cozy Trailkeeper Lodge: compact cream-plaster voxel cottage, deep terracotta stepped roof, dark timber trim, central warm-brown door with tiny golden latch, two teal glass windows, short stone foundation; front three-quarter view and a clean bottom-center contact edge. |
+| `lodge_contact_shadow_v3.png` | House-specific chroma-keyed contact-occlusion decal: shallow green-charcoal footprint with an irregular stepped upper edge fitted to the lodge foundation and stairs. |
 | `sign.png` | East Trail wayfinding sign: warm weathered voxel wood post and broad arrow-shaped plank pointing right, darker cut block along the face but no letters or symbols, compact readable silhouette and clean bottom-center contact point. |
 | `ranger_sela.png` | Original adult ranger Sela: warm tan skin, short silver-gray voxel hair, deep teal field coat, cream scarf, charcoal trousers, brown trail boots, small ochre utility satchel; calm welcoming stance, front three-quarter view, original character design. |
 | `rock.png` | Mossglass boulder: low angular cluster of slate-gray cubic rock forms with a few muted sage moss blocks, asymmetric silhouette, clean flat bottom contact edge. |
@@ -86,6 +87,64 @@ Color palette: deep river teal, turquoise, muted cyan, pale aqua, a few cream-bl
 Materials/textures: many small connected water voxels and elongated block bands; no isolated cubes; moderate low contrast
 Constraints: seamless repeat; no visible square grid; no border; no frame; no bank; no plants; no fish; no rocks; no text; no logo; no watermark; original game material
 Avoid: photorealistic water; ocean waves; checkerboard; static horizontal dash pattern; floating cubes; perspective scene; horizon; Minecraft branding or recognizable Minecraft textures
+```
+
+### `terrain_grass_top_v3.png`
+
+This later built-in image-generation pass replaces the fine grass mosaic with
+large, readable voxel plates that match the construction scale of the lodge.
+
+```text
+Create a NEW seamless square terrain-top texture for a voxel-themed Godot exploration game.
+
+Reference roles:
+- Image 1 is the current grass palette/content reference. Preserve its mossy sage, fern green, olive, and restrained yellow-green family, but replace its tiny busy pixel mosaic.
+- Image 2 is the scale and construction-language reference. Match the lodge's clearly modeled chunky blocks, crisp stepped edges, and softly lit voxel faces. Do not include the lodge or any object.
+
+Deliverable:
+A perfectly top-down, orthographic, edge-to-edge grassy ground MATERIAL ONLY, designed to tile seamlessly on all four edges. It must read immediately as chunky voxel terrain at gameplay scale.
+
+Critical scale requirement:
+Use large, clearly visible block cells and connected stepped patches, approximately 24-48 source pixels per primary square/rectangular voxel block in a 1024-1254px texture. Avoid micro-pixels, fine checkerboard noise, painterly brushwork, photographic grass, tiny flowers, scattered confetti, or continuous soft mottling. Build the surface from broad interlocking square and rectangular voxel plates, with occasional 1-block height-step facets and sparse darker moss seams. Keep contrast restrained enough for characters and paths to remain readable.
+
+Lighting and composition:
+Soft warm light from upper-left, subtle darker lower/right faces on a few block steps, mostly flat walkable surface, no horizon, no perspective, no slope, no cliff wall, no border, no isolated props, no text, no letters, no logo, no watermark, no frame. The result must be a reusable seamless material, not a scene.
+```
+
+### `terrain_cliff_face_v2.png`
+
+The cliff material belongs to the rejected elevation prototype retained under
+`features/terrain_elevation/`; it is not composited beneath the live lodge.
+
+### `lodge_contact_shadow_v3.png`
+
+The built-in image-generation tool produced this house-specific grounding
+decal from `lodge.png` as a footprint reference. Runtime code samples only the
+shadow region and converts its darkness into neutral green-charcoal opacity
+with a dedicated shadow-mask shader, so no magenta reaches the live scene.
+
+```text
+Use case: stylized-concept
+Asset type: chroma-keyed game contact-shadow decal for a Godot faux-2.5D voxel building
+Input images: Image 1 is a footprint and camera-angle reference only. Do NOT render or include the lodge.
+
+Primary request:
+Create exactly one standalone ambient-occlusion contact shadow shaped to fit beneath the referenced lodge's irregular stone foundation and front steps.
+
+Scene/backdrop:
+A perfectly flat, uniform, solid chroma-key magenta background using RGB 240, 14, 237 (#F00EED). No checkerboard, no transparency preview, no variation, no gradient, no texture.
+
+Subject:
+A shallow, horizontally oriented dark green-charcoal shadow. Its upper/contact edge is irregular and slightly stepped to echo the building's lowest stone blocks and central stairs. The center beneath the stairs and inner foundation is darkest; the opacity/edge softness falls off only a short distance toward the outer edge.
+
+Composition/framing:
+Shadow centered horizontally and vertically in the canvas, about 74% of canvas width and no more than 9% of canvas height. Generous pure-magenta space around it. It must remain narrower than the referenced building footprint.
+
+Style/medium:
+Soft game-sprite ambient occlusion with a restrained voxel-stepped silhouette, not a hard geometric platform.
+
+Constraints:
+Exactly one shadow on the solid magenta chroma background. No house, no platform, no slab, no pedestal, no terrace, no ground plane, no grass, no stone, no cliff, no plants, no objects, no directional cast shadow, no checkerboard, no text, no logo, no watermark, no frame.
 ```
 
 The final `.png` files are the selected lossless project artifacts. The 19 files

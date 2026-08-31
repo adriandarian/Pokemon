@@ -1,11 +1,11 @@
 class_name AdventureController
 extends Node
 
-const RANGER_LODGE_YARD_POSITION := Vector2(842.0, 585.0)
-const EAST_TRAIL_SIGN_POSITION := Vector2(1040.0, 582.0)
-const PRESERVE_SIGN_POSITION := Vector2(1248.0, 585.0)
-const PRESERVE_GATE_NORTH_LANTERN_POSITION := Vector2(1400.0, 515.0)
-const PRESERVE_GATE_SOUTH_LANTERN_POSITION := Vector2(1425.0, 820.0)
+const RANGER_LODGE_YARD_POSITION := Vector2(930.0, 625.0)
+const EAST_TRAIL_SIGN_POSITION := Vector2(1080.0, 590.0)
+const PRESERVE_SIGN_POSITION := Vector2(1320.0, 590.0)
+const PRESERVE_GATE_NORTH_LANTERN_POSITION := Vector2(1450.0, 495.0)
+const PRESERVE_GATE_SOUTH_LANTERN_POSITION := Vector2(1590.0, 900.0)
 
 @onready var player: PlayerCharacter = %Player
 @onready var props: Node2D = %Props
@@ -160,8 +160,8 @@ func _spawn_authored_world() -> void:
 
 	# Backdrop grove frames the lodge without occupying its yard or the route.
 	var tree_positions: Array[Vector2] = [
-		Vector2(390.0, 350.0), Vector2(520.0, 285.0), Vector2(760.0, 305.0),
-		Vector2(980.0, 345.0), Vector2(380.0, 720.0),
+		Vector2(365.0, 315.0), Vector2(470.0, 235.0), Vector2(560.0, 330.0),
+		Vector2(840.0, 255.0), Vector2(1015.0, 335.0), Vector2(380.0, 720.0),
 		# South grove keeps the pier approach legible and gives the fence a context.
 		Vector2(735.0, 1110.0), Vector2(1040.0, 1080.0),
 		# Preserve perimeter vegetation contains the encounter space.

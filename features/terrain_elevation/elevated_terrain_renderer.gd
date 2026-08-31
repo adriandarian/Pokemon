@@ -2,12 +2,12 @@ class_name ElevatedTerrainRenderer
 extends Node2D
 
 const ElevationMap = preload("res://features/terrain_elevation/terrain_elevation_map.gd")
-const GRASS_TOP: Texture2D = preload("res://assets/voxel/terrain_grass_top_v2.png")
+const GRASS_TOP: Texture2D = preload("res://assets/voxel/terrain_grass_top_v3.png")
 const CLIFF_FACE: Texture2D = preload("res://assets/voxel/terrain_cliff_face_v2.png")
 
 
 func _ready() -> void:
-	texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	queue_redraw()
 
@@ -82,7 +82,7 @@ func _draw_cliff_face(segment: PackedVector2Array, level: float) -> void:
 		face.append(bottom_point)
 		uv.append(Vector2(reverse_distance * 1.4, height_pixels * 7.0))
 	draw_colored_polygon(face, Color("4b5948"))
-	draw_polygon(face, PackedColorArray([Color(0.54, 0.58, 0.49, 0.38)]), uv, CLIFF_FACE)
+	draw_polygon(face, PackedColorArray([Color(0.72, 0.76, 0.63, 0.9)]), uv, CLIFF_FACE)
 	draw_polyline(segment, Color(0.12, 0.18, 0.14, 0.32), 2.0, true)
 
 
