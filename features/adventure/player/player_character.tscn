@@ -22,7 +22,6 @@ shape = SubResource("PlayerShape")
 
 [node name="PlayerVisual" type="Node2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(0, -12)
 script = ExtResource("2_visual")
 
 [node name="Camera2D" type="Camera2D" parent="."]

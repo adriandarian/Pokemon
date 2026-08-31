@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene load_steps=16 format=3]
 
 [ext_resource type="Script" path="res://features/adventure/adventure_controller.gd" id="1_controller"]
 [ext_resource type="Script" path="res://features/adventure/world_canvas.gd" id="2_world"]
@@ -6,6 +6,9 @@
 [ext_resource type="PackedScene" path="res://features/adventure/hud/adventure_hud.tscn" id="4_hud"]
 [ext_resource type="PackedScene" path="res://features/menu/game_menu.tscn" id="5_menu"]
 [ext_resource type="PackedScene" path="res://features/battle/battle_overlay.tscn" id="6_battle"]
+[ext_resource type="Script" path="res://features/voxel_art/voxel_preview_capture.gd" id="7_capture"]
+[ext_resource type="Script" path="res://features/voxel_art/voxel_water_surface.gd" id="8_water"]
+[ext_resource type="Script" path="res://features/voxel_art/river_overlay.gd" id="9_river_overlay"]
 
 [sub_resource type="RectangleShape2D" id="TopBoundary"]
 size = Vector2(2200, 40)
@@ -28,8 +31,17 @@ size = Vector2(1720, 28)
 [node name="Adventure" type="Node"]
 script = ExtResource("1_controller")
 
+[node name="VoxelPreviewCapture" type="Node" parent="."]
+script = ExtResource("7_capture")
+
 [node name="WorldCanvas" type="Node2D" parent="."]
 script = ExtResource("2_world")
+
+[node name="WaterSurface" type="Polygon2D" parent="WorldCanvas"]
+script = ExtResource("8_water")
+
+[node name="RiverOverlay" type="Node2D" parent="WorldCanvas"]
+script = ExtResource("9_river_overlay")
 
 [node name="WorldCollision" type="Node2D" parent="."]
 

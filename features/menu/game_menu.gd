@@ -1,6 +1,8 @@
 class_name GameMenu
 extends Control
 
+const VoxelAssets = preload("res://features/voxel_art/voxel_asset_library.gd")
+
 signal closed
 
 const PAGE_BAG := &"bag"
@@ -103,11 +105,7 @@ func _build_bag() -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override(&"separation", 16)
 		card.add_child(row)
-		var marker := ColorRect.new()
-		marker.color = item.accent_color
-		marker.custom_minimum_size = Vector2(12.0, 64.0)
-		marker.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		row.add_child(marker)
+		row.add_child(_make_voxel_icon(VoxelAssets.get_item_texture(item.id), Vector2(70.0, 70.0)))
 		var text_box := VBoxContainer.new()
 		text_box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		text_box.add_theme_constant_override(&"separation", 3)
@@ -141,6 +139,7 @@ func _build_profile() -> void:
 		var row := HBoxContainer.new()
 		row.add_theme_constant_override(&"separation", 18)
 		card.add_child(row)
+		row.add_child(_make_voxel_icon(VoxelAssets.get_species_texture(species.id), Vector2(64.0, 64.0)))
 		var name_label := _make_label("%s  Lv.%d" % [creature.nickname, creature.level], 21, Color("fff0b1"))
 		name_label.size_flags_horizontal = Control.SIZE_EXPAND_FILL
 		row.add_child(name_label)
@@ -153,7 +152,11 @@ func _build_profile() -> void:
 		for badge_id: StringName in GameSession.profile.badge_ids:
 			var badge: BadgeDefinition = ContentRegistry.get_badge(badge_id)
 			if badge != null:
-				content.add_child(_make_label("◆  %s" % badge.display_name, 19, Color("e9bd55")))
+				var badge_row := HBoxContainer.new()
+				badge_row.add_theme_constant_override(&"separation", 12)
+				badge_row.add_child(_make_voxel_icon(VoxelAssets.get_badge_texture(badge.id), Vector2(56.0, 56.0)))
+				badge_row.add_child(_make_label(badge.display_name, 19, Color("e9bd55")))
+				content.add_child(badge_row)
 
 
 func _build_dex() -> void:
@@ -162,18 +165,28 @@ func _build_dex() -> void:
 	for species: CreatureSpecies in ContentRegistry.get_all_species():
 		var discovered: bool = GameSession.profile.discovered_species_ids.has(species.id)
 		var card := _make_card()
+		var row := HBoxContainer.new()
+		row.add_theme_constant_override(&"separation", 15)
+		card.add_child(row)
+		var species_icon := _make_voxel_icon(VoxelAssets.get_species_texture(species.id), Vector2(78.0, 78.0))
+		if not discovered:
+			species_icon.modulate = Color(0.11, 0.16, 0.13, 0.58)
+		row.add_child(species_icon)
 		var box := VBoxContainer.new()
 		box.add_theme_constant_override(&"separation", 5)
-		card.add_child(box)
+		box.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		row.add_child(box)
 		box.add_child(_make_label(species.display_name if discovered else "Unrecorded Species", 21, Color("fff0b1") if discovered else Color("7c8a7d")))
 		var lore := _make_label(species.lore if discovered else "Find this creature in the wild to add its field notes.", 16, Color("c7d2c3"))
 		lore.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 		box.add_child(lore)
 		if discovered:
-			var elements: Array[String] = []
+			var element_row := HBoxContainer.new()
+			element_row.add_theme_constant_override(&"separation", 8)
 			for element: ElementDefinition in species.elements:
-				elements.append(element.display_name)
-			box.add_child(_make_label("ELEMENT  %s" % ", ".join(elements), 14, Color("e5b757")))
+				element_row.add_child(_make_voxel_icon(VoxelAssets.get_element_texture(element.id), Vector2(28.0, 28.0)))
+				element_row.add_child(_make_label(element.display_name.to_upper(), 13, element.color))
+			box.add_child(element_row)
 		content.add_child(card)
 
 
@@ -234,6 +247,18 @@ func _make_label(text: String, font_size: int, color: Color) -> Label:
 	label.add_theme_color_override(&"font_color", color)
 	label.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	return label
+
+
+func _make_voxel_icon(texture: Texture2D, display_size: Vector2) -> TextureRect:
+	var icon := TextureRect.new()
+	icon.texture = texture
+	icon.custom_minimum_size = display_size
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_LINEAR
+	icon.material = VoxelAssets.create_chroma_material()
+	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return icon
 
 
 func _on_inventory_changed(_item_id: StringName, _quantity: int) -> void:

@@ -176,7 +176,19 @@ func _spawn_wild_creature(species_id: StringName, level: int, world_position: Ve
 
 func _apply_developer_preview() -> void:
 	var arguments: PackedStringArray = OS.get_cmdline_user_args()
-	if arguments.has("--preview-menu"):
+	if arguments.has("--preview-profile"):
+		GameSession.collect_creature(&"rillip", 5)
+		GameSession.collect_creature(&"brambit", 6)
+		GameSession.award_badge(&"ember_crest")
+		GameSession.award_badge(&"deep_delver_mark")
+		player.set_movement_enabled(false)
+		game_menu.open(GameMenu.PAGE_PROFILE)
+	elif arguments.has("--preview-dex"):
+		GameSession.collect_creature(&"rillip", 5)
+		GameSession.collect_creature(&"brambit", 6)
+		player.set_movement_enabled(false)
+		game_menu.open(GameMenu.PAGE_DEX)
+	elif arguments.has("--preview-menu"):
 		player.set_movement_enabled(false)
 		game_menu.open()
 	elif arguments.has("--preview-battle"):

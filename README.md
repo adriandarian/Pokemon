@@ -18,7 +18,7 @@ godot --path .
 The current slice includes:
 
 - A camera-followed player with acceleration, collision, facing, and authored interactions.
-- A faux-2.5D overworld with depth sorting, an oblique trail, village props, a river, and a wild preserve.
+- A faux-2.5D voxel overworld with depth sorting, continuous generated grass, an oblique trail, grounded village props, an animated river, and a wild preserve.
 - Three original creature species and four original elements/moves.
 - Visible roaming wild creatures; encounters happen by approaching and interacting, not by an invisible random roll.
 - A turn-based 2D battle presentation with health, elemental damage, retaliation, capture probability, victory, defeat, and escape.
@@ -40,8 +40,11 @@ Deterministic developer previews are also available for visual work:
 
 ```powershell
 godot --path . -- --preview-menu
+godot --path . -- --preview-profile
+godot --path . -- --preview-dex
 godot --path . -- --preview-battle
 godot --path . -- --preview-wild
+godot --path . -- --capture-delay-frames=90 --capture-preview=res://preview.png
 ```
 
 ### Quick actions

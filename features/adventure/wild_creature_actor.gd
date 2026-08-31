@@ -17,7 +17,7 @@ func _ready() -> void:
 	var visual := CreatureVisual.new()
 	visual.species_id = species_id
 	visual.visual_scale = 0.72
-	visual.position = Vector2(0.0, -8.0)
+	visual.position = Vector2.ZERO
 	add_child(visual)
 	queue_redraw()
 
@@ -36,5 +36,12 @@ func get_prompt() -> String:
 
 
 func _draw() -> void:
-	draw_arc(Vector2(0.0, -98.0), 14.0, 0.0, TAU, 24, Color(1.0, 0.81, 0.28, 0.85), 4.0, true)
-	draw_circle(Vector2(0.0, -98.0), 4.0, Color("fff1aa"))
+	var center := Vector2(0.0, -101.0)
+	draw_colored_polygon(PackedVector2Array([
+		center + Vector2(0.0, -17.0), center + Vector2(14.0, 0.0),
+		center + Vector2(0.0, 17.0), center + Vector2(-14.0, 0.0),
+	]), Color(1.0, 0.71, 0.19, 0.9))
+	draw_colored_polygon(PackedVector2Array([
+		center + Vector2(0.0, -8.0), center + Vector2(7.0, 0.0),
+		center + Vector2(0.0, 8.0), center + Vector2(-7.0, 0.0),
+	]), Color("fff1aa"))

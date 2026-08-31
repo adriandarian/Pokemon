@@ -26,7 +26,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
-color = Color(0.035, 0.047, 0.043, 1)
+color = Color(0.024, 0.038, 0.032, 1)
 
 [node name="TrailBand" type="ColorRect" parent="BootstrapView"]
 layout_mode = 1
@@ -35,7 +35,7 @@ anchor_right = 1.0
 offset_bottom = 9.0
 grow_horizontal = 2
 mouse_filter = 2
-color = Color(0.31, 0.792, 0.482, 1)
+color = Color(0.314, 0.63, 0.286, 1)
 
 [node name="ScrollContainer" type="ScrollContainer" parent="BootstrapView"]
 layout_mode = 1
@@ -208,5 +208,5 @@ autowrap_mode = 2
 layout_mode = 2
 theme_override_colors/font_color = Color(0.408, 0.467, 0.431, 1)
 theme_override_font_sizes/font_size = 13
-text = "No combat rules, camera perspective, or final art direction are locked in yet. Build each feature behind a documented contract."
+text = "Voxel art direction, faux-2.5D exploration, and flat battle staging are locked. Build each new feature behind a documented contract."
 autowrap_mode = 2

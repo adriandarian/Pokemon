@@ -5,27 +5,32 @@ content_margin_left = 26.0
 content_margin_top = 24.0
 content_margin_right = 26.0
 content_margin_bottom = 24.0
-bg_color = Color(0.071, 0.098, 0.087, 0.96)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.255, 0.388, 0.322, 0.75)
-corner_radius_top_left = 20
-corner_radius_top_right = 20
-corner_radius_bottom_right = 20
-corner_radius_bottom_left = 20
+bg_color = Color(0.04, 0.064, 0.052, 0.97)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(0.39, 0.58, 0.38, 0.88)
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
 
 [sub_resource type="StyleBoxFlat" id="ButtonNormal"]
 content_margin_left = 20.0
 content_margin_top = 12.0
 content_margin_right = 20.0
 content_margin_bottom = 12.0
-bg_color = Color(0.188, 0.498, 0.322, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+bg_color = Color(0.15, 0.43, 0.27, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.54, 0.76, 0.42, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="ButtonHover"]
 content_margin_left = 20.0
@@ -33,10 +38,10 @@ content_margin_top = 12.0
 content_margin_right = 20.0
 content_margin_bottom = 12.0
 bg_color = Color(0.255, 0.647, 0.42, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [sub_resource type="StyleBoxFlat" id="ButtonPressed"]
 content_margin_left = 20.0
@@ -44,10 +49,10 @@ content_margin_top = 12.0
 content_margin_right = 20.0
 content_margin_bottom = 12.0
 bg_color = Color(0.125, 0.369, 0.235, 1)
-corner_radius_top_left = 12
-corner_radius_top_right = 12
-corner_radius_bottom_right = 12
-corner_radius_bottom_left = 12
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
 
 [resource]
 default_font_size = 17
@@ -65,4 +70,3 @@ HSeparator/colors/separator = Color(0.22, 0.337, 0.282, 1)
 HSeparator/constants/separation = 18
 Label/colors/font_color = Color(0.82, 0.875, 0.835, 1)
 PanelContainer/styles/panel = SubResource("Panel")
-
