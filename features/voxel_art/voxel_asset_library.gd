@@ -5,6 +5,9 @@ const CHROMA_KEY_SHADER: Shader = preload("res://features/voxel_art/voxel_chroma
 
 const PLAYER_FRONT: Texture2D = preload("res://assets/voxel/player_front.png")
 const PLAYER_BACK: Texture2D = preload("res://assets/voxel/player_back.png")
+const PLAYER_FRONT_ANIMATION_ATLAS: Texture2D = preload("res://assets/voxel/player_animation_atlas.png")
+const PLAYER_BACK_ANIMATION_ATLAS: Texture2D = preload("res://assets/voxel/player_back_animation_atlas.png")
+const RANGER_SELA_ANIMATION_ATLAS: Texture2D = preload("res://assets/voxel/ranger_sela_animation_atlas.png")
 
 const KINDLEHORN: Texture2D = preload("res://assets/voxel/kindlehorn.png")
 const RILLIP: Texture2D = preload("res://assets/voxel/rillip.png")
@@ -28,6 +31,14 @@ const STORM: Texture2D = preload("res://assets/voxel/storm.png")
 
 const PLAYER_FRONT_REGION := Rect2(0.2233, 0.0191, 0.6220, 0.9569)
 const PLAYER_BACK_REGION := Rect2(0.2791, 0.0319, 0.4386, 0.9187)
+const ANIMATION_CELL_SIZE := Vector2(418.0, 418.0)
+const ANIMATION_SOURCE_SIZE: float = 1254.0
+const PLAYER_FRONT_FRAME_WIDTH: float = 330.0
+const PLAYER_BACK_FRAME_WIDTH: float = 250.0
+const RANGER_FRAME_WIDTH: float = 260.0
+const PLAYER_FRONT_FRAME_X := [88.0, 68.0, 33.0, 88.0, 49.0, 0.0, 88.0, 42.0, 0.0]
+const PLAYER_BACK_FRAME_X := [127.0, 97.0, 58.0, 112.0, 93.0, 42.0, 118.0, 83.0, 41.0]
+const RANGER_FRAME_X := [95.0, 80.0, 64.0, 92.0, 75.0, 58.0, 88.0, 76.0, 50.0]
 
 const KINDLEHORN_REGION := Rect2(0.2153, 0.0383, 0.6778, 0.9123)
 const RILLIP_REGION := Rect2(0.0957, 0.1396, 0.8214, 0.7153)
@@ -53,6 +64,66 @@ static func get_player_texture(facing_away: bool) -> Texture2D:
 
 static func get_player_source_rect(texture: Texture2D, facing_away: bool) -> Rect2:
 	return _source_rect(texture, PLAYER_BACK_REGION if facing_away else PLAYER_FRONT_REGION)
+
+
+static func get_player_animation_texture(facing_away: bool) -> Texture2D:
+	return PLAYER_BACK_ANIMATION_ATLAS if facing_away else PLAYER_FRONT_ANIMATION_ATLAS
+
+
+static func get_player_animation_frame_rect(frame_index: int, facing_away: bool) -> Rect2:
+	var safe_index: int = clampi(frame_index, 0, 8)
+	var column: int = safe_index % 3
+	var row: int = floori(float(safe_index) / 3.0)
+	var frame_x: float = float(PLAYER_BACK_FRAME_X[safe_index] if facing_away else PLAYER_FRONT_FRAME_X[safe_index])
+	var frame_width: float = PLAYER_BACK_FRAME_WIDTH if facing_away else PLAYER_FRONT_FRAME_WIDTH
+	var top_inset: float = 18.0 if not facing_away and row == 1 else 0.0
+	var source_rect := Rect2(
+		Vector2(float(column) * ANIMATION_CELL_SIZE.x + frame_x, float(row) * ANIMATION_CELL_SIZE.y + top_inset),
+		Vector2(frame_width, ANIMATION_CELL_SIZE.y - top_inset)
+	)
+	var atlas_scale: float = get_player_animation_texture(facing_away).get_width() / ANIMATION_SOURCE_SIZE
+	return Rect2(source_rect.position * atlas_scale, source_rect.size * atlas_scale)
+
+
+static func get_player_animation_center_offset(frame_index: int, facing_away: bool) -> float:
+	var row: int = floori(float(clampi(frame_index, 0, 8)) / 3.0)
+	var source_offset: float = 9.0 if not facing_away and row == 1 else 0.0
+	return source_offset * get_player_animation_texture(facing_away).get_width() / ANIMATION_SOURCE_SIZE
+
+
+static func get_player_animation_cell_height(facing_away: bool) -> float:
+	return get_player_animation_texture(facing_away).get_height() / 3.0
+
+
+static func get_ranger_animation_texture() -> Texture2D:
+	return RANGER_SELA_ANIMATION_ATLAS
+
+
+static func get_ranger_animation_frame_rect(frame_index: int) -> Rect2:
+	var safe_index: int = clampi(frame_index, 0, 8)
+	var column: int = safe_index % 3
+	var row: int = floori(float(safe_index) / 3.0)
+	var top_inset: float = 18.0 if row == 1 else 0.0
+	var bottom_inset: float = 10.0 if row == 1 else 0.0
+	var source_rect := Rect2(
+		Vector2(
+			float(column) * ANIMATION_CELL_SIZE.x + float(RANGER_FRAME_X[safe_index]),
+			float(row) * ANIMATION_CELL_SIZE.y + top_inset
+		),
+		Vector2(RANGER_FRAME_WIDTH, ANIMATION_CELL_SIZE.y - top_inset - bottom_inset)
+	)
+	var atlas_scale: float = RANGER_SELA_ANIMATION_ATLAS.get_width() / ANIMATION_SOURCE_SIZE
+	return Rect2(source_rect.position * atlas_scale, source_rect.size * atlas_scale)
+
+
+static func get_ranger_animation_center_offset(frame_index: int) -> float:
+	var row: int = floori(float(clampi(frame_index, 0, 8)) / 3.0)
+	var source_offset: float = 4.0 if row == 1 else 0.0
+	return source_offset * RANGER_SELA_ANIMATION_ATLAS.get_width() / ANIMATION_SOURCE_SIZE
+
+
+static func get_ranger_animation_cell_height() -> float:
+	return RANGER_SELA_ANIMATION_ATLAS.get_height() / 3.0
 
 
 static func get_species_texture(species_id: StringName) -> Texture2D:

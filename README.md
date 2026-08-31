@@ -11,6 +11,7 @@ godot --path .
 ```
 
 - `WASD` or arrow keys — move
+- Hold `Shift` — run
 - `E` — interact with people, signs, and wild creatures
 - `Tab` or `Esc` — open or close the Field Guide
 - In battle — choose Fight, throw a Trail Prism, or Run
@@ -33,6 +34,7 @@ No Pokémon names, creatures, art, audio, maps, or proprietary data are included
 ```powershell
 godot --headless --path . res://tests/framework_smoke_test.tscn
 godot --headless --path . res://tests/gameplay_smoke_test.tscn
+godot --headless --path . res://tests/world_animation_smoke_test.tscn
 godot --headless --path . --quit-after 3
 ```
 
@@ -44,6 +46,8 @@ godot --path . -- --preview-profile
 godot --path . -- --preview-dex
 godot --path . -- --preview-battle
 godot --path . -- --preview-wild
+godot --path . -- --preview-animation=walk
+godot --path . -- --preview-animation=run
 godot --path . -- --capture-delay-frames=90 --capture-preview=res://preview.png
 ```
 
@@ -81,6 +85,7 @@ features/creatures/          Species, runtime creature state, original visuals
 features/inventory/          Item definitions
 features/progression/        Badges and player profile data
 features/world/              Location definitions
+features/world_animation/    Shared human clips, wind, shoreline, grass, and flame motion
 tests/                       Headless framework and gameplay validation
 docs/                        Architecture, roadmap, and agent prompting workflow
 ```

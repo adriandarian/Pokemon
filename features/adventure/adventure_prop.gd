@@ -2,6 +2,8 @@ class_name AdventureProp
 extends StaticBody2D
 
 const VoxelAssets = preload("res://features/voxel_art/voxel_asset_library.gd")
+const GroundShadow = preload("res://features/voxel_art/grounding_shadow.gd")
+const LanternFlameScene = preload("res://features/world_animation/lantern_flame.gd")
 
 enum Kind {
 	TREE,
@@ -15,6 +17,9 @@ enum Kind {
 @export var kind: Kind = Kind.TREE
 @export var interaction_title: String = ""
 @export_multiline var interaction_text: String = ""
+
+var _lantern_flame: LanternFlame
+var _wind_source: AmbientWind
 
 
 func configure(prop_kind: Kind, title: String = "", text: String = "") -> void:
@@ -31,7 +36,20 @@ func _ready() -> void:
 	if not interaction_text.is_empty():
 		add_to_group(&"interactable")
 	_add_collision()
+	if kind == Kind.LANTERN:
+		_lantern_flame = LanternFlameScene.new()
+		_lantern_flame.name = "LanternFlame"
+		_lantern_flame.position = Vector2(-19.0, -111.0)
+		add_child(_lantern_flame)
+		if _wind_source != null:
+			_lantern_flame.set_wind_source(_wind_source)
 	queue_redraw()
+
+
+func set_wind_source(source: AmbientWind) -> void:
+	_wind_source = source
+	if _lantern_flame != null:
+		_lantern_flame.set_wind_source(source)
 
 
 func get_interaction() -> Dictionary:
@@ -76,12 +94,10 @@ func _add_collision() -> void:
 
 func _draw() -> void:
 	_draw_contact_shadow()
-	if kind == Kind.LANTERN:
-		draw_circle(Vector2(-19.0, -109.0), 31.0, Color(1.0, 0.69, 0.2, 0.12))
 	var texture: Texture2D = VoxelAssets.get_prop_texture(kind)
 	var display_size: Vector2 = _get_display_size()
 	var source_rect: Rect2 = VoxelAssets.get_prop_source_rect(texture, kind)
-	var destination_rect: Rect2 = VoxelAssets.fit_bottom_centered(source_rect, display_size)
+	var destination_rect: Rect2 = VoxelAssets.fit_bottom_centered(source_rect, display_size, 1.0)
 	draw_texture_rect_region(texture, destination_rect, source_rect)
 
 
@@ -102,17 +118,25 @@ func _get_display_size() -> Vector2:
 
 
 func _draw_contact_shadow() -> void:
-	var radii: Vector2
+	var contact_radii: Vector2
+	var strength: float = 1.0
 	match kind:
 		Kind.HOUSE:
-			radii = Vector2(190.0, 34.0)
+			contact_radii = Vector2(158.0, 9.0)
+			strength = 0.92
 		Kind.TREE:
-			radii = Vector2(49.0, 17.0)
+			contact_radii = Vector2(34.0, 6.5)
 		Kind.ROCK:
-			radii = Vector2(43.0, 14.0)
+			contact_radii = Vector2(39.0, 6.0)
+			strength = 0.9
+		Kind.NPC:
+			contact_radii = Vector2(19.0, 4.5)
+		Kind.SIGN:
+			contact_radii = Vector2(15.0, 3.5)
+			strength = 0.95
+		Kind.LANTERN:
+			contact_radii = Vector2(16.0, 3.5)
+			strength = 0.95
 		_:
-			radii = Vector2(28.0, 10.0)
-	draw_colored_polygon(PackedVector2Array([
-		Vector2(-radii.x, 2.0), Vector2(-radii.x * 0.3, -radii.y),
-		Vector2(radii.x, 2.0), Vector2(radii.x * 0.3, radii.y),
-	]), Color(0.03, 0.07, 0.05, 0.28))
+			contact_radii = Vector2(17.0, 4.5)
+	GroundShadow.draw(self, contact_radii, Vector2(0.0, -1.0), strength)

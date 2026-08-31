@@ -2,6 +2,7 @@ class_name CreatureVisual
 extends Node2D
 
 const VoxelAssets = preload("res://features/voxel_art/voxel_asset_library.gd")
+const GroundShadow = preload("res://features/voxel_art/grounding_shadow.gd")
 const DISPLAY_SIZE := Vector2(138.0, 138.0)
 
 @export var species_id: StringName = &"kindlehorn"
@@ -39,12 +40,13 @@ func _on_settings_changed() -> void:
 func _draw() -> void:
 	var bob: float = sin(_time * 2.8) * 3.0 if not SettingsService.reduced_motion else 0.0
 	var flip_x: float = -visual_scale if facing_left else visual_scale
-	draw_colored_polygon(PackedVector2Array([
-		Vector2(-43.0, 0.0), Vector2(-15.0, -10.0),
-		Vector2(43.0, 0.0), Vector2(15.0, 13.0),
-	]), Color(0.03, 0.07, 0.05, 0.28))
+	GroundShadow.draw(
+		self,
+		Vector2(25.0, 5.5) * visual_scale,
+		Vector2(0.0, -1.0) * visual_scale
+	)
 	draw_set_transform(Vector2(0.0, bob), 0.0, Vector2(flip_x, visual_scale))
 	var texture: Texture2D = VoxelAssets.get_species_texture(species_id)
 	var source_rect: Rect2 = VoxelAssets.get_species_source_rect(texture, species_id)
-	var destination_rect: Rect2 = VoxelAssets.fit_bottom_centered(source_rect, DISPLAY_SIZE)
+	var destination_rect: Rect2 = VoxelAssets.fit_bottom_centered(source_rect, DISPLAY_SIZE, 1.0)
 	draw_texture_rect_region(texture, destination_rect, source_rect)

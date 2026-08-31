@@ -31,8 +31,12 @@ intentionally flat 2D composition.
 - Grounding: sprites contain no ground plane or cast shadow. The built-in image
   generator returned RGB images even after a transparent-alpha extraction pass,
   so final sources use a controlled magenta chroma backdrop. A shared shader
-  removes it at render time, and runtime code supplies a consistent block-shaped
-  contact shadow.
+  removes and despills it at render time. Runtime code supplies a compact,
+  centered contact-occlusion patch directly beneath each footprint. World
+  sprites intentionally avoid detached directional shadow decals: their baked
+  upper-left key light establishes form, while the contact patch establishes
+  ground contact. Footprints are sized by asset role so narrow props do not
+  appear to stand on oversized dark platforms.
 - Originality: no Pokemon species, symbols, logos, locations, or proprietary
   character designs.
 
@@ -97,8 +101,11 @@ destructively rewriting the generated subject pixels.
 - Import quality and memory: textures use lossless import, no mipmaps, a 512 px
   import-size cap, and linear filtering for clean high-resolution downscaling.
 - Broken grounding: every world sprite is bottom-centered on its existing node
-  origin, with its contact shadow drawn at that origin, so collision positions do
-  not move and the visible subject cannot float above its footprint.
+  origin, with shared contact occlusion drawn at that origin and the visible art
+  overlapping it by one pixel. Collision positions do not move, while the
+  subject cannot float above or visually detach from its footprint. The chroma
+  shader reconstructs edge color before alpha blending to prevent a magenta seam
+  from separating the subject from its shadow.
 - Water animation drift: shader motion uses `TIME` only for presentation and
   exposes `motion_amount`; `SettingsService.reduced_motion` sets it to zero.
 - Narrow UI overflow: generated icons have fixed compact minimum sizes and text

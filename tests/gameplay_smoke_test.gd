@@ -35,6 +35,16 @@ func _ready() -> void:
 	var game_menu: GameMenu = adventure.get_node_or_null("Interface/GameMenu") as GameMenu
 	var battle_overlay: BattleOverlay = adventure.get_node_or_null("Interface/BattleOverlay") as BattleOverlay
 	_expect(player != null, "The adventure boots with a controllable CharacterBody2D player.")
+	if player != null:
+		var initial_visual: PlayerVisual = player.get_visual()
+		_expect(initial_visual != null, "The player resolves its required visual child.")
+		player.visual = null
+		await get_tree().physics_frame
+		await get_tree().physics_frame
+		_expect(
+			player.visual == initial_visual,
+			"The player physics loop recovers its visual reference after an editor hot reload."
+		)
 	_expect(adventure.get_node("Actors/WildCreatures").get_child_count() == 3, "The authored wild preserve contains visible encounter creatures.")
 	_expect(game_menu != null, "The Field Guide is present in the playable scene.")
 	_expect(battle_overlay != null, "The 2D battle presentation is present in the playable scene.")
@@ -45,6 +55,7 @@ func _ready() -> void:
 	game_menu.close()
 
 	player.global_position = Vector2(1400.0, 690.0)
+	await get_tree().process_frame
 	await get_tree().process_frame
 	var location_label := adventure.get_node("Interface/AdventureHUD/TopMargin/TopRow/LocationCard/LocationVBox/Location") as Label
 	_expect(location_label.text == "Mossglass Wilds", "Crossing into the preserve updates the location HUD.")

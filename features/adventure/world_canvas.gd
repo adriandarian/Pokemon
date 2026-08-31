@@ -79,16 +79,6 @@ func _draw_wild_preserve() -> void:
 	draw_polyline(closed_outline, Color("305f3d"), 26.0, true)
 	draw_polyline(closed_outline, Color(0.56, 0.73, 0.39, 0.54), 7.0, true)
 
-	for row: int in range(9):
-		for column: int in range(13):
-			var jitter_x: float = float((row * 31 + column * 17) % 29) - 14.0
-			var jitter_y: float = float((row * 13 + column * 23) % 21) - 10.0
-			var base := Vector2(1270.0 + float(column) * 59.0 + jitter_x, 300.0 + float(row) * 72.0 + jitter_y)
-			if not Geometry2D.is_point_in_polygon(base, WILD_POLYGON):
-				continue
-			_draw_grass_cluster(base, 0.82 + float((row + column) % 3) * 0.11)
-
-
 func _draw_trail() -> void:
 	var path: PackedVector2Array = _build_trail_curve()
 	draw_polyline(path, Color("8e714b"), 172.0, true)
@@ -133,13 +123,6 @@ func _draw_world_details() -> void:
 		_draw_voxel_top(point, Vector2(5.0, 3.0), flower_color, Color("47784a"))
 		draw_rect(Rect2(point + Vector2(-2.0, 3.0), Vector2(4.0, 9.0)), Color("3b7044"))
 
-	for index: int in range(18):
-		var base := Vector2(430.0 + float((index * 113) % 1480), 320.0 + float((index * 191) % 820))
-		if Geometry2D.is_point_in_polygon(base, WILD_POLYGON):
-			continue
-		_draw_grass_cluster(base, 0.58)
-
-
 func _draw_fence() -> void:
 	var rail_start := Vector2(430.0, 1208.0)
 	var rail_end := Vector2(2160.0, 1208.0)
@@ -150,19 +133,6 @@ func _draw_fence() -> void:
 		draw_rect(Rect2(base + Vector2(-9.0, -58.0), Vector2(18.0, 58.0)), Color("59402f"))
 		draw_rect(Rect2(base + Vector2(-5.0, -55.0), Vector2(10.0, 51.0)), Color("8c5e38"))
 		_draw_voxel_top(base + Vector2(0.0, -58.0), Vector2(12.0, 6.0), Color("bd8550"), Color("6f4930"))
-
-
-func _draw_grass_cluster(base: Vector2, scale_factor: float) -> void:
-	var stem_height: float = 26.0 * scale_factor
-	draw_colored_polygon(PackedVector2Array([
-		base + Vector2(-8.0, 0.0), base + Vector2(-6.0, -stem_height),
-		base + Vector2(1.0, -stem_height - 7.0), base + Vector2(0.0, 0.0),
-	]), Color("2f6b3d"))
-	draw_colored_polygon(PackedVector2Array([
-		base + Vector2(2.0, 0.0), base + Vector2(5.0, -stem_height * 0.78),
-		base + Vector2(12.0, -stem_height * 0.92), base + Vector2(11.0, 0.0),
-	]), Color("76a554"))
-	_draw_voxel_top(base + Vector2(-2.0, -stem_height), Vector2(7.0, 4.0), Color("94ba64"), Color("4d8348"))
 
 
 func _draw_voxel_top(center: Vector2, radii: Vector2, top_color: Color, side_color: Color) -> void:

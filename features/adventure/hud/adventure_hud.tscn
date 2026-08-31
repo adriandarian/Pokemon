@@ -82,6 +82,10 @@ text = "TAB   Field Guide"
 layout_mode = 2
 text = "WASD / Arrows   Move"
 
+[node name="Run" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
+layout_mode = 2
+text = "SHIFT   Run"
+
 [node name="Interact" type="Label" parent="TopMargin/TopRow/ControlsCard/ControlsVBox"]
 layout_mode = 2
 text = "E   Interact"
