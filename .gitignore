@@ -32,3 +32,7 @@ obj/
 .vscode/settings.json
 .DS_Store
 Thumbs.db
+
+# Agent visual-QA screenshot scratch (large, regenerated on demand)
+output/homestead_visual_audit/
+output/visual_qa_harness/
