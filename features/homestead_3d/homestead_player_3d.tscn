@@ -39,14 +39,14 @@ material_override = SubResource("ShadowMaterial")
 [node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
 unique_name_in_owner = true
 position = Vector3(0, 1.18, 0)
-pixel_size = 0.0105
+pixel_size = 0.012
 alpha_cut = 2
 texture_filter = 1
 material_override = SubResource("FallbackMaterial")
 
 [node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
 unique_name_in_owner = true
-path_desired_distance = 0.35
+path_desired_distance = 0.6
 target_desired_distance = 0.5
 radius = 0.34
 height = 1.58

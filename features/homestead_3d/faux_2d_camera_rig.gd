@@ -4,7 +4,7 @@ extends Node3D
 @export var target: Node3D
 @export var follow_smoothing: float = 7.0
 @export var gameplay_size: float = 21.0
-@export var overview_size: float = 40.5
+@export var overview_size: float = 47.0
 @export var min_gameplay_size: float = 12.0
 @export var max_gameplay_size: float = 34.0
 @export var zoom_step: float = 1.5
@@ -26,7 +26,7 @@ func _ready() -> void:
 	_gameplay_zoom_size = clampf(gameplay_size, min_gameplay_size, max_gameplay_size)
 	camera.size = _gameplay_zoom_size
 	camera.current = true
-	camera.position = Vector3(0.0, 26.0, 40.0)
+	camera.position = Vector3(-25.0, 43.0, 36.0)
 	_orbit_distance = camera.position.length()
 	_pitch = asin(camera.position.y / _orbit_distance)
 	_yaw = atan2(camera.position.x, camera.position.z)
@@ -45,7 +45,7 @@ func set_overview_enabled(enabled: bool) -> void:
 	_overview_enabled = enabled
 	camera.size = overview_size if enabled else _gameplay_zoom_size
 	if enabled:
-		global_position = Vector3(0.0, 0.0, -12.5)
+		global_position = Vector3(3.5, 0.0, 2.0)
 	else:
 		_snap_to_target()
 
@@ -56,6 +56,16 @@ func orbit_by(mouse_delta: Vector2) -> void:
 	_yaw = wrapf(_yaw - mouse_delta.x * orbit_sensitivity, -PI, PI)
 	_pitch = clampf(
 		_pitch - mouse_delta.y * orbit_sensitivity,
+		deg_to_rad(min_pitch_degrees),
+		deg_to_rad(max_pitch_degrees)
+	)
+	_apply_orbit()
+
+
+func set_preview_orbit_degrees(yaw_degrees: float, pitch_degrees: float) -> void:
+	_yaw = deg_to_rad(yaw_degrees)
+	_pitch = clampf(
+		deg_to_rad(pitch_degrees),
 		deg_to_rad(min_pitch_degrees),
 		deg_to_rad(max_pitch_degrees)
 	)

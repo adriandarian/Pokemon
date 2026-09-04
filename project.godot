@@ -97,6 +97,8 @@ common/physics_interpolation=true
 
 [rendering]
 
+scaling_3d/mode=0
+scaling_3d/scale=0.74
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
 environment/defaults/default_clear_color=Color(0.035, 0.047, 0.043, 1)

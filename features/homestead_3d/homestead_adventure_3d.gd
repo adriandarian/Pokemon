@@ -54,7 +54,7 @@ func _update_area_hud() -> void:
 	var next_area: StringName
 	if player.global_position.z >= 9.0:
 		next_area = &"river_crossing"
-	elif player.global_position.y >= 3.2:
+	elif player.global_position.y >= 6.2:
 		next_area = &"wheat_terrace"
 	else:
 		next_area = &"starting_homestead"
@@ -119,9 +119,18 @@ func _apply_developer_preview() -> void:
 		player.teleport_to(world.get_route_endpoint(&"bridge_north") + Vector3(0.0, 0.05, -1.2))
 	elif arguments.has("--preview-south"):
 		player.teleport_to(Vector3(3.0, 0.08, 28.0))
+	elif arguments.has("--preview-homestead-orbit"):
+		player.set_movement_enabled(false)
+		camera_rig.set_overview_enabled(true)
+		camera_rig.set_preview_orbit_degrees(-38.0, 46.0)
+		_hide_preview_interface()
 	elif arguments.has("--preview-homestead-overview"):
 		player.set_movement_enabled(false)
 		camera_rig.set_overview_enabled(true)
-		var interface_layer := get_node_or_null("Interface") as CanvasLayer
-		if interface_layer != null:
-			interface_layer.visible = false
+		_hide_preview_interface()
+
+
+func _hide_preview_interface() -> void:
+	var interface_layer := get_node_or_null("Interface") as CanvasLayer
+	if interface_layer != null:
+		interface_layer.visible = false

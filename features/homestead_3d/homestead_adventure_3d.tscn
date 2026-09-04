@@ -13,7 +13,7 @@
 [sub_resource type="NavigationMesh" id="NavigationMesh_homestead"]
 agent_height = 1.75
 agent_max_climb = 0.25
-agent_max_slope = 50.0
+agent_max_slope = 65.0
 agent_radius = 0.5
 geometry_collision_mask = 2
 geometry_parsed_geometry_type = 1
@@ -23,16 +23,16 @@ region_min_size = 1.0
 
 [sub_resource type="Environment" id="Environment_homestead"]
 background_mode = 1
-background_color = Color(0.43, 0.51, 0.24, 1)
+background_color = Color(0.31, 0.35, 0.19, 1)
 ambient_light_source = 3
-ambient_light_color = Color(0.58, 0.64, 0.46, 1)
-ambient_light_energy = 0.66
+ambient_light_color = Color(0.5, 0.54, 0.39, 1)
+ambient_light_energy = 0.45
 reflected_light_source = 2
 tonemap_mode = 2
 adjustment_enabled = true
-adjustment_brightness = 0.9
-adjustment_contrast = 0.9
-adjustment_saturation = 0.82
+adjustment_brightness = 1.0
+adjustment_contrast = 1.1
+adjustment_saturation = 0.745
 
 [sub_resource type="StandardMaterial3D" id="SunDiscMaterial"]
 shading_mode = 0
@@ -71,8 +71,9 @@ script = ExtResource("9_mouse_navigation")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 rotation = Vector3(-0.959931, -0.436332, 0)
 light_color = Color(1, 0.94, 0.82, 1)
-light_energy = 0.76
+light_energy = 0.9
 shadow_enabled = true
+shadow_opacity = 0.75
 directional_shadow_max_distance = 70.0
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

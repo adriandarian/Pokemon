@@ -3,6 +3,8 @@ extends CharacterBody3D
 
 const HumanAtlas = preload("res://features/world_animation/human_animation_atlas.gd")
 const PLAYER_CHROMA_SHADER = preload("res://features/homestead_3d/player_chroma_3d.gdshader")
+const MAX_WALKABLE_SLOPE_DEGREES := 65.0
+const STEEP_STAIR_MAX_SLOPE_DEGREES := 72.0
 
 signal interact_requested(origin: Vector3, facing: Vector3)
 signal navigation_finished(reached: bool)
@@ -24,6 +26,7 @@ var _sprite_material: ShaderMaterial
 var _navigation_active: bool = false
 var _navigation_target: Vector3
 var _manual_input_active: bool = false
+var _steep_stair_traversal_active: bool = false
 
 @onready var sprite: AnimatedSprite3D = %AnimatedSprite3D
 @onready var navigation_agent: NavigationAgent3D = %NavigationAgent3D
@@ -31,7 +34,7 @@ var _manual_input_active: bool = false
 
 func _ready() -> void:
 	floor_snap_length = 0.65
-	floor_max_angle = deg_to_rad(50.0)
+	floor_max_angle = deg_to_rad(MAX_WALKABLE_SLOPE_DEGREES)
 	floor_block_on_wall = false
 	sprite.sprite_frames = HumanAtlas.create_player_frames()
 	sprite.billboard = BaseMaterial3D.BILLBOARD_ENABLED
@@ -92,6 +95,19 @@ func set_movement_enabled(enabled: bool) -> void:
 		cancel_navigation()
 		velocity = Vector3.ZERO
 		running = false
+
+
+func set_steep_stair_traversal_active(active: bool) -> void:
+	if _steep_stair_traversal_active == active:
+		return
+	_steep_stair_traversal_active = active
+	floor_max_angle = deg_to_rad(
+		STEEP_STAIR_MAX_SLOPE_DEGREES if active else MAX_WALKABLE_SLOPE_DEGREES
+	)
+
+
+func is_steep_stair_traversal_active() -> bool:
+	return _steep_stair_traversal_active
 
 
 func teleport_to(next_position: Vector3) -> void:
