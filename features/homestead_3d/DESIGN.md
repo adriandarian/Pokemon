@@ -4,7 +4,7 @@
 
 The starting homestead is a real three-dimensional exploration space presented
 through a fixed orthographic camera. The player walks with 3D collision across
-a four-metre homestead plateau, an eight-metre wheat terrace, a fitted stone
+a four-metre homestead plateau, a seven-metre wheat terrace, a fitted stone
 stair/ramp, a continuous dirt trail, and a timber bridge over water. The camera
 preserves the illustrated faux-2D composition while every traversable surface
 and blocking landmark participates in 3D physics.
@@ -13,6 +13,20 @@ The baseline is authored around protected landmark anchors while repeated grass,
 cliff blocks, trees, shrubs, and shoreline modules remain reusable. Future biome
 variation can change those module palettes, densities, and seeded placement
 rules without moving the route, stair, bridge, or settlement anchors.
+
+All visible terrain and world props are volumetric geometry. The legacy PNG
+assets remain in `assets/voxel/` for preservation and comparison, but the
+homestead world does not instantiate `Sprite3D` billboards for its cottage,
+shed, trees, crops, rocks, shrubs, reeds, cliffs, shore, or bridge. The player
+may remain an `AnimatedSprite3D` because locomotion, collision, and contacts are
+owned by its `CharacterBody3D`.
+
+The current 3D modeling references are:
+
+- `docs/godot-prompter/specs/references/homestead-3d-turnaround.png`
+- `docs/godot-prompter/specs/references/terrain-3d-module-kit.png`
+
+They are visual specifications only; neither image is rendered in the world.
 
 ## Ownership
 
@@ -30,7 +44,7 @@ rules without moving the route, stair, bridge, or settlement anchors.
 HomesteadAdventure3D (Node3D)
 ├── World (Node3D / HomesteadWorld3D)
 │   ├── Terrain (StaticBody3D and MeshInstance3D)
-│   ├── Route (TrailRibbon3D, stair ramp, bridge deck)
+│   ├── Route (four TrailRibbon3D paths, stair ramp, bridge deck)
 │   └── Props (StaticBody3D landmarks and decorative MeshInstance3D)
 ├── Player (CharacterBody3D / HomesteadPlayer3D)
 │   ├── CollisionShape3D
@@ -54,6 +68,7 @@ HomesteadAdventure3D (Node3D)
 - `HomesteadPlayer3D.set_movement_enabled(enabled)`
 - `HomesteadPlayer3D.teleport_to(position)`
 - `Faux2DCameraRig.set_overview_enabled(enabled)`
+- `Faux2DCameraRig.set_preview_orbit_degrees(yaw, pitch)`
 
 The route contract is exact: north trail end equals stair top, stair bottom
 equals lower trail start, lower trail end equals bridge north, and bridge south
@@ -77,4 +92,6 @@ flat images.
 Run `tests/homestead_3d_smoke_test.tscn` headlessly. It verifies the orthographic
 camera, `CharacterBody3D`, 3D collision owners, exact route joins, ramp slope,
 bridge collision, elevated surfaces, and `AnimatedSprite3D` clips. Visual QA is
-captured in desktop, portrait overview, and narrow viewports.
+captured in desktop, portrait overview, narrow, and rotated-orbit viewports. The
+test also asserts that terrain and world-prop roots contain zero `Sprite3D`
+nodes and materialize the expected volumetric mesh density.
