@@ -45,6 +45,28 @@ func _ready() -> void:
 			world.get_route_endpoint(&"bridge_south")
 		)
 		_expect(bridge_path.size() >= 2, "Path tracing finds a route from the homestead through the stair and bridge.")
+		var stair_link := world.find_child(
+			"SteepStairNavigationLink",
+			true,
+			false
+		) as NavigationLink3D
+		var path_reaches_link_top: bool = false
+		var path_reaches_link_bottom: bool = false
+		if stair_link != null:
+			for path_point: Vector3 in bridge_path:
+				path_reaches_link_top = path_reaches_link_top or path_point.distance_to(
+					stair_link.global_position + stair_link.start_position
+				) < 1.0
+				path_reaches_link_bottom = path_reaches_link_bottom or path_point.distance_to(
+					stair_link.global_position + stair_link.end_position
+				) < 1.0
+		_expect(
+			stair_link != null
+			and path_reaches_link_top
+			and path_reaches_link_bottom,
+			"The click-to-move route crosses the dedicated bidirectional stair link: %s"
+			% [bridge_path]
+		)
 		if camera != null and player != null:
 			var clicked_ground: Vector3 = world.get_spawn_position() + Vector3(1.5, 0.0, 1.5)
 			var ground_screen_position: Vector2 = camera.unproject_position(clicked_ground)
@@ -83,7 +105,7 @@ func _ready() -> void:
 			player.global_position
 		) as Vector3
 		player.teleport_to(world.get_spawn_position())
-		var clicked_body := interactable.get_node_or_null("HouseFoundation") as StaticBody3D
+		var clicked_body := interactable.find_child("HouseFoundation", true, false) as StaticBody3D
 		var click_started: bool = false
 		if clicked_body != null and camera != null:
 			click_started = mouse_navigation.request_interaction_at_screen(
